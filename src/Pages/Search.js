@@ -64,7 +64,7 @@ class SearchPage extends Component {
             'headers': {
                 'Authorization': '7ad19ee2-db3f-4d1f-95d1-58311c3caf11'
             }
-        }).then(response => { console.log(response); this.setState(response.data); });
+        }).then(response => { this.setState(response.data); });
     }
     componentDidMount() {
         this.page = 0;
