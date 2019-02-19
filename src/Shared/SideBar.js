@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import React, { Component } from 'react';
 
 class SideBar extends Component {
@@ -8,7 +8,7 @@ class SideBar extends Component {
             var str = this.state[lang][lib];
             lib = str.split('/')[1];
             vals.push(<li key={lang + lib}>
-                <a href="#SubmenuC_L">{lib}</a>
+                <a href={"/search/" + lang + "/" + lib}>{lib}</a>
             </li>);
         }
         return (vals);

@@ -8,10 +8,10 @@ class HomePage extends Component {
                     <div>
                         <span className="title_welcome fontBold">
                             WikiLibs: our passion, for your time
-                    </span>
+                        </span>
                         <span className="subtitle_welcome fontRegular">
                             Coding libraries will never be a problem again
-                    </span>
+                        </span>
                         <div className="welcome_container">
                             <button type="button" className="btn btn-primary btn-lg button_welcome fontRegular">Join the community !</button>
                         </div>
@@ -77,10 +77,10 @@ class HomePage extends Component {
                 </div>
                 <div className="contact_border"></div>
                 <div className="fontRegular front text-center">
-                    <a className="buttonContact">CONTACT</a>
-                    <a className="buttonContact">HELP AND FAQ</a>
-                    <a className="buttonContact">TERM OF USE</a>
-                    <a className="buttonContact">PRIVACY POLICY</a>
+                    <a href="/" className="buttonContact">CONTACT</a>
+                    <a href="/" className="buttonContact">HELP AND FAQ</a>
+                    <a href="/" className="buttonContact">TERM OF USE</a>
+                    <a href="/" className="buttonContact">PRIVACY POLICY</a>
                 </div>
             </div>
         );

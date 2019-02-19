@@ -17,7 +17,7 @@ class Header extends Component {
                         <ul className="nav navbar-nav navbar-right">
                             <li>
                                 <div className="inset">
-                                    <img src="imgs/pp.png" alt="" />
+                                    <img src="/imgs/pp.png" alt="" />
                                 </div>
                             </li>
                         </ul>

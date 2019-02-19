@@ -13,6 +13,7 @@ ReactDOM.render(
             <Route exact path="/" render={(props) => <App {...props} page={"Home"} />} />
             <Route exact path="/home" render={(props) => <App {...props} page={"Home"} />} />
             <Route exact path="/symbol/:sympath+" render={(props) => <App {...props} page={"Symbol"} />} />
+            <Route exact path="/search/:path+" render={(props) => <App {...props} page={"Search"} />} />
             <Route component={Page404} />
         </Switch>
     </BrowserRouter>
