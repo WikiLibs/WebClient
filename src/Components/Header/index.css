@@ -1,6 +1,6 @@
 @font-face {
     font-family: OpenSansRegular;
-    src: url('../font/OpenSans-Regular.ttf');
+    src: url(./font/OpenSans-Regular.ttf);
 }
 .fontRegular {
     font-family: OpenSansRegular;
@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: OpenSansBold;
-    src: url('../font/OpenSans-Semibold.ttf');
+    src: url(./font/OpenSans-Semibold.ttf);
 }
 .fontBold {
     font-family: OpenSansBold;

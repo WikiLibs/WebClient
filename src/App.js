@@ -1,24 +1,30 @@
-import React, { Component } from 'react';
-import Header from './Shared/Header';
-import SideBar from './Shared/SideBar';
-import Pages from './Pages/PageRegistry';
+import React from 'react';
+import { Router, Switch } from 'react-router-dom';
 
-class App extends Component {
-    render() {
-        document.title = this.props.page
-        const PageComp = Pages[this.props.page];
-        return (
-            <div>
-                <Header />
-                <div id="wrapper">
-                    <SideBar />
-                    <div id="page-content-wrapper">
-                        <PageComp {...this.props} />
-                    </div>
-                </div>
-            </div>
-        );
-    }
+import createBrowserHistory from "history/createBrowserHistory";
+
+import Layout from "./Components/Layout"
+
+/* PAGES */
+import Welcome from './Pages/Welcome'
+import Symbol from './Pages/Symbol'
+import Search from './Pages/Search'
+import NotFound from './Pages/NotFound'
+/* END */
+
+const history = createBrowserHistory()
+
+export default function App()
+{
+    return (
+        <Router history={history}>
+            <Switch>
+                <Layout exact path='/' component={Welcome} />
+                <Layout exact path='/symbol/:sympath+' component={Symbol} />
+                <Layout exact path='/search/:path+' component={Search} />
+
+                <Layout component={NotFound} />
+            </Switch>
+        </Router>
+  );
 }
-
-export default App;

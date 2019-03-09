@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 
-class SearchPage extends Component {
+class Search extends Component {
     constructor(props) {
         super(props);
         this.handleNext = this.handleNext.bind(this);
@@ -42,8 +42,8 @@ class SearchPage extends Component {
         if (this.page > 0)
             return (
                 <div>
-                    <button onClick={this.handleNext} type="button" className="btn btn-primary">Next page</button>
                     <button onClick={this.handlePrev} type="button" className="btn btn-primary">Previous page</button>
+                    <button onClick={this.handleNext} type="button" className="btn btn-primary">Next page</button>
                 </div>
             );
         else
@@ -72,4 +72,4 @@ class SearchPage extends Component {
     }
 }
 
-export default SearchPage;
+export default Search;

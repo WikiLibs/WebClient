@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 
+import './index.css'
+
 class SideBar extends Component {
     genLibList(lang) {
         var vals = []
@@ -18,7 +20,7 @@ class SideBar extends Component {
         for (var lang in this.state) {
             vals.push(
                 <li key={lang}>
-                    <a href="#SubmenuC_L" data-toggle="collapse" aria-expanded="false" className=" fontRegular">{lang}</a>
+                    <a href="#SubmenuC_L" data-toggle="collapse" aria-expanded="false" className="fontRegular">{lang}</a>
                     <ul className="collapse list-unstyled" id="SubmenuC_L">
                         {this.genLibList(lang)}
                     </ul>

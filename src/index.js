@@ -1,22 +1,14 @@
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './maincss/padding.css';
+import './maincss/button.css';
 import App from './App';
-import Page404 from './Pages/404';
 
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/" render={(props) => <App {...props} page={"Home"} />} />
-            <Route exact path="/home" render={(props) => <App {...props} page={"Home"} />} />
-            <Route exact path="/symbol/:sympath+" render={(props) => <App {...props} page={"Symbol"} />} />
-            <Route exact path="/search/:path+" render={(props) => <App {...props} page={"Search"} />} />
-            <Route component={Page404} />
-        </Switch>
-    </BrowserRouter>
-, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();

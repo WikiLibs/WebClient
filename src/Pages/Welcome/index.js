@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 
-class HomePage extends Component {
+import './index.css';
+
+import back from './imgs/back.png'
+import at from './imgs/at.png'
+import people from './imgs/people.png'
+import tools from './imgs/tools.png'
+import mouse from './imgs/mouse.png'
+import search from './imgs/search.png'
+import think from './imgs/think.png'
+
+class Welcome extends Component {
     render() {
         return (
             <div>
@@ -15,7 +25,7 @@ class HomePage extends Component {
                         <div className="welcome_container">
                             <button type="button" className="btn btn-primary btn-lg button_welcome fontRegular">Join the community !</button>
                         </div>
-                        <img className="resize" src="imgs/fond.png" alt="" />
+                        <img className="resize" src={back} alt="" />
                     </div>
                 </div>
                 <div className="welcome_border"></div>
@@ -27,19 +37,19 @@ class HomePage extends Component {
                     </div>
                     <div className='row text_middle padding_middle_row'>
                         <div className='col-4 text-center black'>
-                            <img className="padding_images_welcome_middle" src="imgs/At.png" alt="" />
+                            <img className="padding_images_welcome_middle" src={at} alt="" />
                             <p className="clearMargin">WikiLibs regroups the documentation</p>
                             <p className="clearMargin">of multiples libraries from</p>
                             <p className="clearMargin">different languages.</p>
                         </div>
                         <div className='col-4 text-center black'>
-                            <img className="padding_images_welcome_middle" src="imgs/People.png" alt="" />
+                            <img className="padding_images_welcome_middle" src={people} alt="" />
                             <p className="clearMargin">Your contribution is also important !</p>
                             <p className="clearMargin">You can add your own example for</p>
                             <p className="clearMargin">each function, to help other people.</p>
                         </div>
                         <div className='col-4 text-center black'>
-                            <img className="padding_images_welcome_middle" src="imgs/Tools.png" alt="" />
+                            <img className="padding_images_welcome_middle" src={tools} alt="" />
                             <p className="clearMargin">Wikilibs also gives you access to</p>
                             <p className="clearMargin">resources like download links</p>
                             <p className="clearMargin">and tutorial</p>
@@ -54,20 +64,20 @@ class HomePage extends Component {
                     </div>
                     <div className='row text_middle padding_middle_row'>
                         <div className='col-4 text-center black'>
-                            <img className="padding_images_welcome_middle" src="imgs/Mouse.png" alt="" />
+                            <img className="padding_images_welcome_middle" src={mouse} alt="" />
                             <p className="clearMargin">Click on the top left button to</p>
                             <p className="clearMargin">to make the drawer appear, and choose</p>
                             <p className="clearMargin">a library (either the most used ones,</p>
                             <p className="clearMargin">or from the list.</p>
                         </div>
                         <div className='col-4 text-center black'>
-                            <img className="padding_images_welcome_middle" src="imgs/Search.png" alt="" />
+                            <img className="padding_images_welcome_middle" src={search} alt="" />
                             <p className="clearMargin">Or you can directly search for your</p>
                             <p className="clearMargin">desired library in the search bar</p>
                             <p className="clearMargin">(located in the top side of the site)</p>
                         </div>
                         <div className='col-4 text-center black'>
-                            <img className="padding_images_welcome_middle" src="imgs/Think.png" alt="" />
+                            <img className="padding_images_welcome_middle" src={think} alt="" />
                             <p className="clearMargin">If you are connected, you can add your</p>
                             <p className="clearMargin">example on a function page. If it's</p>
                             <p className="clearMargin">approuved by the moderator, it will be visible</p>
@@ -87,4 +97,4 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+export default Welcome;

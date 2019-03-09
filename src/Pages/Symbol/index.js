@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 
-class SymbolPage extends Component {
+import './color.css';
+
+class Symbol extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -126,4 +128,4 @@ class SymbolPage extends Component {
     }
 }
 
-export default SymbolPage;
+export default Symbol;
