@@ -1,8 +1,8 @@
 import Axios from "axios";
 
 export default class ApiService {
-    url = process.env.REACT_API_URL;
-    apiKey = process.env.REACT_API_KEY;
+    url = process.env.REACT_APP_API_URL;
+    apiKey = process.env.REACT_APP_API_KEY;
 
     getLangs() {
         return (Axios.get(this.url + "/search/lang", {
