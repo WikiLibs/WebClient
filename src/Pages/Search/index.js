@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import {Card, Button, Container } from 'react-bootstrap';
 
 class Search extends Component {
     constructor(props) {
@@ -14,11 +15,13 @@ class Search extends Component {
         for (var v in this.state.results) {
             vals.push(
                 <div key={v} className='paddingWell'>
-                    <div className="card card-inverse paddingCard" style={{ backgroundColor: 'lightgray', borderColor: 'lightgrey' }}>
-                        <div className="card-block">
-                            <a href={"/symbol/" + this.state.results[v]}><p className="card-text black"><span className='func'>{this.state.results[v]}</span></p></a>
-                        </div>
-                    </div>
+                    <Card className="card-inverse paddingCard" style={{ backgroundColor: 'lightgray', borderColor: 'lightgrey' }}>
+                        <Card.Body>
+                            <Card.Text className="black">
+                                <a href={"/symbol/" + this.state.results[v]}><span className='func'>{this.state.results[v]}</span></a>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
                 </div>
             );
         }
@@ -37,26 +40,26 @@ class Search extends Component {
             return;
         if (!this.state.next && this.page > 0)
             return (
-                <button onClick={this.handlePrev} type="button" className="btn btn-primary">Previous page</button>
+                <Button onClick={this.handlePrev}>Previous page</Button>
             );
         if (this.page > 0)
             return (
                 <div>
-                    <button onClick={this.handlePrev} type="button" className="btn btn-primary">Previous page</button>
-                    <button onClick={this.handleNext} type="button" className="btn btn-primary">Next page</button>
+                    <Button onClick={this.handlePrev}>Previous page</Button>
+                    <Button onClick={this.handleNext}>Next page</Button>
                 </div>
             );
         else
-            return (<button onClick={this.handleNext} type="button" className="btn btn-primary">Next page</button>);
+            return (<Button onClick={this.handleNext}>Next page</Button>);
     }
     render() {
         return (
-            <div className='container'>
+            <Container>
                 <h1 className='header1'>Results for '{this.props.match.params.path}'</h1>
                 <p></p>
                 {this.renderSymList()}
                 {this.renderFooter()}
-            </div>
+            </Container>
         );
     }
     refrehData() {
