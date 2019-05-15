@@ -1,13 +1,16 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import ApiService from '../../ApiService';
 import {Card, Button, Container } from 'react-bootstrap';
 
-class Search extends Component {
+export default class Search extends Component {
+    api = new ApiService();
+
     constructor(props) {
         super(props);
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
     }
+
     renderSymList() {
         var vals = []
         if (this.state == null || this.state.results.length <= 0)
@@ -27,14 +30,17 @@ class Search extends Component {
         }
         return (vals);
     }
+
     handleNext() {
         ++this.page;
         this.refrehData();
     }
+
     handlePrev() {
         --this.page;
         this.refrehData();
     }
+
     renderFooter() {
         if (this.state == null || this.state.results.length <= 0)
             return;
@@ -52,6 +58,7 @@ class Search extends Component {
         else
             return (<Button onClick={this.handleNext}>Next page</Button>);
     }
+
     render() {
         return (
             <Container>
@@ -62,17 +69,13 @@ class Search extends Component {
             </Container>
         );
     }
+
     refrehData() {
-        axios.get('/api/search/string/' + this.page + '/' + this.props.match.params.path, {
-            'headers': {
-                'Authorization': '7ad19ee2-db3f-4d1f-95d1-58311c3caf11'
-            }
-        }).then(response => { this.setState(response.data); });
+        this.api.searchSymbols(this.props.match.params.path, this.page).then(response => { this.setState(response.data); });
     }
+
     componentDidMount() {
         this.page = 0;
         this.refrehData();
     }
 }
-
-export default Search;

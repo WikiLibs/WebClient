@@ -5,7 +5,7 @@ import './index.css'
 
 import pp from './pp.png'
 
-class Header extends Component {
+export default class Header extends Component {
     render() {
         return (
             <div className="Header">
@@ -43,5 +43,3 @@ class Header extends Component {
         )
     }
 }
-
-export default Header;

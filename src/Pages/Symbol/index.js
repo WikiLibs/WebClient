@@ -1,10 +1,12 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { Row, Col, Container, Card } from 'react-bootstrap';
+import ApiService from '../../ApiService';
 
 import './color.css';
 
-class Symbol extends Component {
+export default class Symbol extends Component {
+    api = new ApiService();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,6 +19,7 @@ class Symbol extends Component {
             symbols: []
         };
     }
+
     getName() {
         var str = this.state.path;
         if (str == null)
@@ -26,6 +29,7 @@ class Symbol extends Component {
             return (null);
         return (arr[arr.length - 1] + " (" + this.state.type + ")");
     }
+
     renderParameters(proto) {
         var vals = []
 
@@ -40,6 +44,7 @@ class Symbol extends Component {
         }
         return (vals);
     }
+
     renderPrototypes() {
         var vals = []
         for (var v in this.state.prototypes) {
@@ -77,6 +82,7 @@ class Symbol extends Component {
         }
         return (vals);
     }
+
     renderSymListInner() {
         var vals = []
         for (var v in this.state.symbols) {
@@ -94,6 +100,7 @@ class Symbol extends Component {
         }
         return (vals);
     }
+
     renderSymList() {
         return (
             <Container>
@@ -102,12 +109,14 @@ class Symbol extends Component {
             </Container>
         );
     }
+
     renderPrototypesOrSyms() {
         if (this.state.symbols.length > 0)
             return (this.renderSymList());
         else
             return (this.renderPrototypes());
     }
+
     render() {
         return (
             <div>
@@ -119,13 +128,8 @@ class Symbol extends Component {
             </div>
         );
     }
+
     componentDidMount() {
-        axios.get('/api/symbol/' + this.props.match.params.sympath, {
-            'headers': {
-                'Authorization': '7ad19ee2-db3f-4d1f-95d1-58311c3caf11'
-            }
-        }).then(response => { this.setState(response.data); });
+        this.api.getSymbol(this.props.match.params.sympath).then(response => { this.setState(response.data); });
     }
 }
-
-export default Symbol;

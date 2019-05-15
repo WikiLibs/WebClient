@@ -11,7 +11,7 @@ import mouse from './imgs/mouse.png'
 import search from './imgs/search.png'
 import think from './imgs/think.png'
 
-class Welcome extends Component {
+export default class Welcome extends Component {
     render() {
         return (
             <div>
@@ -97,5 +97,3 @@ class Welcome extends Component {
         );
     }
 }
-
-export default Welcome;
