@@ -13,15 +13,15 @@ export default class Search extends Component {
 
     renderSymList() {
         var vals = []
-        if (this.state == null || this.state.results.length <= 0)
+        if (this.state == null || this.state.data.length <= 0)
             return (<h1 className='header1'>No results found</h1>);
-        for (var v in this.state.results) {
+        for (var v in this.state.data) {
             vals.push(
                 <div key={v} className='paddingWell'>
                     <Card className="card-inverse paddingCard" style={{ backgroundColor: 'lightgray', borderColor: 'lightgrey' }}>
                         <Card.Body>
                             <Card.Text className="black">
-                                <a href={"/symbol/" + this.state.results[v]}><span className='func'>{this.state.results[v]}</span></a>
+                                <a href={"/symbol/" + this.state.data[v]}><span className='func'>{this.state.data[v]}</span></a>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -42,13 +42,13 @@ export default class Search extends Component {
     }
 
     renderFooter() {
-        if (this.state == null || this.state.results.length <= 0)
+        if (this.state == null || this.state.data.length <= 0)
             return;
-        if (!this.state.next && this.page > 0)
+        if (!this.state.hasMorePages && this.page > 1)
             return (
                 <Button onClick={this.handlePrev}>Previous page</Button>
             );
-        if (this.page > 0)
+        if (this.page > 1)
             return (
                 <div>
                     <Button onClick={this.handlePrev}>Previous page</Button>
@@ -75,7 +75,7 @@ export default class Search extends Component {
     }
 
     componentDidMount() {
-        this.page = 0;
+        this.page = 1;
         this.refrehData();
     }
 }
