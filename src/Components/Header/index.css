@@ -33,6 +33,7 @@
     top: 0;
     width: 100%;
     z-index: 9999;
+    justify-content: baseline;
 }
 
 .navbar-default a {
