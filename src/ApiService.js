@@ -29,7 +29,8 @@ export default class ApiService {
     }
 
     searchSymbols(str, page) {
-        return (Axios.get(this.url + "/search/string/" + page + '/' + str, {
+        let query = "?page=" + page;
+        return (Axios.get(this.url + "/search/string/" + str + query, {
             'headers': {
                 'Authorization': this.apiKey
             }
