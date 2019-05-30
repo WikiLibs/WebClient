@@ -1,9 +1,11 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import ApiService from '../../ApiService';
 
 import './index.css'
 
-class SideBar extends Component {
+export default class SideBar extends Component {
+    api = new ApiService();
+
     genLibList(lang) {
         var vals = []
         for (var lib in this.state[lang]) {
@@ -15,6 +17,7 @@ class SideBar extends Component {
         }
         return (vals);
     }
+
     genLangList() {
         var vals = []
         for (var lang in this.state) {
@@ -29,6 +32,7 @@ class SideBar extends Component {
         }
         return (vals)
     }
+
     render() {
         return (
             <div className="SideBar">
@@ -41,25 +45,17 @@ class SideBar extends Component {
             </div>
         )
     }
+
     async onLangsReceived(langs) {
         var tbl = {}
         for (var v in langs.data) {
-            var libs = await axios.get('/api/search/lang/' + langs.data[v], {
-                'headers': {
-                    'Authorization': '7ad19ee2-db3f-4d1f-95d1-58311c3caf11'
-                }
-            });
+            var libs = await this.api.getLibs(langs.data[v]);
             tbl[langs.data[v]] = libs.data;
             this.setState(tbl);
         }
     }
+
     componentDidMount() {
-        axios.get('/api/search/lang', {
-            'headers': {
-                'Authorization': '7ad19ee2-db3f-4d1f-95d1-58311c3caf11'
-            }
-        }).then(langs => this.onLangsReceived(langs));
+        this.api.getLangs().then(langs => this.onLangsReceived(langs));
     }
 }
-
-export default SideBar;
