@@ -20,8 +20,16 @@ export default class ApiService {
         }));
     }
 
-    getSymbol(path) {
-        return (Axios.get(this.url + "/symbol/" + path, {
+    getSymbolByPath(path) {
+        return (Axios.get(this.url + "/symbol?path=" + path, {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
+    getSymbolById(id) {
+        return (Axios.get(this.url + "/symbol?id=" + id, {
             'headers': {
                 'Authorization': this.apiKey
             }
