@@ -69,14 +69,17 @@ export default class Symbol extends Component {
                             </Card>
                         </div>
                     </Container>
-                    <Container>
-                        <h2 className='header2'>Parameters</h2>
-                        <div className='paddingWell'>
-                            <Card className="borderless">
-                                {this.renderParameters(proto)}
-                            </Card>
-                        </div>
-                    </Container>
+                    {
+                        proto.parameters.length > 0 &&
+                        <Container>
+                            <h2 className='header2'>Parameters</h2>
+                            <div className='paddingWell'>
+                                <Card className="borderless">
+                                    {this.renderParameters(proto)}
+                                </Card>
+                            </div>
+                        </Container>
+                    }
                 </div>
             )
         }
@@ -91,7 +94,7 @@ export default class Symbol extends Component {
                     <Card className="card-inverse paddingCard" style={{ backgroundColor: 'lightgray', borderColor: 'lightgrey' }}>
                         <Card.Body>
                             <Card.Text className="black">
-                                <a href={"/symbol/" + this.state.symbols[v]}><span className='func'>{this.state.symbols[v]}</span></a>
+                                <a href={"/symbol/" + this.state.symbols[v].id}><span className='func'>{this.state.symbols[v].path}</span></a>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -104,17 +107,17 @@ export default class Symbol extends Component {
     renderSymList() {
         return (
             <Container>
-                <h2 className='header2'>Referenced symbols</h2>
+                <h2 className='header2'>Members</h2>
                 {this.renderSymListInner()}
             </Container>
         );
     }
 
     renderPrototypesOrSyms() {
-        if (this.state.symbols.length > 0)
-            return (this.renderSymList());
-        else
-            return (this.renderPrototypes());
+            return (<>
+                {this.renderPrototypes()}
+                {this.state.symbols.length > 0 && this.renderSymList()}
+            </>);
     }
 
     render() {
@@ -130,6 +133,10 @@ export default class Symbol extends Component {
     }
 
     componentDidMount() {
-        this.api.getSymbol(this.props.match.params.sympath).then(response => { this.setState(response.data); });
+        let sym = this.props.match.params.sympath;
+        if (isNaN(sym))
+            this.api.getSymbolByPath(sym).then(response => { this.setState(response.data); });
+        else
+            this.api.getSymbolById(sym).then(response => { this.setState(response.data); });
     }
 }

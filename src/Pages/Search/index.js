@@ -16,12 +16,14 @@ export default class Search extends Component {
         if (this.state == null || this.state.data.length <= 0)
             return (<h1 className='header1'>No results found</h1>);
         for (var v in this.state.data) {
+            if (this.state.data[v].type === "attribute" || this.state.data[v].type === "member")
+                continue;
             vals.push(
                 <div key={v} className='paddingWell'>
                     <Card className="card-inverse paddingCard" style={{ backgroundColor: 'lightgray', borderColor: 'lightgrey' }}>
                         <Card.Body>
                             <Card.Text className="black">
-                                <a href={"/symbol/" + this.state.data[v]}><span className='func'>{this.state.data[v]}</span></a>
+                                <a href={"/symbol/" + this.state.data[v].id}><span className='func'>{this.state.data[v].path}</span></a>
                             </Card.Text>
                         </Card.Body>
                     </Card>
