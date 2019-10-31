@@ -24,7 +24,7 @@ export default class Welcome extends Component {
                             Coding libraries will never be a problem again
                         </span>
                         <div className="welcome_container">
-                            <button type="button" className="btn btn-primary btn-lg button_welcome fontRegular">Join the community !</button>
+                            <a href="/test"><button type="button" className="btn btn-primary btn-lg button_welcome fontRegular">Join the community !</button></a>
                         </div>
                         <img className="resize" src={back} alt="" />
                     </div>
