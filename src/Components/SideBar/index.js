@@ -8,9 +8,12 @@ export default class SideBar extends Component {
 
     genLibList(lang) {
         var vals = []
-        for (var lib in this.state[lang]) {
+         for (var lib in this.state[lang]) {
+             //console.log(this.state[lang][lib])
             var str = this.state[lang][lib];
-            lib = str.split('/')[1];
+            if (lang.lenght !== 0) {
+                lib = str.split('/')[1];
+            }
             vals.push(<li key={lang + lib}>
                 <a href={"/search/" + lang + "/" + lib}>{lib}</a>
             </li>);
@@ -47,12 +50,13 @@ export default class SideBar extends Component {
     }
 
     async onLangsReceived(langs) {
-        var tbl = {}
+        var tbl = {};
         for (var v in langs.data) {
-            var libs = await this.api.getLibs(langs.data[v]);
-            tbl[langs.data[v]] = libs.data;
-            this.setState(tbl);
+            var libs = await this.api.getLibs(v+1);
+            tbl[langs.data[v].name] = libs.data.data;
         }
+        console.log(tbl)
+        this.setState(tbl);
     }
 
     componentDidMount() {

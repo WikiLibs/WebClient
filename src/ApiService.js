@@ -4,8 +4,12 @@ export default class ApiService {
     url = process.env.REACT_APP_API_URL;
     apiKey = process.env.REACT_APP_API_KEY;
 
+    getDebug() {
+        return (Axios.get(this.url + "/debug"));
+    }
+
     getLangs() {
-        return (Axios.get(this.url + "/search/lang", {
+        return (Axios.get(this.url + "/symbol/lang", {
             'headers': {
                 'Authorization': this.apiKey
             }
@@ -13,7 +17,7 @@ export default class ApiService {
     }
 
     getLibs(lang) {
-        return (Axios.get(this.url + "/search/lang/" + lang, {
+        return (Axios.get(this.url + "/symbol/lib/" + lang, {
             'headers': {
                 'Authorization': this.apiKey
             }
