@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ApiService from '../../ApiService';
 
 
-export default class TestEZ extends Component {
+export default class Subscribe extends Component {
     api = new ApiService();
 
     submitFormHandler = event => {
