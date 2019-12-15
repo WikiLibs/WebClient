@@ -1,99 +1,101 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
 
 import './index.css';
 
-import back from './imgs/back.png'
+import back from './imgs/back.jpg'
+import fullLogo from './imgs/WikiLibs_Logo.png'
 import at from './imgs/at.png'
 import people from './imgs/people.png'
 import tools from './imgs/tools.png'
 import mouse from './imgs/mouse.png'
 import search from './imgs/search.png'
 import think from './imgs/think.png'
+import footer from './imgs/WikiLibs_Logo_Footer.png'
 
-export default class Welcome extends Component {
+class Welcome extends Component {
     render() {
         return (
             <div>
-                <div className="fullsizeScreen">
-                    <div>
-                        <span className="title_welcome fontBold">
-                            WikiLibs: our passion, for your time
-                        </span>
-                        <span className="subtitle_welcome fontRegular">
-                            Coding libraries will never be a problem again
-                        </span>
-                        <div className="welcome_container">
-                            <a href="/subscribe"><button type="button" className="btn btn-primary btn-lg button_welcome fontRegular">Join the community !</button></a>
+                <div id="Head">
+                    <div id="Title" className="title">
+                        <img src={back} className="back_img overlay" alt=""></img>
+                        <div id="headline">
+                            <img src={fullLogo}  className="logo_title" alt=""></img>
+                            <div id="description">
+                                <span className="big_title">WikiLibs,</span><br/>
+                                <span className="big_title italic">Our passion, for your time</span><br/><br/>
+                                <span className="small_title italic">Coding libraries won't be a problem anymore.</span><br/>
+                                <span className="small_title italic">Start saving time now</span><br/>
+                            </div>
                         </div>
-                        <img className="resize" src={back} alt="" />
                     </div>
                 </div>
-                <div className="welcome_border"></div>
-                <div className="fullsizeScreen padding_welcome">
-                    <div className="padding_middle">
-                        <span className="title_middle fontBold">
-                            What is WikiLibs ?
-                    </span>
+                <div id="Body">
+                    <div className="home_card">
+                        <span className="card_title">What is WikiLibs ?</span>
+                        <div className="tiles_container">
+                            <div className="tile">
+                                <img src={at} className="logo_tile" alt=""></img>
+                                <span className="description_tile">
+                                    WikiLibs regroups the documentation of coding libraries, with a unified presentation
+                                </span>
+                            </div>
+                            <div className="tile">
+                                <img src={people} className="logo_tile" alt=""></img>
+                                <span className="description_tile">
+                                    You can see and add custom example to any symbol, for quicker undestanding
+                                </span>
+                            </div>
+                            <div className="tile">
+                                <img src={tools} className="logo_tile" alt=""></img>
+                                <span className="description_tile">
+                                    You can also access ressources like tutorials or installation guides
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <Row className="text_middle padding_middle_row">
-                        <Col className="text-center black" xs="4">
-                            <img className="padding_images_welcome_middle" src={at} alt="" />
-                            <p className="clearMargin">WikiLibs regroups the documentation</p>
-                            <p className="clearMargin">of multiples libraries from</p>
-                            <p className="clearMargin">different languages.</p>
-                        </Col>
-                        <Col className="text-center black" xs="4">
-                            <img className="padding_images_welcome_middle" src={people} alt="" />
-                            <p className="clearMargin">Your contribution is also important !</p>
-                            <p className="clearMargin">You can add your own example for</p>
-                            <p className="clearMargin">each function, to help other people.</p>
-                        </Col>
-                        <Col className="text-center black" xs="4">
-                            <img className="padding_images_welcome_middle" src={tools} alt="" />
-                            <p className="clearMargin">Wikilibs also gives you access to</p>
-                            <p className="clearMargin">resources like download links</p>
-                            <p className="clearMargin">and tutorial</p>
-                        </Col>
-                    </Row>
-                </div>
-                <div className="fullsizeScreen padding_welcome">
-                    <div className="padding_middle">
-                        <span className="title_middle1 fontBold">
-                            How to use it ?
-                        </span>
+                    <div className="home_card gray_card">
+                        <span className="card_title">How to use ?</span>
+                        <div className="tiles_container">
+                            <div className="tile">
+                                <img src={mouse} className="logo_tile" alt=""></img>
+                                <span className="description_tile">
+                                    Look for a library by clicking on the top-left drawer
+                                </span>
+                            </div>
+                            <div className="tile">
+                                <img src={search} className="logo_tile" alt=""></img>
+                                <span className="description_tile">
+                                    Or just search directly for a library or symbol using the search bar
+                                </span>
+                            </div>
+                            <div className="tile">
+                                <img src={think} className="logo_tile" alt=""></img>
+                                <span className="description_tile">
+                                    You can also add your own examples on a symbol page !
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <Row className="text_middle padding_middle_row">
-                        <Col className="text-center black" xs="4">
-                            <img className="padding_images_welcome_middle" src={mouse} alt="" />
-                            <p className="clearMargin">Click on the top left button to</p>
-                            <p className="clearMargin">to make the drawer appear, and choose</p>
-                            <p className="clearMargin">a library (either the most used ones,</p>
-                            <p className="clearMargin">or from the list.</p>
-                        </Col>
-                        <Col className="text-center black" xs="4">
-                            <img className="padding_images_welcome_middle" src={search} alt="" />
-                            <p className="clearMargin">Or you can directly search for your</p>
-                            <p className="clearMargin">desired library in the search bar</p>
-                            <p className="clearMargin">(located in the top side of the site)</p>
-                        </Col>
-                        <Col className="text-center black" xs="4">
-                            <img className="padding_images_welcome_middle" src={think} alt="" />
-                            <p className="clearMargin">If you are connected, you can add your</p>
-                            <p className="clearMargin">example on a function page. If it's</p>
-                            <p className="clearMargin">approuved by the moderator, it will be visible</p>
-                            <p className="clearMargin">to the other users !</p>
-                        </Col>
-                    </Row>
+
                 </div>
-                <div className="contact_border"></div>
-                <div className="fontRegular front text-center">
-                    <a href="/" className="buttonContact">CONTACT</a>
-                    <a href="/" className="buttonContact">HELP AND FAQ</a>
-                    <a href="/" className="buttonContact">TERM OF USE</a>
-                    <a href="/" className="buttonContact">PRIVACY POLICY</a>
+                <div id="Footer">
+                    <div className="footer_container">
+                        <div className="copyright">
+                            <img className="logo_footer" src={footer} alt=""></img>
+                            <span className="copyright_txt">WikiLibs &copy; 2019</span>
+                        </div>
+                        <div className="useful">
+                            <a href="#CONTACT">CONTACT</a>
+                            <a href="#HELP">HELP AND FAQ</a>
+                            <a href="#TERMSOFUSE">TERMS OF USE</a>
+                            <a href="#PRIVACY">PRIVACY POLICY</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     }
 }
+
+export default Welcome;

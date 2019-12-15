@@ -12,7 +12,7 @@ export default class SideBar extends Component {
             var str = this.state[lang][lib].path;
             lib = str.split('/')[2];
             vals.push(<li key={str}>
-                <a href={"/search/" + lang + "/" + lib}>{lib}</a>
+                <a href={"/search/" + str}>{lib}</a>
             </li>);
         }
         return (vals);
