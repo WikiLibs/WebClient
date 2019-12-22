@@ -1,0 +1,160 @@
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('../../../Components/Header/font/OpenSans-Bold.ttf');
+}
+@font-face {
+    font-family: 'OpenSans-Regular';
+    src: url('../../../Components/Header/font/OpenSans-Regular.ttf');
+}
+
+.content_symbol_page {
+    margin-left: 443px;
+    margin-right: 442px;
+    margin-top: 96px;
+    margin-bottom: -39px;
+}
+
+.title_format {
+    display: flex;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.icon_lib {
+    border: 1px #eee solid;
+    width: 40px;
+    height: 44px;
+}
+
+.title_symbol {
+    font-size: 26px;
+    line-height: 40px;
+    margin-left: 16px;
+    font-family: OpenSans-Bold;
+    color: #4C3DA8;
+}
+
+.sub_title {
+    display: grid;
+    margin-left: 55px;
+    font-size: 14px;
+    font-family: OpenSans-Regular;
+    font-style: italic;
+    color: #3E3E3E;
+}
+
+.component_symbol {
+    margin-top: 64px;
+}
+
+.component_title {
+    line-height: 40px;
+    font-family: OpenSans-Bold;
+    color: #4C3DA8;
+}
+
+.component_content {
+    margin-left: 29px;
+    margin-top: 32px;
+}
+
+.code_background {
+    font-size: 15px;
+    font-family: OpenSans-Regular;
+    line-height: 14px;
+    background: #EBEBEB;
+    height: 80px;
+    padding-left: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.description {
+    font-size: 15px;
+    font-family: OpenSans-Regular;
+    color: #3E3E3E;
+}
+
+.parameter_component {
+    margin-bottom: 32px;
+}
+
+.parameter_name {
+    font-size: 15px;
+    font-family: OpenSans-Regular;
+    color: #4C3DA8;
+}
+
+.parameter_description {
+    font-size: 15px;
+    font-family: OpenSans-Regular;
+    color: #3E3E3E;
+    margin-top: 16px;
+    margin-left: 32px;
+}
+
+.symbol_separator {
+    margin: 64px;
+    background: #868686;
+}
+
+.example_description {
+    font-size: 15px;
+    font-family: OpenSans-Regular;
+    color: #202020;
+}
+
+.code_example_background {
+    font-size: 15px;
+    font-family: OpenSans-Regular;
+    line-height: 14px;
+    background: #EBEBEB;
+    padding-left: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    margin-top: 32px;
+}
+
+.run_code {
+
+    display: none;
+}
+
+.footer_container {
+    color: white;
+    background-color: #7B68EE;
+    margin-top: 96px;
+    display: flex;
+    padding-left: 12%;
+    padding-right: 12%;
+    justify-content: space-between;
+    height: 96px;
+}
+
+
+.copyright {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-family: OpenSans-Bold;
+    vertical-align: middle;
+}
+
+.logo_footer {
+    width: 40px;
+}
+
+.copyright_txt {
+    padding-left: 32px;
+}
+
+.useful {
+    margin-top: auto;
+    margin-bottom: auto;
+    vertical-align: middle;
+}
+
+.useful > a {
+    font-family: OpenSans-Regular;
+    color: white;
+    padding-left: 16px;
+}
