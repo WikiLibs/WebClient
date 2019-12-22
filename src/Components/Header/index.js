@@ -28,7 +28,7 @@ export default class Header extends Component {
                         </Navbar.Brand>
                         <div className="inner-addon right-addon" style={{ width: '50%', position: 'relative', alignSelf: 'auto' }}>
                             <i className="fas fa-search glyphicon"></i>
-                            <input type="search" className="form-control fontRegular" placeholder="Search" style={{ borderRadius: '100px !important', outline: 'none' }} />
+                            <input type="search" className="form-control fontRegular" placeholder="Search" style={{ borderRadius: '100px !important', outline: 'none' }} >{this.autoSuggestion}</input>
                         </div>
                         <Nav className="navbar-nav navbar-right">
                             <li>

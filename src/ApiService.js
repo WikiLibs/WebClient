@@ -48,9 +48,17 @@ export default class ApiService {
         }));
     }
 
+    getSymbol() {
+        return (Axios.get(this.url + "/symbol", {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
     searchSymbols(str, page) {
-        // let query = "?page=" + page;
-        return (Axios.get(this.url + "/symbol/search/" + str, {
+        let query = "?page=" + page;
+        return (Axios.get(this.url + "/symbol/search/" + str + query, {
             'headers': {
                 'Authorization': this.apiKey
             }
