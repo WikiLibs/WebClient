@@ -6,10 +6,10 @@ import createBrowserHistory from "history/createBrowserHistory";
 import Layout from "./Components/Layout"
 
 /* PAGES */
-import Welcome from './Pages/Welcome'
-import Symbol from './Pages/Symbol'
+import WelcomePage from './Pages/WelcomePage'
+import SymbolPage from './Pages/SymbolPage'
 import Search from './Pages/Search'
-import NotFound from './Pages/NotFound'
+import NotFound from './Pages/NotFoundPage'
 import Subscribe from './Pages/Subscribe';
 /* END */
 
@@ -20,8 +20,8 @@ export default function App()
     return (
         <Router history={history}>
             <Switch>
-                <Layout exact path='/' component={Welcome} />
-                <Layout exact path='/symbol/:sympath+' component={Symbol} />
+                <Layout exact path='/' component={WelcomePage} />
+                <Layout exact path='/symbol/:sympath+' component={SymbolPage} />
                 <Layout exact path='/search/:path+' component={Search} />
                 <Layout exact path='/subscribe' component={Subscribe} />
 

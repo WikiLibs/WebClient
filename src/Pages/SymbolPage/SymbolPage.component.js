@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Row, Col, Container, Card } from 'react-bootstrap';
 import ApiService from '../../ApiService';
 
-import './color.css';
+import './style.css';
 
-export default class Symbol extends Component {
+export default class SymbolPage extends Component {
     api = new ApiService();
 
     constructor(props) {
@@ -20,7 +20,15 @@ export default class Symbol extends Component {
         };
     }
 
-    getName() {
+    componentDidMount = () => {
+        let sym = this.props.match.params.sympath;
+        if (isNaN(sym))
+            this.api.getSymbolByPath(sym).then(response => { this.setState(response.data); });
+        else
+            this.api.getSymbolById(sym).then(response => { this.setState(response.data); });
+    }
+
+    getName = () => {
         var str = this.state.path;
         if (str == null)
             return (null);
@@ -30,7 +38,7 @@ export default class Symbol extends Component {
         return (arr[arr.length - 1] + " (" + this.state.type + ")");
     }
 
-    renderParameters(proto) {
+    renderParameters = (proto) => {
         var vals = []
 
         for (var v in proto.parameters) {
@@ -45,7 +53,7 @@ export default class Symbol extends Component {
         return (vals);
     }
 
-    renderPrototypes() {
+    renderPrototypes = () => {
         var vals = []
         for (var v in this.state.prototypes) {
             var proto = this.state.prototypes[v]
@@ -86,7 +94,7 @@ export default class Symbol extends Component {
         return (vals);
     }
 
-    renderSymListInner() {
+    renderSymListInner = () => {
         var vals = []
         for (var v in this.state.symbols) {
             vals.push(
@@ -104,23 +112,25 @@ export default class Symbol extends Component {
         return (vals);
     }
 
-    renderSymList() {
+    renderSymList = () => {
         return (
             <Container>
                 <h2 className='header2'>Members</h2>
                 {this.renderSymListInner()}
             </Container>
-        );
+        )
     }
 
-    renderPrototypesOrSyms() {
-            return (<>
+    renderPrototypesOrSyms = () => {
+        return (
+            <div>
                 {this.renderPrototypes()}
                 {this.state.symbols.length > 0 && this.renderSymList()}
-            </>);
+            </div>
+        )
     }
 
-    render() {
+    render = () => {
         return (
             <div>
                 <Container>
@@ -129,14 +139,6 @@ export default class Symbol extends Component {
                 </Container>
                 {this.renderPrototypesOrSyms()}
             </div>
-        );
-    }
-
-    componentDidMount() {
-        let sym = this.props.match.params.sympath;
-        if (isNaN(sym))
-            this.api.getSymbolByPath(sym).then(response => { this.setState(response.data); });
-        else
-            this.api.getSymbolById(sym).then(response => { this.setState(response.data); });
+        )
     }
 }
