@@ -1,18 +1,18 @@
 .header1 {
     color: #8560A8;
-    font-family: OpenSansRegular;
+    font-family: 'Open Sans';
     font-size: 270%;
     margin-bottom: 0.3%;
 }
 
 .header2 {
     color: #8560A8;
-    font-family: OpenSansRegular;
+    font-family: 'Open Sans';
     font-size: 180%;
 }
 
 .p-font {
-    font-family: OpenSansRegular;
+    font-family: 'Open Sans';
     font-size: 100%;
     padding-bottom: 2%;
 }
