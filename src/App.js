@@ -9,7 +9,6 @@ import Layout from "./Components/Layout"
 import WelcomePage from './Pages/WelcomePage'
 import SymbolPage from './Pages/SymbolPage'
 import Search from './Pages/Search'
-import NotFound from './Pages/NotFound'
 import UserCreation from './Pages/UserCreation'
 import UserConnection from './Pages/UserConnection';
 import Profile from './Pages/Profile';
