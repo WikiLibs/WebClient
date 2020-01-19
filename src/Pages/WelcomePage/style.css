@@ -1,12 +1,3 @@
-@font-face {
-    font-family: 'OpenSans-Bold';
-    src: url('../../Components/Header/font/OpenSans-Bold.ttf');
-}
-@font-face {
-    font-family: 'OpenSans-Regular';
-    src: url('../../Components/Header/font/OpenSans-Regular.ttf');
-}
-
 .back_img {
     width: 100%;
 }
@@ -44,13 +35,14 @@
 }
 
 #description .big_title {
-    font-family: OpenSans-Bold;
+    font-family: 'Open Sans';
+    font-weight: bold;
     font-size: 36px;
     line-height: 44px;
 }
 
 #description .small_title {
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     font-size: 26px;
 }
 
@@ -69,7 +61,8 @@
 }
 
 .card_title {
-    font-family: OpenSans-Bold;
+    font-family: 'Open Sans';
+    font-weight: bold;
     font-size: 36px;
 }
 
@@ -93,7 +86,7 @@
 }
 
 .description_tile {
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     line-height: 15px;
     margin: 0 auto;
     text-align: center;
@@ -113,7 +106,8 @@
 .copyright {
     margin-top: auto;
     margin-bottom: auto;
-    font-family: OpenSans-Bold;
+    font-family: 'Open Sans';
+    font-weight: bold;
     vertical-align: middle;
 }
 
@@ -133,7 +127,7 @@
 }
 
 .useful > a {
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     color: white;
     padding-left: 16px;
 }
