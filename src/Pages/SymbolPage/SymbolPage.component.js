@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Card } from 'react-bootstrap';
 import ApiService from '../../ApiService';
 
 import './style.css';
@@ -30,114 +29,147 @@ export default class SymbolPage extends Component {
 
     getName = () => {
         var str = this.state.path;
-        if (str == null)
+        if (!str)
             return (null);
         var arr = str.split('/');
         if (arr.length <= 0)
             return (null);
-        return (arr[arr.length - 1] + " (" + this.state.type + ")");
+        return (arr[arr.length - 1]);
     }
 
-    renderParameters = (proto) => {
-        var vals = []
-
-        for (var v in proto.parameters) {
-            var param = proto.parameters[v];
-            vals.push(
-                <Row key={v}>
-                    <Col xs="2" className="black"><span className='front'>{param.prototype}</span></Col>
-                    <Col xs="6" className="black">{param.description}</Col>
-                </Row>
-            );
+    searchStringInParameters = (string, array) => {
+        for (let i = 0; i < array.parameters.length; i++) {
+            if (array.parameters[i].prototype === string)
+                return true
         }
-        return (vals);
+        return false
     }
 
-    renderPrototypes = () => {
-        var vals = []
-        for (var v in this.state.prototypes) {
-            var proto = this.state.prototypes[v]
-            vals.push(
-                <div key={v}>
-                    <Container>
-                        <h2 className='header2'>Prototype</h2>
-                        <div className='paddingWell'>
-                            <Card className="card-inverse paddingCard cardbackgroundcolor">
-                                <Card.Body>
-                                    <Card.Text className="black p-font">{proto.prototype}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    </Container>
-                    <Container>
-                        <h2 className='header2'>Description</h2>
-                        <div className='paddingWell'>
-                            <Card className="borderless">
-                                <Card.Text className='black'>{proto.description}</Card.Text>
-                            </Card>
-                        </div>
-                    </Container>
-                    {
-                        proto.parameters.length > 0 &&
-                        <Container>
-                            <h2 className='header2'>Parameters</h2>
-                            <div className='paddingWell'>
-                                <Card className="borderless">
-                                    {this.renderParameters(proto)}
-                                </Card>
-                            </div>
-                        </Container>
-                    }
-                </div>
-            )
-        }
-        return (vals);
-    }
-
-    renderSymListInner = () => {
-        var vals = []
-        for (var v in this.state.symbols) {
-            vals.push(
-                <div key={v} className='paddingWell'>
-                    <Card className="card-inverse paddingCard" style={{ backgroundColor: 'lightgray', borderColor: 'lightgrey' }}>
-                        <Card.Body>
-                            <Card.Text className="black">
-                                <a href={"/symbol/" + this.state.symbols[v].id}><span className='func'>{this.state.symbols[v].path}</span></a>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </div>
-            );
-        }
-        return (vals);
-    }
-
-    renderSymList = () => {
+    renderTitle = () => {
         return (
-            <Container>
-                <h2 className='header2'>Members</h2>
-                {this.renderSymListInner()}
-            </Container>
+            <div className='symbol-page-section-container'>
+                <div className='symbol-page-title'>
+                    {this.getName()}
+                </div>
+                <div className='symbol-page-infos-path'>
+                    {this.state.path}
+                </div>
+            </div>
         )
     }
 
-    renderPrototypesOrSyms = () => {
+    renderPrototype = (prototype) => {
         return (
-            <div>
-                {this.renderPrototypes()}
-                {this.state.symbols.length > 0 && this.renderSymList()}
+            <div className='symbol-page-section-container'>
+                <div className='symbol-page-title'>
+                    Prototype
+                </div>
+                <div className='symbol-page-code-container'>
+                    {prototype.prototype}
+                </div>
+            </div>
+        )
+    }
+
+    renderDescription = (prototype) => {
+        if (!prototype.description)
+            return null
+        return (
+            <div className='symbol-page-section-container'>
+                <div className='symbol-page-title'>
+                    Description
+                </div>
+                <div className='symbol-page-description'>
+                    {prototype.description}
+                </div>
+            </div>
+        )
+    }
+
+    renderParameters = (prototype) => {
+        if (!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0)
+            return null
+        return (
+            <div className='symbol-page-section-container'>
+                <div className='symbol-page-title'>
+                    Parameters
+                </div>
+                <div className='symbol-page-parameters-container'>
+                    {prototype.parameters.map((parameter, index) =>
+                    <div>
+                        {parameter.prototype !== 'return'
+                            ? <div>
+                                <div className='symbol-page-parameter-name'>
+                                    {parameter.prototype}
+                                </div>
+                                <div className='symbol-page-parameter-description'>
+                                    {parameter.description}
+                                </div>
+                            </div>
+                            : null
+                        }
+                        {(index !== (prototype.parameters.length - 1) &&
+                            index !== 0 &&
+                            parameter.prototype !== 'return')
+                            ? <div className='symbol-page-separator'></div>
+                            : null
+                        }
+                    </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+
+    renderReturns = (prototype) => {
+        if (!this.searchStringInParameters('return', prototype))
+            return null
+        return (
+            <div className='symbol-page-section-container'>
+                <div className='symbol-page-title'>
+                    Return value(s)
+                </div>
+                <div className='symbol-page-parameters-container'>
+                    {prototype.parameters.map((parameter, index) =>
+                    <div>
+                        {parameter.prototype === 'return'
+                            ? <div>
+                                <div className='symbol-page-parameter-name'>
+                                    {parameter.prototype}
+                                </div>
+                                <div className='symbol-page-parameter-description'>
+                                    {parameter.description}
+                                </div>
+                            </div>
+                            : null
+                        }
+                        {(index !== (prototype.parameters.length - 1) &&
+                            index !== 0 &&
+                            parameter.prototype === 'return')
+                            ? <div className='symbol-page-separator'></div>
+                            : null
+                        }
+                    </div>
+                    )}
+                </div>
             </div>
         )
     }
 
     render = () => {
         return (
-            <div>
-                <Container>
-                    <h1 className='header1'>{this.getName()}</h1>
-                    <p className='minor'>({this.state.path})</p>
-                </Container>
-                {this.renderPrototypesOrSyms()}
+            <div className='symbol-page-container'>
+                {this.renderTitle()}
+                <div>
+                    {this.state.prototypes.map((prototype) =>
+                        <div>
+                            {this.renderPrototype(prototype)}
+                            {this.renderDescription(prototype)}
+                            {this.renderParameters(prototype)}
+                            {this.renderReturns(prototype)}
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

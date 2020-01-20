@@ -69,12 +69,14 @@
 .tiles_container {
     padding: 64px;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     padding-bottom: 16px;
 }
 
 .tile {
-    flex: 1;
     padding: 32px;
+    width: 400px;
 }
 
 .logo_tile {
