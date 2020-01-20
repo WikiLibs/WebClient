@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 
 import './index.css'
 
@@ -123,8 +124,17 @@ class Header extends Component {
         single: '',
         popper: '',
         suggestions: [],
+        userConnect: false
     };
     
+    componentDidMount = () => {
+        if(localStorage.getItem('userToken') != null) {
+            this.setState({userConnect: true});
+        } else {
+            this.setState({userConnect: false});
+        }
+    }
+
     handleSuggestionsFetchRequested = ({ value }) => {
         this.setState({
           suggestions: getSuggestions(value),
@@ -145,6 +155,26 @@ class Header extends Component {
 
     handleSubbmit = ({ value }) => {
         console.log(value);
+    }
+
+    disconnect() {
+        localStorage.removeItem('userToken');
+        window.location.pathname = "/";
+    }
+
+    checkConnect() {
+        if(this.state.userConnect) {
+            return (<div>
+                <Link to='/profile'>My Profile</Link>
+                <button onClick={this.disconnect}>Disconnect</button>
+            </div>);
+        } else {
+            return (<div>
+                <Link to='/usercreation'>Create account</Link>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Link to='/userconnection'>Connect</Link>
+            </div>);
+        }
     }
 
     render() {
@@ -203,6 +233,9 @@ class Header extends Component {
                                 />
                             </div>
                         </div>
+                        <span>
+                            {this.checkConnect()}
+                        </span>
                         <Nav className="navbar-nav navbar-right">
                             <li>
                                 <div className="inset">
