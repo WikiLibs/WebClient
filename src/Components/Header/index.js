@@ -126,14 +126,6 @@ class Header extends Component {
         suggestions: [],
         userConnect: false
     };
-    
-    componentDidMount = () => {
-        if(localStorage.getItem('userToken') != null) {
-            this.setState({userConnect: true});
-        } else {
-            this.setState({userConnect: false});
-        }
-    }
 
     handleSuggestionsFetchRequested = ({ value }) => {
         this.setState({
@@ -255,10 +247,16 @@ class Header extends Component {
             for (var name in libs.data.data) {
                 suggestions.push(libs.data.data[name].path)
             }
+            console.log("segment", suggestions)
         }
     }
 
     componentDidMount() {
+        if(localStorage.getItem('userToken') != null) {
+            this.setState({userConnect: true});
+        } else {
+            this.setState({userConnect: false});
+        }
         this.api.getLangs().then(langs => this.onLangsReceived(langs));
     }
 }
