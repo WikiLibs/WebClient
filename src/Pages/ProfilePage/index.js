@@ -21,7 +21,7 @@ const formValid = ({ formErrors, ...rest }) => {
     return valid;
 };
 
-export default class Profile extends Component {
+export default class ProfilePage extends Component {
     api = new ApiService();
 
     constructor(props) {
@@ -31,11 +31,12 @@ export default class Profile extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            private: '',
+            private: true,
             profileMsg: '',
             pseudo: '',
             password: '',
             newPassword: '',
+            Msg: '',
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -47,7 +48,9 @@ export default class Profile extends Component {
                 newPassword: ""
             }
         };
+    }
 
+    componentDidMount = () => {
         this.api.getMe().then((Response) => {
             console.log(Response.data);
 
@@ -68,8 +71,19 @@ export default class Profile extends Component {
                 profilMsg: ${this.state.profileMsg}
                 Pseudo: ${this.state.pseudo}
                 Password: ${this.state.password}
-            `);
-            this.api.patchMe(this.state);
+                newPassword: ${this.state.newPassword}
+            `)
+            if (this.state.password) {
+                this.api.patchMe(this.state)
+                .then((Response) => {
+                    console.log(Response);
+                    this.setState({Msg: "success"});
+                })
+                .catch( error => {
+                    this.setState({Msg: "error"});
+                    console.log(error.response);
+                });
+            }
         } else {
             console.error("FORM INVALID");
         }
@@ -107,12 +121,20 @@ export default class Profile extends Component {
         this.setState({ formErrors, [name]: value });
     };
 
+    setPrivate(nb) {
+        if (nb === 0) {
+            this.setState({private: true});
+        } else {
+            this.setState({private: false});
+        }
+    }
+
     render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit} noValidate>
                     <label>
-                        First Name *
+                        First Name
                         <br/>
                         <input
                             type="text"
@@ -124,7 +146,7 @@ export default class Profile extends Component {
                     </label>
                     <br/>
                     <label>
-                        Last Name *
+                        Last Name
                         <br/>
                         <input
                             type="text"
@@ -136,7 +158,7 @@ export default class Profile extends Component {
                     </label>
                     <br/>
                     <label>
-                        Email *
+                        Email
                         <br/>
                         <input
                             type="email"
@@ -156,8 +178,16 @@ export default class Profile extends Component {
                             className=""
                             noValidate
                         >
-                            <option value="yes" defaultValue>Yes</option>
-                            <option value="no">No</option>  
+                            {
+                                this.state.private === "true" ?
+                                <option onClick={() => this.setPrivate(0)}>Yes</option> :
+                                <option onClick={() => this.setPrivate(1)}>No</option>
+                            }
+                            {
+                                this.state.private === "true" ?
+                                <option onClick={() => this.setPrivate(1)}>No</option> :
+                                <option onClick={() => this.setPrivate(0)}>Yes</option>
+                            }
                         </select>
                     </label>
                     <br/>
@@ -175,7 +205,7 @@ export default class Profile extends Component {
                     </label>
                     <br/>
                     <label>
-                        Pseudo *
+                        Pseudo
                         <br/>
                         <input
                             type="text"
@@ -188,18 +218,7 @@ export default class Profile extends Component {
                     </label>
                     <br/>
                     <label>
-                        Password
-                        <br/>
-                        <input
-                            type="password"
-                            className=""
-                            name="password"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <label>
-                        New Password
+                        Password *
                         <br/>
                         <input
                             type="password"
@@ -210,6 +229,20 @@ export default class Profile extends Component {
                         />
                     </label>
                     <br/>
+                    <label>
+                        New Password
+                        <br/>
+                        <input
+                            type="password"
+                            className=""
+                            name="newPassword"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                    </label>
+                    <br/>
+                    {this.state.Msg === "error" ? <p>Error during the process</p> : 
+                        (this.state.Msg === "success" ? <p>Your account is successfully updated !</p> : '')}
                     <input type="submit" value="Modify Profile" />
                 </form>
             </div>

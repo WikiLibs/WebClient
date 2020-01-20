@@ -11,7 +11,7 @@ import SymbolPage from './Pages/SymbolPage'
 import Search from './Pages/Search'
 import UserCreation from './Pages/UserCreation'
 import UserConnection from './Pages/UserConnection';
-import Profile from './Pages/Profile';
+import ProfilePage from './Pages/ProfilePage';
 import NotFound from './Pages/NotFoundPage'
 
 /* END */
@@ -28,7 +28,7 @@ export default function App()
                 <Layout exact path='/search/:path+' component={Search} />
                 <Layout exact path='/usercreation' component={UserCreation} />
                 <Layout exact path='/userconnection' component={UserConnection} />
-                <Layout exact path='/profile' component={Profile} />
+                <Layout exact path='/profile' component={ProfilePage} />
 
                 <Layout component={NotFound} />
             </Switch>

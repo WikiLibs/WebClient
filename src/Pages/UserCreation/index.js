@@ -31,10 +31,11 @@ export default class UserCreation extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            private: '',
+            private: true,
             profilMsg: '',
             pseudo: '',
             password: '',
+            Msg: '',
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -42,7 +43,7 @@ export default class UserCreation extends Component {
                 private: "",
                 profilMsg: "",
                 pseudo: "",
-                password: ""
+                password: "",
             }
         };
     }
@@ -61,9 +62,18 @@ export default class UserCreation extends Component {
                 Pseudo: ${this.state.pseudo}
                 Password: ${this.state.password}
             `);
-            this.api.createUser(this.state);
+            this.api.createUser(this.state)
+                .then((Response) => {
+                    console.log(Response);
+                    this.setState({Msg: "success"});
+                })
+                .catch( (error) => {
+                    this.setState({Msg: "error"});
+                    console.log(error);
+                })
         } else {
             console.error("FORM INVALID");
+            this.setState({Msg: "error"});
         }
     };
 
@@ -98,6 +108,14 @@ export default class UserCreation extends Component {
 
         this.setState({ formErrors, [name]: value });
     };
+
+    setPrivate(nb) {
+        if (nb === 0) {
+            this.setState({private: true});
+        } else {
+            this.setState({private: false});
+        }
+    }
 
     render() {
         return (
@@ -148,8 +166,8 @@ export default class UserCreation extends Component {
                             className=""
                             noValidate
                         >
-                            <option value="yes" defaultValue>Yes</option>
-                            <option value="no">No</option>  
+                            <option onClick={() => this.setPrivate(0)}>Yes</option>
+                            <option onClick={() => this.setPrivate(1)}>No</option>
                         </select>
                     </label>
                     <br/>
@@ -189,6 +207,8 @@ export default class UserCreation extends Component {
                         />
                     </label>
                     <br/>
+                    {this.state.Msg === "error" ? <p>Error ! Verify your information and if you don't have already an account</p> : 
+                        (this.state.Msg === "success" ? <p>Your account is successfully created !</p> : '')}
                     <input type="submit" value="Create" />
                 </form>
             </div>
