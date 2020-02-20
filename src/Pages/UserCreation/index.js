@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import ApiService from '../../ApiService';
 
 import './index.css';
+import footer from '../WelcomePage/imgs/WikiLibs_Logo_Footer.png'
 
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -23,6 +28,7 @@ const formValid = ({ formErrors, ...rest }) => {
 
 export default class UserCreation extends Component {
     api = new ApiService();
+    
 
     constructor(props) {
         super(props);
@@ -31,7 +37,7 @@ export default class UserCreation extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            private: true,
+            private: false,
             profilMsg: '',
             pseudo: '',
             password: '',
@@ -94,13 +100,16 @@ export default class UserCreation extends Component {
             case "email":
                 formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
                 break;
-            case "Pseudo":
+            case "pseudo":
                 formErrors.pseudo = 
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
-            case "Password":
+            case "password":
                 formErrors.password =
                     value.length < 6 ? "Minimum 6 characters required" : "";
+                break;
+            case "private":
+                this.state.private = this.state.private ? false : true;
                 break;
             default:
                 break;
@@ -120,6 +129,7 @@ export default class UserCreation extends Component {
     render() {
         return (
             <div>
+            {/* <div>
                 <form onSubmit={this.handleSubmit} noValidate>
                     <label>
                         First Name *
@@ -211,6 +221,122 @@ export default class UserCreation extends Component {
                         (this.state.Msg === "success" ? <p>Your account is successfully created !</p> : '')}
                     <input type="submit" value="Create" />
                 </form>
+            </div> */}
+            <div>
+                <div id="Body">
+                    <div className="content_account">
+                        <span>Create Account</span>
+                        <div className="margin_in_form">
+                            <form onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
+                                <TextField
+                                    label="Firstname *"
+                                    placeholder="John"
+                                    id="outlined-start-adornment"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    name="firstName"
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    className="text_field"
+                                />
+                                <TextField
+                                    label="Lastname *"
+                                    placeholder="Doe"
+                                    id="outlined-start-adornment"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    name="lastName"
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    className="text_field"
+                                />
+                                <TextField
+                                    label="Email *"
+                                    placeholder="email"
+                                    id="outlined-start-adornment"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    name="email"
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    type="email"
+                                    className="text_field"
+                                />
+                                <FormControlLabel
+                                    className="control_label"
+                                    value="true"
+                                    control={<Checkbox color="primary" />}
+                                    label="Public account"
+                                    labelPlacement="end"
+                                    name="private"
+                                    onChange={this.handleChange}
+                                />
+                                <TextField
+                                    label="Profile message"
+                                    id="outlined-start-adornment"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    className="text_field"
+                                    placeholder="Put your message here"
+                                    margin="normal"
+                                    variant="outlined"
+                                    name="profilMsg"
+                                    onChange={this.handleChange}
+                                />
+                                <TextField
+                                    autoFocus
+                                    label="Pseudo *"
+                                    placeholder="Pseudo"
+                                    id="outlined-start-adornment"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
+                                    className="text_field"
+                                    name="pseudo"
+                                    onChange={this.handleChange}
+                                />
+                                <TextField
+                                    label="Password *"
+                                    placeholder="********"
+                                    id="outlined-start-adornment"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
+                                    type="password"
+                                    className="text_field"
+                                    name="password"
+                                    onChange={this.handleChange}
+                                />
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    className="submit_btn"
+                                >CREATE ACCOUNT</Button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="Footer">
+                    <div className="footer_container">
+                        <div className="copyright">
+                            <img className="logo_footer" src={footer} alt=""></img>
+                            <span className="copyright_txt">WikiLibs &copy; 2019</span>
+                        </div>
+                        <div className="useful">
+                            <a href="#CONTACT">CONTACT</a>
+                            <a href="#HELP">HELP AND FAQ</a>
+                            <a href="#TERMSOFUSE">TERMS OF USE</a>
+                            <a href="#PRIVACY">PRIVACY POLICY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         );
     }
