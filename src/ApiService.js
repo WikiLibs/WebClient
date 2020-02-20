@@ -65,6 +65,15 @@ export default class ApiService {
         }));
     }
 
+    searchSymbolsSpecific(str, number) {
+        let query = "?count=" + number;
+        return (Axios.get(this.url + "/symbol/search/" + str + query, {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
     createUser(state) {
         return (Axios.post(this.url + "/auth/internal/register", {
                 firstName: state.firstName,
