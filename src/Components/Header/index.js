@@ -70,12 +70,12 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
     const inputValue = deburr(value.trim()).toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
-  
+
     return inputLength === 0
       ? []
       : suggestions.filter(suggestion => {
-          const keep =
-            count < 5 && suggestion.slice(0, inputLength).toLowerCase() === inputValue;
+          const keep = 
+             count < 5 //&& suggestion.slice(0, inputLength).toLowerCase() === inputValue;
   
           if (keep) {
             count += 1;
@@ -86,7 +86,7 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
   }
   
   function getSuggestionValue(suggestion) {
-    return suggestion;
+     return suggestion;
   }
   
   const styles = theme => ({
@@ -127,7 +127,13 @@ class Header extends Component {
         userConnect: false
     };
 
-    handleSuggestionsFetchRequested = ({ value }) => {
+    handleSuggestionsFetchRequested = async ({ value }) => {
+        suggestions = [];
+        var funct = await this.api.searchSymbolsSpecific(value, 5);
+        for (var name in funct.data.data) {
+            suggestions.push(funct.data.data[name].path)
+        }
+
         this.setState({
           suggestions: getSuggestions(value),
         });
@@ -247,7 +253,6 @@ class Header extends Component {
             for (var name in libs.data.data) {
                 suggestions.push(libs.data.data[name].path)
             }
-            console.log("segment", suggestions)
         }
     }
 
@@ -257,6 +262,7 @@ class Header extends Component {
         } else {
             this.setState({userConnect: false});
         }
+        this.api.searchSymbolsSpecific("api", 3).then(langs => console.log(langs));
         this.api.getLangs().then(langs => this.onLangsReceived(langs));
     }
 }
