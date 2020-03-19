@@ -123,13 +123,13 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
 class Header extends Component {
     api = new ApiService();
 
-    constructor(props) {
-        super(props)
-        this.idleTimer = null
-        this.onAction = this._onAction.bind(this)
-        this.onActive = this._onActive.bind(this)
-        this.onIdle = this._onIdle.bind(this)
-      }
+    // constructor(props) {
+    //     super(props)
+    //     this.idleTimer = null
+    //     this.onAction = this._onAction.bind(this)
+    //     this.onActive = this._onActive.bind(this)
+    //     this.onIdle = this._onIdle.bind(this)
+    //   }
 
     state = {
         single: '',
@@ -140,8 +140,16 @@ class Header extends Component {
 
     /////////////////////////////
 
-    handleSuggestionsFetchRequested = ({ value }) => {
+    handleSuggestionsFetchRequested = async ({ value }) => {
         valueBar = value
+        // console.log("testestestetstets");
+        // setTimeout(function(){ 
+        //     console.log('hello');}, 2000)
+        var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
+            suggestions = [];
+            for (var name in funct.data.data) {
+                suggestions.push(funct.data.data[name].path)
+            }
         this.setState({
           suggestions: getSuggestions(value),
         });
@@ -169,8 +177,8 @@ class Header extends Component {
         if (e.type === "keydown" && e.target.className === "MuiInputBase-input MuiInput-input")
         {
             console.log('user did something', e)
-            suggestions = [];
             var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
+            suggestions = [];
             for (var name in funct.data.data) {
                 suggestions.push(funct.data.data[name].path)
             }

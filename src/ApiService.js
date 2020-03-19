@@ -17,7 +17,7 @@ export default class ApiService {
     }
 
     getLibsPath(lang) {
-        return (Axios.get(this.url + "/symbol/search/" + lang, {
+        return (Axios.get(this.url + "/symbol/search?Path=" + lang +"&PageOptions.Page=1", {
             'headers': {
                 'Authorization': this.apiKey
             }
@@ -66,8 +66,8 @@ export default class ApiService {
     }
 
     searchSymbolsSpecific(str, number) {
-        let query = "?count=" + number;
-        return (Axios.get(this.url + "/symbol/search/" + str + query, {
+        let query = "?Count=" + number;
+        return (Axios.get(this.url + "/symbol/search?Path=" + str + query + "&PageOptions.Page=1", {
             'headers': {
                 'Authorization': this.apiKey
             }
