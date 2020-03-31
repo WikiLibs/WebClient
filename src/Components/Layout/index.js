@@ -4,19 +4,20 @@ import { withRouter } from 'react-router';
 import ApiService from '../../ApiService';
 import Header from '../../Components/Header';
 import SideBar from '../../Components/SideBar';
+import jwt_decode from 'jwt-decode';
 
 class PageBody extends Component {
-    api = new ApiService()
+    api = new ApiService();
 
     constructor(props) {
-        super(props)
+        super(props);
         let flag = false;
         if (localStorage.getItem('userToken') != null)
             flag = true;
         this.state = {
             navBar: false,
             userConnected: flag
-        }
+        };
     }
 
     //TODO: automatic timer renew token
@@ -27,9 +28,17 @@ class PageBody extends Component {
 
     componentDidMount() {
         if (this.state.userConnected) {
-            this.api.getMe().then(async (data) => {
-                this.setState({ user: data.data });
+            this.api.getMe().then(response => {
+                this.setState({ user: response.data });
+            }).catch(() => {
+                localStorage.setItem('userToken', null);
+                this.setState({ user: null });
             });
+        }
+        let token = localStorage.getItem('userToken');
+        if (token) {
+            //let jwt = jwt_decode(token);
+
         }
     }
 

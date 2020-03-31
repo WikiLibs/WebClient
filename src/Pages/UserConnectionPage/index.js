@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import ApiService from '../../ApiService';
+import { checkForm } from '../../util';
 
 import './index.css';
 
@@ -10,20 +12,6 @@ import footer from './imgs/WikiLibs_Logo_Footer.png'
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
-
-const formValid = ({ formErrors, ...rest }) => {
-    let valid = true;
-
-    Object.values(formErrors).forEach(val => {
-        val.length > 0 && (valid = false);
-    });
-
-    Object.values(rest).forEach(val => {
-        val == null && (valid = false);
-    });
-
-    return valid;
-};
 
 export default class UserConnectionPage extends Component {
     api = new ApiService();
@@ -37,20 +25,22 @@ export default class UserConnectionPage extends Component {
             formErrors: {
                 email: "",
                 password: ""
-            }
+            },
+            apiError: null
         };
     }
 
     handleSubmit = e => {
         e.preventDefault();
 
-        if (formValid(this.state)) {
+        if (checkForm(this.state)) {
             console.log(`
                 --SUBMITTING--
                 Email: ${this.state.email}
                 Password: ${this.state.password}
             `);
-            this.api.connectUser(this.state);
+            //Handle errors similar to this
+            this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
         } else {
             console.error("FORM INVALID");
         }
@@ -63,11 +53,10 @@ export default class UserConnectionPage extends Component {
 
         switch (name) {
             case "email":
-                formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
+                formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
             case "Password":
-                formErrors.password =
-                    value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
                 break;
             default:
                 break;
@@ -83,11 +72,10 @@ export default class UserConnectionPage extends Component {
                     <div className="content_account">
                         <span>Sign in</span>
                         <div className="margin_in_form">
-                            <form onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
+                            <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
                                 <TextField
                                     label="Email"
                                     placeholder="email"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -100,7 +88,6 @@ export default class UserConnectionPage extends Component {
                                 <TextField
                                     label="Password"
                                     placeholder="********"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -121,6 +108,9 @@ export default class UserConnectionPage extends Component {
                                     <span>Don't have an account yet ? You can <a href="/Register">register</a> !</span>
                                 </div>
                             </form>
+                            {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
+                            {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
+                            {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
                         </div>
                     </div>
                 </div>

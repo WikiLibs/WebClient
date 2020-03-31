@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import Alert from '@material-ui/lab/Alert';
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import ApiService from '../../ApiService';
+import { checkForm } from '../../util';
 
 import './index.css';
 import footer from '../WelcomePage/imgs/WikiLibs_Logo_Footer.png'
@@ -11,20 +13,6 @@ import footer from '../WelcomePage/imgs/WikiLibs_Logo_Footer.png'
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
-
-const formValid = ({ formErrors, ...rest }) => {
-    let valid = true;
-
-    Object.values(formErrors).forEach(val => {
-        val.length > 0 && (valid = false);
-    });
-
-    Object.values(rest).forEach(val => {
-        val == null && (valid = false);
-    });
-
-    return valid;
-};
 
 export default class UserCreationPage extends Component {
     api = new ApiService();
@@ -40,7 +28,6 @@ export default class UserCreationPage extends Component {
             profilMsg: '',
             pseudo: '',
             password: '',
-            Msg: '',
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -49,14 +36,16 @@ export default class UserCreationPage extends Component {
                 profilMsg: "",
                 pseudo: "",
                 password: "",
-            }
+            },
+            apiError: null,
+            success: null
         };
     }
 
     handleSubmit = e => {
         e.preventDefault();
 
-        if (formValid(this.state)) {
+        if (checkForm(this.state)) {
             console.log(`
                 --SUBMITTING--
                 First name: ${this.state.firstName}
@@ -69,16 +58,13 @@ export default class UserCreationPage extends Component {
             `);
             this.api.createUser(this.state)
                 .then((Response) => {
-                    console.log(Response);
-                    this.setState({ Msg: "success" });
+                    this.setState({ success: "Successfully created account, please check your email." });
                 })
                 .catch((error) => {
-                    this.setState({ Msg: "error" });
-                    console.log(error);
+                    this.setState({ apiError: this.api.translateErrorMessage(error) });
                 })
         } else {
             console.error("FORM INVALID");
-            this.setState({ Msg: "error" });
         }
     };
 
@@ -90,25 +76,22 @@ export default class UserCreationPage extends Component {
         switch (name) {
             case "firstName":
                 formErrors.firstName =
-                    value.length <= 0 ? "minimum 1 character required" : "";
+                    value.length <= 0 ? "Minimum 1 character required" : "";
                 break;
             case "lastName":
                 formErrors.lastName =
-                    value.length <= 0 ? "minimum 1 character required" : "";
+                    value.length <= 0 ? "Minimum 1 character required" : "";
                 break;
             case "email":
-                formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
+                formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
             case "pseudo":
                 formErrors.pseudo =
-                    value.length <= 0 ? "minimum 1 character required" : "";
+                    value.length <= 0 ? "Minimum 1 character required" : "";
                 break;
             case "password":
                 formErrors.password =
                     value.length < 6 ? "Minimum 6 characters required" : "";
-                break;
-            case "private":
-                this.setState({ private: !this.state.private });
                 break;
             default:
                 break;
@@ -117,14 +100,6 @@ export default class UserCreationPage extends Component {
         this.setState({ formErrors, [name]: value });
     };
 
-    setPrivate(nb) {
-        if (nb === 0) {
-            this.setState({ private: true });
-        } else {
-            this.setState({ private: false });
-        }
-    }
-
     render() {
         return (
             <div>
@@ -132,11 +107,10 @@ export default class UserCreationPage extends Component {
                     <div className="content_account">
                         <span>Create Account</span>
                         <div className="margin_in_form">
-                            <form onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
+                            <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
                                 <TextField
                                     label="Firstname *"
                                     placeholder="John"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -148,7 +122,6 @@ export default class UserCreationPage extends Component {
                                 <TextField
                                     label="Lastname *"
                                     placeholder="Doe"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -160,7 +133,6 @@ export default class UserCreationPage extends Component {
                                 <TextField
                                     label="Email *"
                                     placeholder="email"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -173,15 +145,13 @@ export default class UserCreationPage extends Component {
                                 <FormControlLabel
                                     className="control_label"
                                     value="true"
-                                    control={<Checkbox color="primary" />}
+                                    control={<Checkbox onChange={() => this.setState({ private: !this.state.private })} checked={!this.state.private} color="primary" />}
                                     label="Public account"
                                     labelPlacement="end"
                                     name="private"
-                                    onChange={this.handleChange}
                                 />
                                 <TextField
                                     label="Profile message"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -196,7 +166,6 @@ export default class UserCreationPage extends Component {
                                     autoFocus
                                     label="Pseudo *"
                                     placeholder="Pseudo"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -208,7 +177,6 @@ export default class UserCreationPage extends Component {
                                 <TextField
                                     label="Password *"
                                     placeholder="********"
-                                    id="outlined-start-adornment"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -224,6 +192,13 @@ export default class UserCreationPage extends Component {
                                     className="submit_btn"
                                 >CREATE ACCOUNT</Button>
                             </form>
+                            {this.state.success && <Alert severity="success">{this.state.success}</Alert>}
+                            {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
+                            {this.state.formErrors.firstName && <Alert severity="warning">{this.state.formErrors.firstName}</Alert>}
+                            {this.state.formErrors.lastName && <Alert severity="warning">{this.state.formErrors.lastName}</Alert>}
+                            {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
+                            {this.state.formErrors.pseudo && <Alert severity="warning">{this.state.formErrors.pseudo}</Alert>}
+                            {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
                         </div>
                     </div>
                 </div>
