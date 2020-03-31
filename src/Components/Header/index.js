@@ -133,8 +133,7 @@ class Header extends Component {
     state = {
         single: '',
         popper: '',
-        suggestions: [],
-        userConnect: false
+        suggestions: []
     };
 
     handleSuggestionsFetchRequested = async ({ value }) => {
@@ -178,22 +177,17 @@ class Header extends Component {
         console.log('last active', this.idleTimer.getLastActiveTime())
     }
 
-    disconnect() {
-        localStorage.removeItem('userToken');
-        window.location.pathname = "/";
-    }
-
     checkConnect() {
-        if (this.state.userConnect) {
+        if (this.props.user) {
             return (<div>
-                <Link to='/profile'>My Profile</Link>
-                <button onClick={this.disconnect}>Disconnect</button>
+                <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>
+                <Link style={{ color: "white", padding: "24px" }} to='/admin'>Administration</Link>
+                <Link style={{ color: "white", padding: "24px" }} onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
             </div>);
         } else {
             return (<div>
-                <Link to='/usercreation'>Create account</Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to='/userconnection'>Connect</Link>
+                <Link style={{ color: "white", padding: "24px" }} to='/usercreation'>Create account</Link>
+                <Link style={{ color: "white", padding: "24px" }} to='/userconnection'>Connect</Link>
             </div>);
         }
     }
@@ -285,15 +279,6 @@ class Header extends Component {
                 suggestions.push(libs.data.data[name].path)
             }
         }
-    }
-
-    componentDidMount() {
-        if (localStorage.getItem('userToken') != null) {
-            this.setState({ userConnect: true });
-        } else {
-            this.setState({ userConnect: false });
-        }
-        this.api.getLangs().then(langs => this.onLangsReceived(langs));
     }
 }
 

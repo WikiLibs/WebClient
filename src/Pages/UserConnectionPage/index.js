@@ -79,35 +79,6 @@ export default class UserConnectionPage extends Component {
     render() {
         return (
             <div>
-            {/* <div>
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <label>
-                        Email
-                        <br/>
-                        <input
-                            type="email"
-                            className=""
-                            name="email"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Password
-                        <br/>
-                        <input
-                            type="password"
-                            className=""
-                            name="password"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <input type="submit" value="Connect" />
-                </form>
-            </div> */}
                 <div id="Body">
                     <div className="content_account">
                         <span>Sign in</span>

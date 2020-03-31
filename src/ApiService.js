@@ -16,6 +16,11 @@ export default class ApiService {
         }));
     }
 
+    disconnect() {
+        localStorage.removeItem('userToken');
+        window.location.pathname = "/";
+    }
+
     getLibsPath(lang) {
         return (Axios.get(this.url + "/symbol/search?Path=" + lang +"&PageOptions.Page=1", {
             'headers': {
@@ -117,7 +122,7 @@ export default class ApiService {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
         })
-        .catch( error => {
+        .catch(error => {
             console.log(error.response);
         }));
     }
