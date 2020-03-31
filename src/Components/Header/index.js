@@ -20,7 +20,8 @@ import './index.css'
 import pp from './pp.png'
 
 var suggestions = [];
-var valueBar = "";
+//var valueBar = "";
+//var bool_test = false
   
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
     window.location.pathname = "/search/" + suggestion;
@@ -49,7 +50,7 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
   function renderSuggestion(suggestion, { query, isHighlighted }) {
     const matches = match(suggestion, query);
     const parts = parse(suggestion, matches);
-  
+    
     return (
       <MenuItem selected={isHighlighted} component="div">
         <div>
@@ -123,13 +124,13 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
 class Header extends Component {
     api = new ApiService();
 
-    // constructor(props) {
-    //     super(props)
-    //     this.idleTimer = null
-    //     this.onAction = this._onAction.bind(this)
-    //     this.onActive = this._onActive.bind(this)
-    //     this.onIdle = this._onIdle.bind(this)
-    //   }
+    constructor(props) {
+        super(props)
+        this.idleTimer = null
+        this.onAction = this._onAction.bind(this)
+        this.onActive = this._onActive.bind(this)
+        this.onIdle = this._onIdle.bind(this)
+      }
 
     state = {
         single: '',
@@ -141,18 +142,19 @@ class Header extends Component {
     /////////////////////////////
 
     handleSuggestionsFetchRequested = async ({ value }) => {
-        valueBar = value
-        // console.log("testestestetstets");
-        // setTimeout(function(){ 
-        //     console.log('hello');}, 2000)
-        var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
+        
+        //if (bool_test === true) {
             suggestions = [];
+            var funct = await this.api.searchSymbolsSpecific(value, 5);
             for (var name in funct.data.data) {
                 suggestions.push(funct.data.data[name].path)
             }
+
+        //     bool_test = false
+        // }
         this.setState({
-          suggestions: getSuggestions(value),
-        });
+            suggestions: getSuggestions(value),
+            });
     };
     
     handleSuggestionsClearRequested = () => {
@@ -174,15 +176,16 @@ class Header extends Component {
     /////////////////////////////////////////
 
     async _onAction(e) {
-        if (e.type === "keydown" && e.target.className === "MuiInputBase-input MuiInput-input")
-        {
-            console.log('user did something', e)
-            var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
-            suggestions = [];
-            for (var name in funct.data.data) {
-                suggestions.push(funct.data.data[name].path)
-            }
-        }
+        // if (e.type === "keydown" && e.target.className === "MuiInputBase-input MuiInput-input")
+        // {
+            //bool_test = true
+             console.log('user did something', e)
+            // suggestions = [];
+            // var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
+            // for (var name in funct.data.data) {
+            //     suggestions.push(funct.data.data[name].path)
+            // }
+        //}
     }
      
     _onActive(e) {
