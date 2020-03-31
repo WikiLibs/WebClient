@@ -1,0 +1,39 @@
+.footer_container {
+    color: white;
+    background-color: #7B68EE;
+    margin-top: 96px;
+    display: flex;
+    padding-left: 12%;
+    padding-right: 12%;
+    justify-content: space-between;
+    height: 96px;
+}
+
+.copyright {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.logo_footer {
+    width: 40px;
+    /* padding-right: 16px; */
+}
+
+.copyright_txt {
+    padding-left: 32px;
+}
+
+.useful {
+    margin-top: auto;
+    margin-bottom: auto;
+    vertical-align: middle;
+}
+
+.useful > a {
+    font-family: 'Open Sans';
+    color: white;
+    padding-left: 16px;
+}

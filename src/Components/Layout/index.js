@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import ApiService from '../../ApiService';
 import Header from '../../Components/Header';
+import Footer from '../../Components/Footer';
 import SideBar from '../../Components/SideBar';
 import jwt_decode from 'jwt-decode';
 
@@ -51,6 +52,7 @@ class PageBody extends Component {
                     <div id="page-content-wrapper">
                         <this.props.MatchedPage user={this.state.userConnected ? this.state.user : null} {...this.props} />
                     </div>
+                    <Footer />
                 </div>
             </div>
         );
