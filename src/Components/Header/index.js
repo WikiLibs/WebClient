@@ -13,11 +13,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 
+import IdleTimer from 'react-idle-timer'
+
 import './index.css'
 
 import pp from './pp.png'
 
 var suggestions = [];
+//var valueBar = "";
+//var bool_test = false
   
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
     window.location.pathname = "/search/" + suggestion;
@@ -46,7 +50,7 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
   function renderSuggestion(suggestion, { query, isHighlighted }) {
     const matches = match(suggestion, query);
     const parts = parse(suggestion, matches);
-  
+    
     return (
       <MenuItem selected={isHighlighted} component="div">
         <div>
@@ -120,6 +124,14 @@ function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIn
 class Header extends Component {
     api = new ApiService();
 
+    constructor(props) {
+        super(props)
+        this.idleTimer = null
+        this.onAction = this._onAction.bind(this)
+        this.onActive = this._onActive.bind(this)
+        this.onIdle = this._onIdle.bind(this)
+      }
+
     state = {
         single: '',
         popper: '',
@@ -127,16 +139,22 @@ class Header extends Component {
         userConnect: false
     };
 
-    handleSuggestionsFetchRequested = async ({ value }) => {
-        suggestions = [];
-        var funct = await this.api.searchSymbolsSpecific(value, 5);
-        for (var name in funct.data.data) {
-            suggestions.push(funct.data.data[name].path)
-        }
+    /////////////////////////////
 
+    handleSuggestionsFetchRequested = async ({ value }) => {
+        
+        //if (bool_test === true) {
+            suggestions = [];
+            var funct = await this.api.searchSymbolsSpecific(value, 5);
+            for (var name in funct.data.data) {
+                suggestions.push(funct.data.data[name].path)
+            }
+
+        //     bool_test = false
+        // }
         this.setState({
-          suggestions: getSuggestions(value),
-        });
+            suggestions: getSuggestions(value),
+            });
     };
     
     handleSuggestionsClearRequested = () => {
@@ -154,6 +172,33 @@ class Header extends Component {
     handleSubbmit = ({ value }) => {
         console.log(value);
     }
+
+    /////////////////////////////////////////
+
+    async _onAction(e) {
+        // if (e.type === "keydown" && e.target.className === "MuiInputBase-input MuiInput-input")
+        // {
+            //bool_test = true
+             console.log('user did something', e)
+            // suggestions = [];
+            // var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
+            // for (var name in funct.data.data) {
+            //     suggestions.push(funct.data.data[name].path)
+            // }
+        //}
+    }
+     
+    _onActive(e) {
+        console.log('user is active', e)
+        console.log('time remaining', this.idleTimer.getRemainingTime())
+      }
+     
+    _onIdle(e) {
+        console.log('user is idle', e)
+        console.log('last active', this.idleTimer.getLastActiveTime())
+      }
+
+    /////////////////////////////////////////
 
     disconnect() {
         localStorage.removeItem('userToken');
@@ -175,6 +220,8 @@ class Header extends Component {
         }
     }
 
+    //////////////////////////////////////////
+
     render() {
         const { classes } = this.props;
 
@@ -189,6 +236,14 @@ class Header extends Component {
         };
         return (
             <div className="Header">
+                <IdleTimer
+                    ref={ref => { this.idleTimer = ref }}
+                    element={document}
+                    onActive={this.onActive}
+                    onIdle={this.onIdle}
+                    onAction={this.onAction}
+                    debounce={500}
+                    timeout={1000 * 60 * 15} />
                 <header>
                     <Navbar className="header-bar" variant="default" style={{ backgroundColor: '#8560a8' }}>
                         <Button
@@ -247,6 +302,8 @@ class Header extends Component {
         )
     }
 
+    ///////////////////////////////////////////////////
+
     async onLangsReceived(langs) {
         for (var v in langs.data) {
             var libs = await this.api.getLibsPath(langs.data[v].name + "/");
@@ -262,7 +319,6 @@ class Header extends Component {
         } else {
             this.setState({userConnect: false});
         }
-        this.api.searchSymbolsSpecific("api", 3).then(langs => console.log(langs));
         this.api.getLangs().then(langs => this.onLangsReceived(langs));
     }
 }

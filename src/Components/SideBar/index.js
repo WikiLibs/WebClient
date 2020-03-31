@@ -49,12 +49,13 @@ export default class SideBar extends Component {
     async onLangsReceived(langs) {
         var tbl = {};
         for (var v in langs.data) {
+            console.log(langs.data[v].name)
             var libs = await this.api.getLibsPath(langs.data[v].name + "/");
+
             tbl[langs.data[v].name] = libs.data.data;
             //console.log(libs.data.data)
-            // console.log(langs.data[v].name, libs.data.data)
+            //console.log(langs.data[v].name, libs.data.data)
         }
-        console.log(tbl)
         this.setState(tbl);
     }
 
