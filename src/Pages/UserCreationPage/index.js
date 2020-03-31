@@ -28,7 +28,6 @@ const formValid = ({ formErrors, ...rest }) => {
 
 export default class UserCreationPage extends Component {
     api = new ApiService();
-    
 
     constructor(props) {
         super(props);
@@ -71,15 +70,15 @@ export default class UserCreationPage extends Component {
             this.api.createUser(this.state)
                 .then((Response) => {
                     console.log(Response);
-                    this.setState({Msg: "success"});
+                    this.setState({ Msg: "success" });
                 })
-                .catch( (error) => {
-                    this.setState({Msg: "error"});
+                .catch((error) => {
+                    this.setState({ Msg: "error" });
                     console.log(error);
                 })
         } else {
             console.error("FORM INVALID");
-            this.setState({Msg: "error"});
+            this.setState({ Msg: "error" });
         }
     };
 
@@ -90,18 +89,18 @@ export default class UserCreationPage extends Component {
 
         switch (name) {
             case "firstName":
-                formErrors.firstName = 
+                formErrors.firstName =
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
             case "lastName":
-                formErrors.lastName = 
+                formErrors.lastName =
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
             case "email":
                 formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
                 break;
             case "pseudo":
-                formErrors.pseudo = 
+                formErrors.pseudo =
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
             case "password":
@@ -109,7 +108,7 @@ export default class UserCreationPage extends Component {
                     value.length < 6 ? "Minimum 6 characters required" : "";
                 break;
             case "private":
-                this.state.private = this.state.private ? false : true;
+                this.setState({ private: !this.state.private });
                 break;
             default:
                 break;
@@ -120,108 +119,14 @@ export default class UserCreationPage extends Component {
 
     setPrivate(nb) {
         if (nb === 0) {
-            this.setState({private: true});
+            this.setState({ private: true });
         } else {
-            this.setState({private: false});
+            this.setState({ private: false });
         }
     }
 
     render() {
         return (
-            <div>
-            {/* <div>
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <label>
-                        First Name *
-                        <br/>
-                        <input 
-                            type="text"
-                            className=""
-                            name="firstName"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Last Name *
-                        <br/>
-                        <input
-                            type="text"
-                            className=""
-                            name="lastName"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Email *
-                        <br/>
-                        <input
-                            type="email"
-                            className=""
-                            name="email"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Private
-                        <br/>
-                        <select 
-                            name="private" 
-                            type="text" onChange={this.handleChange}
-                            className=""
-                            noValidate
-                        >
-                            <option onClick={() => this.setPrivate(0)}>Yes</option>
-                            <option onClick={() => this.setPrivate(1)}>No</option>
-                        </select>
-                    </label>
-                    <br/>
-                    <label>
-                        Profil Message
-                        <br/>
-                        <input
-                            type="text"
-                            className=""
-                            name="profilMsg"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Pseudo *
-                        <br/>
-                        <input
-                            type="text"
-                            className=""
-                            name="pseudo"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Password *
-                        <br/>
-                        <input
-                            type="password"
-                            className=""
-                            name="password"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br/>
-                    {this.state.Msg === "error" ? <p>Error ! Verify your information and if you don't have already an account</p> : 
-                        (this.state.Msg === "success" ? <p>Your account is successfully created !</p> : '')}
-                    <input type="submit" value="Create" />
-                </form>
-            </div> */}
             <div>
                 <div id="Body">
                     <div className="content_account">
@@ -336,7 +241,6 @@ export default class UserCreationPage extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }
