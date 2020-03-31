@@ -28,12 +28,12 @@ export default class ProfilePage extends Component {
         super(props);
 
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
+            email: this.props.user.email,
             private: true,
-            profileMsg: '',
-            pseudo: '',
+            profileMsg: this.props.user.profileMsg,
+            pseudo: this.props.user.pseudo,
             password: '',
             newPassword: '',
             Msg: '',
