@@ -154,7 +154,7 @@ class Header extends Component {
     checkConnect() {
         if (this.props.user) {
             return (<div>
-                <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>
+                {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>}
                 <Link style={{ color: "white", padding: "24px" }} to='/admin'>Administration</Link>
                 <Link style={{ color: "white", padding: "24px" }} onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
             </div>);

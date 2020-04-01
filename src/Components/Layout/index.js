@@ -28,7 +28,24 @@ class PageBody extends Component {
     componentDidMount() {
         if (this.state.userConnected) {
             this.api.getMe().then(response => {
-                this.setState({ user: response.data });
+                let user = response.data;
+                //if the user's permission array is not null, convert it to an easy to use JS object
+                if (user.permissions && user.permissions.length > 0) {
+                    user.permissionMap = {};
+                    user.permissions.forEach(str => {
+                        user.permissionMap[str] = true;
+                    });
+                }
+                user.hasPermission = (str) => {
+                    if (user.permissionMap == null)
+                        return (false);
+                    if (user.permissionMap["*"])
+                        return (true);
+                    if (user.permissionMap[str])
+                        return (true);
+                    return (false);
+                }
+                this.setState({ user: user });
             }).catch(() => {
                 localStorage.setItem('userToken', null);
                 this.setState({ user: null });
