@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
 import ApiService from '../../ApiService';
+import Alert from '@material-ui/lab/Alert';
+import { checkForm } from '../../util';
 
 import './index.css';
 
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
-
-const formValid = ({ formErrors, ...rest }) => {
-    let valid = true;
-
-    Object.values(formErrors).forEach(val => {
-        val.length > 0 && (valid = false);
-    });
-
-    Object.values(rest).forEach(val => {
-        val == null && (valid = false);
-    });
-
-    return valid;
-};
 
 export default class ProfilePage extends Component {
     api = new ApiService();
@@ -28,15 +16,14 @@ export default class ProfilePage extends Component {
         super(props);
 
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            private: true,
-            profileMsg: '',
-            pseudo: '',
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
+            email: this.props.user.email,
+            private: this.props.user.private,
+            profileMsg: this.props.user.profileMsg,
+            pseudo: this.props.user.pseudo,
             password: '',
             newPassword: '',
-            Msg: '',
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -46,22 +33,16 @@ export default class ProfilePage extends Component {
                 pseudo: "",
                 password: "",
                 newPassword: ""
-            }
+            },
+            apiError: null,
+            success: null
         };
-    }
-
-    componentDidMount = () => {
-        this.api.getMe().then((Response) => {
-            console.log(Response.data);
-
-            this.setState(Response.data);
-        });
     }
 
     handleSubmit = e => {
         e.preventDefault();
 
-        if (formValid(this.state)) {
+        if (checkForm(this.state)) {
             console.log(`
                 --SUBMITTING--
                 First name: ${this.state.firstName}
@@ -75,14 +56,12 @@ export default class ProfilePage extends Component {
             `)
             if (this.state.password) {
                 this.api.patchMe(this.state)
-                .then((Response) => {
-                    console.log(Response);
-                    this.setState({Msg: "success"});
-                })
-                .catch( error => {
-                    this.setState({Msg: "error"});
-                    console.log(error.response);
-                });
+                    .then((Response) => {
+                        this.setState({ success: "Successfully updated profile." });
+                    })
+                    .catch(error => {
+                        this.setState({ apiError: this.api.translateErrorMessage(error) });
+                    });
             }
         } else {
             console.error("FORM INVALID");
@@ -96,18 +75,18 @@ export default class ProfilePage extends Component {
 
         switch (name) {
             case "firstName":
-                formErrors.firstName = 
+                formErrors.firstName =
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
             case "lastName":
-                formErrors.lastName = 
+                formErrors.lastName =
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
             case "email":
                 formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
                 break;
             case "Pseudo":
-                formErrors.pseudo = 
+                formErrors.pseudo =
                     value.length <= 0 ? "minimum 1 character required" : "";
                 break;
             case "Password":
@@ -123,9 +102,9 @@ export default class ProfilePage extends Component {
 
     setPrivate(nb) {
         if (nb === 0) {
-            this.setState({private: true});
+            this.setState({ private: true });
         } else {
-            this.setState({private: false});
+            this.setState({ private: false });
         }
     }
 
@@ -135,7 +114,7 @@ export default class ProfilePage extends Component {
                 <form onSubmit={this.handleSubmit} noValidate>
                     <label>
                         First Name
-                        <br/>
+                        <br />
                         <input
                             type="text"
                             className=""
@@ -144,10 +123,10 @@ export default class ProfilePage extends Component {
                             value={this.state.firstName}
                         />
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         Last Name
-                        <br/>
+                        <br />
                         <input
                             type="text"
                             className=""
@@ -156,10 +135,10 @@ export default class ProfilePage extends Component {
                             value={this.state.lastName}
                         />
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         Email
-                        <br/>
+                        <br />
                         <input
                             type="email"
                             className=""
@@ -168,32 +147,32 @@ export default class ProfilePage extends Component {
                             value={this.state.email}
                         />
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         Private
-                        <br/>
-                        <select 
-                            name="private" 
+                        <br />
+                        <select
+                            name="private"
                             type="text" onChange={this.handleChange}
                             className=""
                             noValidate
                         >
                             {
                                 this.state.private === "true" ?
-                                <option onClick={() => this.setPrivate(0)}>Yes</option> :
-                                <option onClick={() => this.setPrivate(1)}>No</option>
+                                    <option onClick={() => this.setPrivate(0)}>Yes</option> :
+                                    <option onClick={() => this.setPrivate(1)}>No</option>
                             }
                             {
                                 this.state.private === "true" ?
-                                <option onClick={() => this.setPrivate(1)}>No</option> :
-                                <option onClick={() => this.setPrivate(0)}>Yes</option>
+                                    <option onClick={() => this.setPrivate(1)}>No</option> :
+                                    <option onClick={() => this.setPrivate(0)}>Yes</option>
                             }
                         </select>
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         Profil Message
-                        <br/>
+                        <br />
                         <input
                             type="text"
                             className=""
@@ -203,10 +182,10 @@ export default class ProfilePage extends Component {
                             onChange={this.handleChange}
                         />
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         Pseudo
-                        <br/>
+                        <br />
                         <input
                             type="text"
                             className=""
@@ -216,10 +195,10 @@ export default class ProfilePage extends Component {
                             onChange={this.handleChange}
                         />
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         Password *
-                        <br/>
+                        <br />
                         <input
                             type="password"
                             className=""
@@ -228,10 +207,10 @@ export default class ProfilePage extends Component {
                             onChange={this.handleChange}
                         />
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         New Password
-                        <br/>
+                        <br />
                         <input
                             type="password"
                             className=""
@@ -240,11 +219,18 @@ export default class ProfilePage extends Component {
                             onChange={this.handleChange}
                         />
                     </label>
-                    <br/>
-                    {this.state.Msg === "error" ? <p>Error during the process</p> : 
+                    <br />
+                    {this.state.Msg === "error" ? <p>Error during the process</p> :
                         (this.state.Msg === "success" ? <p>Your account is successfully updated !</p> : '')}
                     <input type="submit" value="Modify Profile" />
                 </form>
+                {this.state.success && <Alert severity="success">{this.state.success}</Alert>}
+                {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
+                {this.state.formErrors.firstName && <Alert severity="warning">{this.state.formErrors.firstName}</Alert>}
+                {this.state.formErrors.lastName && <Alert severity="warning">{this.state.formErrors.lastName}</Alert>}
+                {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
+                {this.state.formErrors.pseudo && <Alert severity="warning">{this.state.formErrors.pseudo}</Alert>}
+                {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
             </div>
         );
     }

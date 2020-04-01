@@ -20,207 +20,151 @@ import './index.css'
 import pp from './pp.png'
 
 var suggestions = [];
-//var valueBar = "";
-//var bool_test = false
-  
+
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
     window.location.pathname = "/search/" + suggestion;
 }
 
-  function renderInputComponent(inputProps) {
-    const { classes, inputRef = () => {}, ref, ...other } = inputProps;
-  
+function renderInputComponent(inputProps) {
+    const { classes, inputRef = () => { }, ref, ...other } = inputProps;
+
     return (
-      <TextField
-        fullWidth
-        InputProps={{
-          inputRef: node => {
-            ref(node);
-            inputRef(node);
-          },
-          classes: {
-            input: classes.input,
-          },
-        }}
-        {...other}
-      />
+        <TextField
+            fullWidth
+            InputProps={{
+                inputRef: node => {
+                    ref(node);
+                    inputRef(node);
+                },
+                classes: {
+                    input: classes.input,
+                },
+            }}
+            {...other}
+        />
     );
-  }
-  
-  function renderSuggestion(suggestion, { query, isHighlighted }) {
+}
+
+function renderSuggestion(suggestion, { query, isHighlighted }) {
     const matches = match(suggestion, query);
     const parts = parse(suggestion, matches);
-    
+
     return (
-      <MenuItem selected={isHighlighted} component="div">
-        <div>
-          {parts.map((part, index) =>
-            part.highlight ? (
-              <span key={String(index)} style={{ fontWeight: 500 }}>
-                {part.text}
-              </span>
-            ) : (
-              <strong key={String(index)} style={{ fontWeight: 300 }}>
-                {part.text}
-              </strong>
-            ),
-          )}
-        </div>
-      </MenuItem>
+        <MenuItem selected={isHighlighted} component="div">
+            <div>
+                {parts.map((part, index) =>
+                    part.highlight ? (
+                        <span key={String(index)} style={{ fontWeight: 500 }}>
+                            {part.text}
+                        </span>
+                    ) : (
+                            <strong key={String(index)} style={{ fontWeight: 300 }}>
+                                {part.text}
+                            </strong>
+                        ),
+                )}
+            </div>
+        </MenuItem>
     );
-  }
-  
-  function getSuggestions(value) {
+}
+
+function getSuggestions(value) {
     const inputValue = deburr(value.trim()).toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
 
     return inputLength === 0
-      ? []
-      : suggestions.filter(suggestion => {
-          const keep = 
-             count < 5 //&& suggestion.slice(0, inputLength).toLowerCase() === inputValue;
-  
-          if (keep) {
-            count += 1;
-          }
-  
-          return keep;
+        ? []
+        : suggestions.filter(suggestion => {
+            const keep =
+                count < 5
+
+            if (keep) {
+                count += 1;
+            }
+
+            return keep;
         });
-  }
-  
-  function getSuggestionValue(suggestion) {
-     return suggestion;
-  }
-  
-  const styles = theme => ({
+}
+
+function getSuggestionValue(suggestion) {
+    return suggestion;
+}
+
+const styles = theme => ({
     root: {
-      height: 40,
-      flexGrow: 1,
+        height: 40,
+        flexGrow: 1,
     },
     container: {
-      position: 'relative',
+        position: 'relative',
     },
     suggestionsContainerOpen: {
-      position: 'absolute',
-      zIndex: 1,
-      marginTop: theme.spacing(),
-      left: 0,
-      right: 0,
+        position: 'absolute',
+        zIndex: 1,
+        marginTop: theme.spacing(),
+        left: 0,
+        right: 0,
     },
     suggestion: {
-      display: 'block',
+        display: 'block',
     },
     suggestionsList: {
-      margin: 0,
-      padding: 0,
-      listStyleType: 'none',
+        margin: 0,
+        padding: 0,
+        listStyleType: 'none',
     },
     divider: {
-      height: theme.spacing(2),
+        height: theme.spacing(2),
     },
-  });
+});
 
 class Header extends Component {
     api = new ApiService();
 
-    constructor(props) {
-        super(props)
-        this.idleTimer = null
-        this.onAction = this._onAction.bind(this)
-        this.onActive = this._onActive.bind(this)
-        this.onIdle = this._onIdle.bind(this)
-      }
-
     state = {
         single: '',
         popper: '',
-        suggestions: [],
-        userConnect: false
+        suggestions: []
     };
-
-    /////////////////////////////
 
     handleSuggestionsFetchRequested = async ({ value }) => {
-        
-        //if (bool_test === true) {
-            suggestions = [];
-            var funct = await this.api.searchSymbolsSpecific(value, 5);
-            for (var name in funct.data.data) {
-                suggestions.push(funct.data.data[name].path)
-            }
-
-        //     bool_test = false
-        // }
+        suggestions = [];
+        var funct = await this.api.searchSymbolsSpecific(value, 5);
+        for (var name in funct.data.data) {
+            suggestions.push(funct.data.data[name].path)
+        }
         this.setState({
             suggestions: getSuggestions(value),
-            });
+        });
     };
-    
+
     handleSuggestionsClearRequested = () => {
         this.setState({
-          suggestions: [],
+            suggestions: [],
         });
     };
-    
+
     handleChange = name => (event, { newValue }) => {
         this.setState({
-          [name]: newValue,
+            [name]: newValue,
         });
     };
 
-    handleSubbmit = ({ value }) => {
-        console.log(value);
-    }
-
-    /////////////////////////////////////////
-
-    async _onAction(e) {
-        // if (e.type === "keydown" && e.target.className === "MuiInputBase-input MuiInput-input")
-        // {
-            //bool_test = true
-             console.log('user did something', e)
-            // suggestions = [];
-            // var funct = await this.api.searchSymbolsSpecific(valueBar, 5);
-            // for (var name in funct.data.data) {
-            //     suggestions.push(funct.data.data[name].path)
-            // }
-        //}
-    }
-     
-    _onActive(e) {
-        console.log('user is active', e)
-        console.log('time remaining', this.idleTimer.getRemainingTime())
-      }
-     
-    _onIdle(e) {
-        console.log('user is idle', e)
-        console.log('last active', this.idleTimer.getLastActiveTime())
-      }
-
-    /////////////////////////////////////////
-
-    disconnect() {
-        localStorage.removeItem('userToken');
-        window.location.pathname = "/";
-    }
-
     checkConnect() {
-        if(this.state.userConnect) {
+        if (this.props.user) {
             return (<div>
-                <Link to='/profile'>My Profile</Link>
-                <button onClick={this.disconnect}>Disconnect</button>
+                <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>
+                <Link style={{ color: "white", padding: "24px" }} to='/admin'>Administration</Link>
+                <Link style={{ color: "white", padding: "24px" }} onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
             </div>);
         } else {
             return (<div>
-                <Link to='/usercreation'>Create account</Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to='/userconnection'>Connect</Link>
+                <Link style={{ color: "white", padding: "24px" }} to='/usercreation'>Create account</Link>
+                <Link style={{ color: "white", padding: "24px" }} to='/userconnection'>Connect</Link>
             </div>);
         }
     }
-
-    //////////////////////////////////////////
 
     render() {
         const { classes } = this.props;
@@ -302,8 +246,6 @@ class Header extends Component {
         )
     }
 
-    ///////////////////////////////////////////////////
-
     async onLangsReceived(langs) {
         for (var v in langs.data) {
             var libs = await this.api.getLibsPath(langs.data[v].name + "/");
@@ -312,19 +254,10 @@ class Header extends Component {
             }
         }
     }
-
-    componentDidMount() {
-        if(localStorage.getItem('userToken') != null) {
-            this.setState({userConnect: true});
-        } else {
-            this.setState({userConnect: false});
-        }
-        this.api.getLangs().then(langs => this.onLangsReceived(langs));
-    }
 }
 
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
 
 export default withStyles(styles)(Header);

@@ -16,8 +16,30 @@ export default class ApiService {
         }));
     }
 
+    translateErrorMessage(err) {
+        switch (err.response.status) {
+            case 401:
+                return ("Bad credentials and/or Api token.");
+            case 403:
+                return ("You do not have permission to do that.");
+            case 404:
+                return ("The specified resource could not be found.");
+            case 409:
+                return ("A resource with the same identifier already exists.");
+            case 500:
+                return ("An internal server error occured, please contact server administrator.");
+            default:
+                return ("Unknown error");
+        }
+    }
+
+    disconnect() {
+        localStorage.removeItem('userToken');
+        window.location.pathname = "/";
+    }
+
     getLibsPath(lang) {
-        return (Axios.get(this.url + "/symbol/search?Path=" + lang +"&PageOptions.Page=1", {
+        return (Axios.get(this.url + "/symbol/search?Path=" + lang + "&PageOptions.Page=1", {
             'headers': {
                 'Authorization': this.apiKey
             }
@@ -76,55 +98,60 @@ export default class ApiService {
 
     createUser(state) {
         return (Axios.post(this.url + "/auth/internal/register", {
-                firstName: state.firstName,
-                lastName: state.lastName,
-                email: state.email,
-                private: state.private,
-                profileMsg: state.profilMsg,
-                pseudo: state.pseudo,
-                password: state.password
+            firstName: state.firstName,
+            lastName: state.lastName,
+            email: state.email,
+            private: state.private,
+            profileMsg: state.profilMsg,
+            pseudo: state.pseudo,
+            password: state.password
         },
-        {
-            headers: {
-                'Authorization': this.apiKey
-            }
-        }));
-    }
-
-    connectUser(state) {
-        return (Axios.post(this.url + "auth/internal/login" , {
-                email: state.email,
-                password: state.password
-            },
             {
                 headers: {
                     'Authorization': this.apiKey
-            }
-        })
-        .then((Response) => {
-            localStorage.setItem('userToken', Response.data);
-            console.log(Response);
-            window.location.pathname = "/";
-        })
-        .catch(error => {
-            console.log(error.response);
-        }));
+                }
+            }));
+    }
+
+    connectUser(state) {
+        return (Axios.post(this.url + "auth/internal/login", {
+            email: state.email,
+            password: state.password
+        },
+            {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            })
+            .then((Response) => {
+                localStorage.setItem('userToken', Response.data);
+                window.location.pathname = "/";
+            }));
+    }
+
+    refresh() {
+        return (Axios.patch(this.url + "auth/refresh", null,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            })
+            .then((response) => {
+                localStorage.setItem('userToken', response.data);
+            }));
     }
 
     getMe() {
-        return (Axios.get(this.url + "user/me" , {
+        return (Axios.get(this.url + "user/me", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
-        })
-        .catch( error => {
-            console.log(error.response);
         }));
     }
 
     patchMe(state) {
         if (state.newPassword !== "") {
-            return (Axios.patch(this.url + "user/me" , {
+            return (Axios.patch(this.url + "user/me", {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 email: state.email,
@@ -134,13 +161,13 @@ export default class ApiService {
                 curPassword: state.password,
                 newPassword: state.newPassword
             },
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-                }
-            }));
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                    }
+                }));
         } else {
-            return (Axios.patch(this.url + "user/me" , {
+            return (Axios.patch(this.url + "user/me", {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 email: state.email,
@@ -149,11 +176,11 @@ export default class ApiService {
                 pseudo: state.pseudo,
                 curPassword: state.password,
             },
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-                }
-            }));
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                    }
+                }));
         }
     }
 }

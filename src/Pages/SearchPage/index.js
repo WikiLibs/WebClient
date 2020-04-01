@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 
 import './style.css'
 
-export default class Search extends Component {
+export default class SearchPage extends Component {
     api = new ApiService();
 
     constructor(props) {
@@ -16,7 +16,6 @@ export default class Search extends Component {
             symbols: {}
         };
     }
-
 
     componentDidMount = () => {
         this.refrehData();

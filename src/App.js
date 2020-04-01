@@ -8,11 +8,11 @@ import Layout from "./Components/Layout"
 /* PAGES */
 import WelcomePage from './Pages/WelcomePage'
 import SymbolPage from './Pages/SymbolPage'
-import Search from './Pages/Search'
-import UserCreation from './Pages/UserCreation'
-import UserConnection from './Pages/UserConnection';
+import SearchPage from './Pages/SearchPage'
+import UserCreationPage from './Pages/UserCreationPage'
+import UserConnectionPage from './Pages/UserConnectionPage';
 import ProfilePage from './Pages/ProfilePage';
-import NotFound from './Pages/NotFoundPage'
+import NotFoundPage from './Pages/NotFoundPage'
 
 /* END */
 
@@ -25,12 +25,12 @@ export default function App()
             <Switch>
                 <Layout exact path='/' component={WelcomePage} />
                 <Layout exact path='/symbol/:sympath+' component={SymbolPage} />
-                <Layout exact path='/search/:path+' component={Search} />
-                <Layout exact path='/usercreation' component={UserCreation} />
-                <Layout exact path='/userconnection' component={UserConnection} />
+                <Layout exact path='/search/:path+' component={SearchPage} />
+                <Layout exact path='/usercreation' component={UserCreationPage} />
+                <Layout exact path='/userconnection' component={UserConnectionPage} />
                 <Layout exact path='/profile' component={ProfilePage} />
 
-                <Layout component={NotFound} />
+                <Layout component={NotFoundPage} />
             </Switch>
         </Router>
   );
