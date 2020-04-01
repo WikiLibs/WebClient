@@ -13,7 +13,7 @@ import UserCreationPage from './Pages/UserCreationPage'
 import UserConnectionPage from './Pages/UserConnectionPage';
 import ProfilePage from './Pages/ProfilePage';
 import NotFoundPage from './Pages/NotFoundPage'
-
+import AdminPage from './Pages/AdminPage'
 /* END */
 
 const history = createBrowserHistory()
@@ -29,6 +29,7 @@ export default function App()
                 <Layout exact path='/usercreation' component={UserCreationPage} />
                 <Layout exact path='/userconnection' component={UserConnectionPage} />
                 <Layout exact path='/profile' component={ProfilePage} />
+                <Layout exact path='/admin' component={AdminPage} />
 
                 <Layout component={NotFoundPage} />
             </Switch>
