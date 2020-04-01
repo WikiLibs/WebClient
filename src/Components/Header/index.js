@@ -122,10 +122,6 @@ const styles = theme => ({
 class Header extends Component {
     api = new ApiService();
 
-    constructor(props) {
-        super(props)
-    }
-
     state = {
         single: '',
         popper: '',
