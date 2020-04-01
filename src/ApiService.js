@@ -129,6 +129,18 @@ export default class ApiService {
             }));
     }
 
+    refresh() {
+        return (Axios.patch(this.url + "auth/refresh", null,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            })
+            .then((response) => {
+                localStorage.setItem('userToken', response.data);
+            }));
+    }
+
     getMe() {
         return (Axios.get(this.url + "user/me", {
             headers: {

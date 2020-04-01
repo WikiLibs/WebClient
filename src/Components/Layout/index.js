@@ -13,15 +13,13 @@ class PageBody extends Component {
     constructor(props) {
         super(props);
         let flag = false;
-        if (localStorage.getItem('userToken') != null)
+        if (localStorage.getItem('userToken') && localStorage.getItem('userToken') !== 'null')
             flag = true;
         this.state = {
             navBar: false,
             userConnected: flag
         };
     }
-
-    //TODO: automatic timer renew token
 
     openNavBar() {
         this.setState({ navBar: !this.state.navBar });
@@ -36,10 +34,19 @@ class PageBody extends Component {
                 this.setState({ user: null });
             });
         }
-        let token = localStorage.getItem('userToken');
-        if (token) {
-            //let jwt = jwt_decode(token);
-
+        if (this.state.userConnected) {
+            let token = localStorage.getItem('userToken');
+            let jwt = jwt_decode(token);
+            let curtm = new Date().getTime() / 1000;
+            if (jwt.exp - curtm <= 60) { // if the token remaining life time is less or equal to 60
+                this.api.refresh().catch(err => {
+                    localStorage.setItem('userToken', null);
+                    this.setState({ user: null });
+                });
+            } else if (jwt.exp - curtm < 0) { //Oops token is dead
+                localStorage.setItem('userToken', null);
+                this.setState({ user: null });
+            }
         }
     }
 
