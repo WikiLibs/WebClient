@@ -1,0 +1,17 @@
+#AdminActions {
+    margin: 24px;
+    display: inline-block;
+}
+
+#AdminActions .MuiToggleButtonGroup-root {
+    display: inline-grid;
+}
+
+#AdminActions .MuiToggleButtonGroup-grouped {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+}
+
+#AdminContent {
+    display: inline-block;
+}

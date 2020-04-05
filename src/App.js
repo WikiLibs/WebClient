@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Switch } from 'react-router-dom';
 
-import createBrowserHistory from "history/createBrowserHistory";
+import { createBrowserHistory } from "history";
 
 import Layout from "./Components/Layout"
 
@@ -13,7 +13,7 @@ import UserCreationPage from './Pages/UserCreationPage'
 import UserConnectionPage from './Pages/UserConnectionPage';
 import ProfilePage from './Pages/ProfilePage';
 import NotFoundPage from './Pages/NotFoundPage'
-
+import AdminPage from './Pages/AdminPage'
 /* END */
 
 const history = createBrowserHistory()
@@ -24,11 +24,12 @@ export default function App()
         <Router history={history}>
             <Switch>
                 <Layout exact path='/' component={WelcomePage} />
-                <Layout exact path='/symbol/:sympath+' component={SymbolPage} />
-                <Layout exact path='/search/:path+' component={SearchPage} />
+                <Layout exact path='/symbol' component={SymbolPage} />
+                <Layout exact path='/search' component={SearchPage} />
                 <Layout exact path='/usercreation' component={UserCreationPage} />
                 <Layout exact path='/userconnection' component={UserConnectionPage} />
                 <Layout exact path='/profile' component={ProfilePage} />
+                <Layout exact path='/admin' component={AdminPage} />
 
                 <Layout component={NotFoundPage} />
             </Switch>

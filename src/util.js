@@ -8,4 +8,13 @@ const checkForm = ({ formErrors }) => {
     return valid;
 };
 
-export {checkForm};
+function useQuery() {
+    let obj = new URLSearchParams(window.location.search);
+    let res = {}
+    for (const [key, value] of obj) {
+        res[key] = value;
+    }
+    return (res);
+}
+
+export { checkForm, useQuery };

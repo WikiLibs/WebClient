@@ -38,16 +38,8 @@ export default class ApiService {
         window.location.pathname = "/";
     }
 
-    getLibsPath(lang) {
-        return (Axios.get(this.url + "/symbol/search?Path=" + lang + "&PageOptions.Page=1", {
-            'headers': {
-                'Authorization': this.apiKey
-            }
-        }));
-    }
-
     getLibs(lang) {
-        return (Axios.get(this.url + "/symbol/lib/" + lang, {
+        return (Axios.get(this.url + "/symbol/lang/" + lang, {
             'headers': {
                 'Authorization': this.apiKey
             }
@@ -70,8 +62,9 @@ export default class ApiService {
         }));
     }
 
-    getSymbol() {
-        return (Axios.get(this.url + "/symbol", {
+    getSymbolByLib(id, page) {
+        let query = "?Page=" + page;
+        return (Axios.get(this.url + "/symbol/lib/" + id + query, {
             'headers': {
                 'Authorization': this.apiKey
             }

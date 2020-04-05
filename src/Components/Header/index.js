@@ -22,7 +22,7 @@ import pp from './pp.png'
 var suggestions = [];
 
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
-    window.location.pathname = "/search/" + suggestion;
+    window.location = "/search?path=" + suggestion;
 }
 
 function renderInputComponent(inputProps) {
@@ -151,6 +151,12 @@ class Header extends Component {
         });
     };
 
+    handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+            window.location = "/search?path=" + this.state.single;
+        }
+    }
+
     checkConnect() {
         if (this.props.user) {
             return (<div>
@@ -215,6 +221,7 @@ class Header extends Component {
                                         placeholder: 'Search a function',
                                         value: this.state.single,
                                         onChange: this.handleChange('single'),
+                                        onKeyDown: this.handleKeyDown
                                     }}
                                     theme={{
                                         container: classes.container,

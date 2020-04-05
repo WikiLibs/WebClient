@@ -8,13 +8,12 @@ export default class SideBar extends Component {
 
     genLibList(lang) {
         var vals = []
-         for (var lib in this.state[lang]) {
-            var str = this.state[lang][lib].path;
-            lib = str.split('/')[2];
-            vals.push(<li key={str}>
-                <a href={"/search/" + str}>{lib}</a>
+        this.state[lang].data.forEach(elem => {
+            let str = elem.name.split('/')[1];
+            vals.push(<li key={elem.id}>
+                <a href={"/search?name=" + encodeURIComponent(this.state[lang].displayName + '/' + str) + "&lib=" + elem.id}>{str}</a>
             </li>);
-        }
+        });
         return (vals);
     }
 
@@ -23,7 +22,7 @@ export default class SideBar extends Component {
         for (var lang in this.state) {
             vals.push(
                 <li key={lang}>
-                    <a href={"#" + lang} data-toggle="collapse" aria-expanded="false" className="fontRegular">{lang}</a>
+                    <a href={"#" + lang} data-toggle="collapse" aria-expanded="false" className="fontRegular">{this.state[lang].displayName}</a>
                     <ul className="collapse list-unstyled" id={lang}>
                         {this.genLibList(lang)}
                     </ul>
@@ -49,12 +48,8 @@ export default class SideBar extends Component {
     async onLangsReceived(langs) {
         var tbl = {};
         for (var v in langs.data) {
-            console.log(langs.data[v].name)
-            var libs = await this.api.getLibsPath(langs.data[v].name + "/");
-
-            tbl[langs.data[v].name] = libs.data.data;
-            //console.log(libs.data.data)
-            //console.log(langs.data[v].name, libs.data.data)
+            var libs = await this.api.getLibs(langs.data[v].id);
+            tbl[langs.data[v].name] = { displayName: langs.data[v].displayName, data: libs.data.data };
         }
         this.setState(tbl);
     }
