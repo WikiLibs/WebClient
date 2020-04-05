@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ApiService from '../../ApiService';
+import { useQuery } from '../../util';
 
 import './style.css';
 
@@ -20,11 +21,11 @@ export default class SymbolPage extends Component {
     }
 
     componentDidMount = () => {
-        let sym = this.props.match.params.sympath;
-        if (isNaN(sym))
-            this.api.getSymbolByPath(sym).then(response => { this.setState(response.data); });
-        else
-            this.api.getSymbolById(sym).then(response => { this.setState(response.data); });
+        var q = useQuery();
+        if (q.path)
+            this.api.getSymbolByPath(q.path).then(response => { this.setState(response.data); });
+        else if (q.id)
+            this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
 
     getName = () => {
@@ -45,6 +46,13 @@ export default class SymbolPage extends Component {
         return false
     }
 
+    getDisplayPath() {
+        if (!this.state.path)
+            return ("");
+        let upPath = this.state.path.substr(this.state.path.indexOf('/') + 1);
+        return (this.state.lang.displayName + '/' + upPath);
+    }
+
     renderTitle = () => {
         return (
             <div className='symbol-page-section-container'>
@@ -52,7 +60,7 @@ export default class SymbolPage extends Component {
                     {this.getName()}
                 </div>
                 <div className='symbol-page-infos-path'>
-                    {this.state.path}
+                    {this.getDisplayPath()}
                 </div>
             </div>
         )
@@ -95,27 +103,29 @@ export default class SymbolPage extends Component {
                     Parameters
                 </div>
                 <div className='symbol-page-parameters-container'>
-                    {prototype.parameters.map((parameter, index) =>
-                    <div>
-                        {parameter.prototype !== 'return'
-                            ? <div>
-                                <div className='symbol-page-parameter-name'>
-                                    {parameter.prototype}
-                                </div>
-                                <div className='symbol-page-parameter-description'>
-                                    {parameter.description}
-                                </div>
+                    {
+                        prototype.parameters.map((parameter, index) =>
+                            <div key={index}>
+                                {parameter.prototype !== 'return'
+                                    ? <div>
+                                        <div className='symbol-page-parameter-name'>
+                                            {parameter.prototype}
+                                        </div>
+                                        <div className='symbol-page-parameter-description'>
+                                            {parameter.description}
+                                        </div>
+                                    </div>
+                                    : null
+                                }
+                                {(index !== (prototype.parameters.length - 1) &&
+                                    index !== 0 &&
+                                    parameter.prototype !== 'return')
+                                    ? <div className='symbol-page-separator'></div>
+                                    : null
+                                }
                             </div>
-                            : null
-                        }
-                        {(index !== (prototype.parameters.length - 1) &&
-                            index !== 0 &&
-                            parameter.prototype !== 'return')
-                            ? <div className='symbol-page-separator'></div>
-                            : null
-                        }
-                    </div>
-                    )}
+                        )
+                    }
                 </div>
             </div>
         )
@@ -131,25 +141,25 @@ export default class SymbolPage extends Component {
                 </div>
                 <div className='symbol-page-parameters-container'>
                     {prototype.parameters.map((parameter, index) =>
-                    <div>
-                        {parameter.prototype === 'return'
-                            ? <div>
-                                <div className='symbol-page-parameter-name'>
-                                    {parameter.prototype}
+                        <div>
+                            {parameter.prototype === 'return'
+                                ? <div>
+                                    <div className='symbol-page-parameter-name'>
+                                        {parameter.prototype}
+                                    </div>
+                                    <div className='symbol-page-parameter-description'>
+                                        {parameter.description}
+                                    </div>
                                 </div>
-                                <div className='symbol-page-parameter-description'>
-                                    {parameter.description}
-                                </div>
-                            </div>
-                            : null
-                        }
-                        {(index !== (prototype.parameters.length - 1) &&
-                            index !== 0 &&
-                            parameter.prototype === 'return')
-                            ? <div className='symbol-page-separator'></div>
-                            : null
-                        }
-                    </div>
+                                : null
+                            }
+                            {(index !== (prototype.parameters.length - 1) &&
+                                index !== 0 &&
+                                parameter.prototype === 'return')
+                                ? <div className='symbol-page-separator'></div>
+                                : null
+                            }
+                        </div>
                     )}
                 </div>
             </div>
@@ -161,14 +171,16 @@ export default class SymbolPage extends Component {
             <div className='symbol-page-container'>
                 {this.renderTitle()}
                 <div>
-                    {this.state.prototypes.map((prototype) =>
-                        <div>
-                            {this.renderPrototype(prototype)}
-                            {this.renderDescription(prototype)}
-                            {this.renderParameters(prototype)}
-                            {this.renderReturns(prototype)}
-                        </div>
-                    )}
+                    {
+                        this.state.prototypes.map((prototype, index) =>
+                            <div key={index}>
+                                {this.renderPrototype(prototype)}
+                                {this.renderDescription(prototype)}
+                                {this.renderParameters(prototype)}
+                                {this.renderReturns(prototype)}
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         )

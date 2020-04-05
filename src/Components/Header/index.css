@@ -60,3 +60,7 @@
     position: relative;
     z-index: 998;
 }
+
+.inner-addon.right-addon input {
+    color: white;
+}
