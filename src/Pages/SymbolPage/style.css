@@ -51,3 +51,31 @@
 .symbol-page-parameter-description {
     margin: 16px 32px 0 32px;
 }
+
+span.type {
+    color: #3894D2;
+}
+
+span.class {
+    color: #01831A;
+}
+
+span.symbol {
+    color: #AB2239;
+}
+
+span.flag {
+    color: #AB2239;
+}
+
+span.number {
+    color: #7B68EE;
+}
+
+span.string {
+    color: #A48B01;
+}
+
+span.comment {
+    color: #646464;
+}

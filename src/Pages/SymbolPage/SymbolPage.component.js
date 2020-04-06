@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ApiService from '../../ApiService';
 import { useQuery } from '../../util';
+import { protoToHtml } from '../../protoParser';
 
 import './style.css';
 
@@ -73,7 +74,7 @@ export default class SymbolPage extends Component {
                     Prototype
                 </div>
                 <div className='symbol-page-code-container'>
-                    {prototype.prototype}
+                    <div dangerouslySetInnerHTML={{ __html: protoToHtml(prototype.prototype) }} />
                 </div>
             </div>
         )
@@ -141,7 +142,7 @@ export default class SymbolPage extends Component {
                 </div>
                 <div className='symbol-page-parameters-container'>
                     {prototype.parameters.map((parameter, index) =>
-                        <div>
+                        <div key={index}>
                             {parameter.prototype === 'return'
                                 ? <div>
                                     <div className='symbol-page-parameter-name'>
