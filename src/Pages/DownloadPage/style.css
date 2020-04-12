@@ -1,0 +1,52 @@
+.download-page-container {
+    max-width: 1036px;
+    margin: 32px auto;
+    font-family: 'Open Sans';
+    font-size: 15px;
+    padding: 0 32px;
+    color: #202020;
+}
+
+.download-page-title {
+    color: #4C3DA8;
+    font-size: 26px;
+}
+
+.download-page-download-content {
+    padding: 64px 0;
+}
+
+.download-page-other-downloads-content {
+}
+
+.download-page-text-container {
+    padding: 32px 42px;
+}
+
+.download-page-button-container {
+    margin-top: 64px;
+    display: flex;
+    justify-content: center;
+}
+
+.download-page-subtext {
+    margin-top: 16px;
+    color: #3E3E3E;
+    font-style: italic;
+    text-align: center;
+}
+
+.download-page-other-container {
+    margin: 32px 0 64px 0;
+}
+
+.download-page-other {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.download-page-other-link {
+    color: #4C3DA8;
+    margin-left: 16px;
+}
