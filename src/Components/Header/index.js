@@ -11,11 +11,11 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom'
-
-import IdleTimer from 'react-idle-timer'
+import { Link } from 'react-router-dom';
+import Dropdown from 'react-dropdown';
 
 import './index.css'
+import 'react-dropdown/style.css';
 
 import pp from './pp.png'
 
@@ -125,15 +125,43 @@ class Header extends Component {
     state = {
         single: '',
         popper: '',
-        suggestions: []
+        suggestions: [],
+        langs: [],
+        langsNames: [],
+        types: [],
+        libMap: null,
+        results: [],
+        langMap: {},
+        libFlag: -1,
+        langFlag: -1,
+        typeFlag: "TYPE_NULL",
+        search: ""
     };
 
+    defaultOption = this.state.langsNames[0];
+    defaultValue = "Select a language";
+
+    ///////////////////////////////////////////////////////////
+
     handleSuggestionsFetchRequested = async ({ value }) => {
+        this.state.search =  value;
         suggestions = [];
-        var funct = await this.api.searchSymbolsSpecific(value, 5);
-        for (var name in funct.data.data) {
-            suggestions.push(funct.data.data[name].path)
+
+        console.log(this.state.langFlag)
+        let query = {
+            page: 1,
+            count: 5,
+            lib: this.state.libFlag === -1 ? null : this.state.libFlag,
+            lang: this.state.langFlag === -1 ? null : this.state.langFlag,
+            type: this.state.typeFlag === "TYPE_NULL" ? null : this.state.typeFlag,
+            path: this.state.search
+        };
+
+        var result = await this.api.SearchSymbols(query);
+        for (var id in result.data.data) {
+            suggestions.push(result.data.data[id].path)
         }
+
         this.setState({
             suggestions: getSuggestions(value),
         });
@@ -156,6 +184,25 @@ class Header extends Component {
             window.location = "/search?path=" + this.state.single;
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    initDropdown = ({ value }) => {
+        if (value === "None") {
+            this.setState({langFlag: -1});
+            this.defaultValue = "None"
+        } else {
+            this.state.langs.forEach(elem => {
+                if (value === elem.name) {
+                    this.setState({langFlag: elem.id});
+                    this.defaultValue = elem.name;
+                    return;
+                }
+            });
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
 
     checkConnect() {
         if (this.props.user) {
@@ -186,14 +233,6 @@ class Header extends Component {
         };
         return (
             <div className="Header">
-                <IdleTimer
-                    ref={ref => { this.idleTimer = ref }}
-                    element={document}
-                    onActive={this.onActive}
-                    onIdle={this.onIdle}
-                    onAction={this.onAction}
-                    debounce={500}
-                    timeout={1000 * 60 * 15} />
                 <header>
                     <Navbar className="header-bar" variant="default" style={{ backgroundColor: '#8560a8' }}>
                         <Button
@@ -211,6 +250,7 @@ class Header extends Component {
                         <Navbar.Brand className="fontBold" href="/" style={{ color: 'white', paddingLeft: '15px', marginRightboxShadow: '-1px -2px 10px black' }}>
                             WikiLibs
                         </Navbar.Brand>
+                        <Dropdown options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
                         <div className="inner-addon right-addon" style={{ width: '50%', position: 'relative', alignSelf: 'auto' }}>
                             <i className="fas fa-search glyphicon"></i>
                             <div className={classes.root}>
@@ -252,14 +292,19 @@ class Header extends Component {
             </div>
         )
     }
-
-    async onLangsReceived(langs) {
-        for (var v in langs.data) {
-            var libs = await this.api.getLibsPath(langs.data[v].name + "/");
-            for (var name in libs.data.data) {
-                suggestions.push(libs.data.data[name].path)
-            }
-        }
+    componentDidMount() {
+        this.api.GetLangLibTable().then(langs => {
+            let map = {};
+            let tab = [];
+            tab[0] = "None";
+            map[-1] = [];
+            langs.forEach(elem => {
+                map[elem.id] = elem.libs;
+                tab.push(elem.name);
+            });
+            this.setState({ langs: langs, libMap: map, langsNames: tab });
+        });
+        this.api.GetSymTypes().then(types => this.setState({ types: types }));
     }
 }
 
