@@ -147,7 +147,6 @@ class Header extends Component {
         this.state.search =  value;
         suggestions = [];
 
-        console.log(this.state.langFlag)
         let query = {
             page: 1,
             count: 5,
