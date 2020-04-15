@@ -15,7 +15,7 @@ import './style.css';
 import ManageGroups from './Components/ManageGroups';
 
 const ComponentMap = {
-    Groups: ManageGroups
+    "Groups": ManageGroups
 };
 
 export default class AdminPage extends Component {
@@ -27,7 +27,9 @@ export default class AdminPage extends Component {
         };
     }
 
-    switchAdminComponent = (_, val) => {
+    switchAdminComponent = (asd, val) => {
+        if (val == null)
+            return; //Apparently MaterialUI ToggleButtonGroup does not properly handle exclusive changes
         this.setState({ component: val });
     }
 
