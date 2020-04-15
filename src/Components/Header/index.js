@@ -21,7 +21,7 @@ import pp from './pp.png'
 var suggestions = [];
 
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
-    window.location = "/search?name=" + suggestion;
+    window.location = "/search?path=" + suggestion;
 }
 
 function renderInputComponent(inputProps) {
