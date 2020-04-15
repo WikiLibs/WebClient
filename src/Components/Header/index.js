@@ -187,14 +187,14 @@ class Header extends Component {
     ////////////////////////////////////////////////////////////////////////
 
     initDropdown = ({ value }) => {
-        if (value === "None") {
+        if (value === "All") {
             this.setState({langFlag: -1});
-            this.defaultValue = "None"
+            this.defaultValue = "All"
         } else {
             this.state.langs.forEach(elem => {
-                if (value === elem.name) {
+                if (value === elem.displayName) {
                     this.setState({langFlag: elem.id});
-                    this.defaultValue = elem.name;
+                    this.defaultValue = elem.displayName;
                     return;
                 }
             });
@@ -295,11 +295,11 @@ class Header extends Component {
         this.api.GetLangLibTable().then(langs => {
             let map = {};
             let tab = [];
-            tab[0] = "None";
+            tab[0] = "All";
             map[-1] = [];
             langs.forEach(elem => {
                 map[elem.id] = elem.libs;
-                tab.push(elem.name);
+                tab.push(elem.displayName);
             });
             this.setState({ langs: langs, libMap: map, langsNames: tab });
         });
