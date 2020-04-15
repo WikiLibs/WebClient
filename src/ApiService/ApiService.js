@@ -120,26 +120,6 @@ export default class ApiService {
         }));
     }
 
-    // searchSymbols(str, page) {
-    //     let query = "&PageOptions.Page=" + page;
-    //     return (Axios.get(this.url + "/symbol/search?Path=" + str + query, {
-    //         'headers': {
-    //             'Authorization': this.apiKey
-    //         }
-    //     }));
-    // }
-
-    searchSymbolsSpecific(str, number) {
-        let query = "&PageOptions.Count=" + number;
-        let page = "&PageOptions.Page=1";
-        let lib = "";//"&LibId=4";
-        return (Axios.get(this.url + "/symbol/search?Path=" + str + query + page + lib, {
-            'headers': {
-                'Authorization': this.apiKey
-            }
-        }));
-    }
-
     createUser(state) {
         return (Axios.post(this.url + "/auth/internal/register", {
             firstName: state.firstName,
