@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ApiService from '../../ApiService';
+import { ApiService } from '../../ApiService';
 import Alert from '@material-ui/lab/Alert';
 import { checkForm } from '../../util';
 

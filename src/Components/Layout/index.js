@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import ApiService from '../../ApiService';
+import { ApiService } from '../../ApiService';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import SideBar from '../../Components/SideBar';

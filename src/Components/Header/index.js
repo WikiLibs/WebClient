@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Button, Nav } from 'react-bootstrap';
-import ApiService from '../../ApiService';
+import { ApiService } from '../../ApiService';
 
 import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
@@ -144,7 +144,7 @@ class Header extends Component {
     ///////////////////////////////////////////////////////////
 
     handleSuggestionsFetchRequested = async ({ value }) => {
-        this.state.search =  value;
+        this.state.search = value;
         suggestions = [];
 
         let query = {
@@ -188,12 +188,12 @@ class Header extends Component {
 
     initDropdown = ({ value }) => {
         if (value === "None") {
-            this.setState({langFlag: -1});
+            this.setState({ langFlag: -1 });
             this.defaultValue = "None"
         } else {
             this.state.langs.forEach(elem => {
                 if (value === elem.displayName) {
-                    this.setState({langFlag: elem.id});
+                    this.setState({ langFlag: elem.id });
                     this.defaultValue = elem.displayName;
                     return;
                 }
@@ -292,7 +292,7 @@ class Header extends Component {
         )
     }
     componentDidMount() {
-        this.api.GetLangLibTable().then(langs => {
+        this.api.getLangLibTable().then(langs => {
             let map = {};
             let tab = [];
             tab[0] = "None";
@@ -303,7 +303,7 @@ class Header extends Component {
             });
             this.setState({ langs: langs, libMap: map, langsNames: tab });
         });
-        this.api.GetSymTypes().then(types => this.setState({ types: types }));
+        this.api.getSymTypes().then(types => this.setState({ types: types }));
     }
 }
 

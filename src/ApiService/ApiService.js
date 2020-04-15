@@ -18,7 +18,7 @@ export default class ApiService {
 
     /////////////////////////////////////////////////////////
 
-    GetLangLibTable() {
+    getLangLibTable() {
         return (this.getLangs().then(async response => {
             let langs = [];
             //Required cause for some reasons after the first iteration Axios decided to fuck up it's own memory
@@ -39,7 +39,7 @@ export default class ApiService {
         }));
     }
 
-    GetSymTypes() {
+    getSymTypes() {
         return (Axios.get(this.url + "/symbol/type", {
             'headers': {
                 'Authorization': this.apiKey
@@ -47,7 +47,7 @@ export default class ApiService {
         }).then(response => response.data));
     }
 
-    SearchSymbols(query) {
+    searchSymbols(query) {
         let q = "Path=" + encodeURIComponent(query.path);
         if (query.lang)
             q += "&LangId=" + query.lang;
