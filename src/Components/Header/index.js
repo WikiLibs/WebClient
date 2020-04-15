@@ -192,9 +192,9 @@ class Header extends Component {
             this.defaultValue = "None"
         } else {
             this.state.langs.forEach(elem => {
-                if (value === elem.name) {
+                if (value === elem.displayName) {
                     this.setState({langFlag: elem.id});
-                    this.defaultValue = elem.name;
+                    this.defaultValue = elem.displayName;
                     return;
                 }
             });
@@ -299,7 +299,7 @@ class Header extends Component {
             map[-1] = [];
             langs.forEach(elem => {
                 map[elem.id] = elem.libs;
-                tab.push(elem.name);
+                tab.push(elem.displayName);
             });
             this.setState({ langs: langs, libMap: map, langsNames: tab });
         });
