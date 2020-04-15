@@ -23,10 +23,7 @@ export default class SymbolPage extends Component {
 
     componentDidMount = () => {
         var q = useQuery();
-        if (q.path)
-            this.api.getSymbolByPath(q.path).then(response => { this.setState(response.data); });
-        else if (q.id)
-            this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
+        this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
 
     getName = () => {
@@ -63,6 +60,12 @@ export default class SymbolPage extends Component {
                 <div className='symbol-page-infos-path'>
                     {this.getDisplayPath()}
                 </div>
+                {
+                    this.state.import &&
+                    <div className='symbol-page-infos-path'>
+                        {this.state.import}
+                    </div>
+                }
             </div>
         )
     }
