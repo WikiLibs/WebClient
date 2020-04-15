@@ -3,17 +3,17 @@ import { Router, Switch } from 'react-router-dom';
 
 import { createBrowserHistory } from "history";
 
-import Layout from "./Components/Layout"
+import Layout from "./Components/Layout";
 
 /* PAGES */
-import WelcomePage from './Pages/WelcomePage'
-import SymbolPage from './Pages/SymbolPage'
-import SearchPage from './Pages/SearchPage'
-import UserCreationPage from './Pages/UserCreationPage'
+import WelcomePage from './Pages/WelcomePage';
+import SymbolPage from './Pages/SymbolPage';
+import SearchPage from './Pages/SearchPage';
+import UserCreationPage from './Pages/UserCreationPage';
 import UserConnectionPage from './Pages/UserConnectionPage';
 import ProfilePage from './Pages/ProfilePage';
-import NotFoundPage from './Pages/NotFoundPage'
-import AdminPage from './Pages/AdminPage'
+import NotFoundPage from './Pages/NotFoundPage';
+import AdminPage from './Pages/AdminPage';
 /* END */
 
 const history = createBrowserHistory()
