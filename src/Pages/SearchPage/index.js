@@ -23,8 +23,9 @@ export default class SearchPage extends Component {
         langMap: {},
         libFlag: -1,
         langFlag: -1,
-        typeFlag: "TYPE_NULL",
-        search: "/"
+        typeFlag: -1,
+        search: null,
+        pageName: "Unknown"
     };
 
     defaultOption = this.state.langsNames[0];
@@ -48,25 +49,24 @@ export default class SearchPage extends Component {
 
     refrehData = () => {
         var q = useQuery();
+        let query = {
+            page: this.state.page,
+            count: 10,
+            lib: this.state.libFlag === -1 ? null : this.state.libFlag,
+            lang: this.state.langFlag === -1 ? null : this.state.langFlag,
+            type: this.state.typeFlag === -1 ? null : this.state.typeFlag,
+            path: this.state.search
+        };
         if (q.lib) {
-            this.setState({ search: q.name });
-            this.api.getSymbolByLib(q.lib, this.state.page).then(response => {
-                this.sortResultsIntoList(response.data);
-            });
+            this.setState({ search: null, pageName: q.name });
+            query.lib = parseInt(q.lib);
         } else if (q.path) {
-            this.setState({ search: q.path });
-            let query = {
-                page: this.state.page,
-                count: 10,
-                lib: this.state.libFlag === -1 ? null : this.state.libFlag,
-                lang: this.state.langFlag === -1 ? null : this.state.langFlag,
-                type: this.state.typeFlag === "TYPE_NULL" ? null : this.state.typeFlag,
-                path: this.state.search
-            };
-            this.api.searchSymbols(query).then(response => {
-                this.sortResultsIntoList(response.data);
-            });
+            this.setState({ search: q.path, pageName: q.path });
+            query.path = q.path;
         }
+        this.api.searchSymbols(query).then(response => {
+            this.sortResultsIntoList(response.data);
+        });
     }
 
     handleNext = () => {
@@ -166,7 +166,7 @@ export default class SearchPage extends Component {
         return (
             <div className='search-page-container'>
                 <div className='search-page-title'>
-                    Results for : '{this.state.search}'
+                    Results for : '{this.state.pageName}'
                     <Dropdown options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
                 </div>
                 {this.renderSymbolList()}

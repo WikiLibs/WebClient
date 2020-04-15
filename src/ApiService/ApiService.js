@@ -48,13 +48,16 @@ export default class ApiService {
     }
 
     searchSymbols(query) {
-        let q = "Path=" + encodeURIComponent(query.path);
+        let q = ""
+        if (query.path)
+            q += "&Path=" + encodeURIComponent(query.path);
         if (query.lang)
             q += "&LangId=" + query.lang;
         if (query.lib)
             q += "&LibId=" + query.lib;
         if (query.type)
-            q += "&Type=" + encodeURIComponent(query.type);
+            q += "&TypeId=" + encodeURIComponent(query.type);
+        q = q.substring(1);
         q += "&PageOptions.Page=" + query.page + "&PageOptions.Count=" + query.count;
         return (Axios.get(this.url + "/symbol/search?" + q, {
             'headers': {
@@ -95,25 +98,8 @@ export default class ApiService {
         }));
     }
 
-    getSymbolByPath(path) {
-        return (Axios.get(this.url + "/symbol?path=" + path, {
-            'headers': {
-                'Authorization': this.apiKey
-            }
-        }));
-    }
-
     getSymbolById(id) {
         return (Axios.get(this.url + "/symbol?id=" + id, {
-            'headers': {
-                'Authorization': this.apiKey
-            }
-        }));
-    }
-
-    getSymbolByLib(id, page) {
-        let query = "?Page=" + page;
-        return (Axios.get(this.url + "/symbol/lib/" + id + query, {
             'headers': {
                 'Authorization': this.apiKey
             }
