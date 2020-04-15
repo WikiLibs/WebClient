@@ -27,7 +27,6 @@ function sendToSymbolPage(query) {
     } else {
         var i = 0
         suggestions.forEach(elem => {
-             console.log(elem, query.path)
             if (elem === query.path) {
                 window.location = "/symbol?id=" + suggestionsId[i];
                 return;
