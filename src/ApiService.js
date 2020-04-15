@@ -16,6 +16,55 @@ export default class ApiService {
         }));
     }
 
+    /////////////////////////////////////////////////////////
+
+    GetLangLibTable() {
+        return (this.getLangs().then(async response => {
+            let langs = [];
+            //Required cause for some reasons after the first iteration Axios decided to fuck up it's own memory
+            let forceDupe = JSON.parse(JSON.stringify(response.data));
+            for (let k in forceDupe) {
+                let elem = forceDupe[k];
+                let lang = {
+                    id: elem.id,
+                    name: elem.name,
+                    displayName: elem.displayName,
+                    libs: []
+                };
+                let response = await this.getLibs(elem.id);
+                lang.libs = response.data.data;
+                langs.push(lang);
+            }
+            return (langs);
+        }));
+    }
+
+    GetSymTypes() {
+        return (Axios.get(this.url + "/symbol/type", {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }).then(response => response.data));
+    }
+
+    SearchSymbols(query) {
+        let q = "Path=" + encodeURIComponent(query.path);
+        if (query.lang)
+            q += "&LangId=" + query.lang;
+        if (query.lib)
+            q += "&LibId=" + query.lib;
+        if (query.type)
+            q += "&Type=" + encodeURIComponent(query.type);
+        q += "&PageOptions.Page=" + query.page + "&PageOptions.Count=" + query.count;
+        return (Axios.get(this.url + "/symbol/search?" + q, {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
+    /////////////////////////////////////////////////////////
+
     translateErrorMessage(err) {
         switch (err.response.status) {
             case 401:
@@ -71,18 +120,20 @@ export default class ApiService {
         }));
     }
 
-    searchSymbols(str, page) {
-        let query = "&PageOptions.Page=" + page;
-        return (Axios.get(this.url + "/symbol/search?Path=" + str + query, {
-            'headers': {
-                'Authorization': this.apiKey
-            }
-        }));
-    }
+    // searchSymbols(str, page) {
+    //     let query = "&PageOptions.Page=" + page;
+    //     return (Axios.get(this.url + "/symbol/search?Path=" + str + query, {
+    //         'headers': {
+    //             'Authorization': this.apiKey
+    //         }
+    //     }));
+    // }
 
     searchSymbolsSpecific(str, number) {
         let query = "&PageOptions.Count=" + number;
-        return (Axios.get(this.url + "/symbol/search?Path=" + str + query + "&PageOptions.Page=1", {
+        let page = "&PageOptions.Page=1";
+        let lib = "";//"&LibId=4";
+        return (Axios.get(this.url + "/symbol/search?Path=" + str + query + page + lib, {
             'headers': {
                 'Authorization': this.apiKey
             }
