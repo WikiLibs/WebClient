@@ -2,40 +2,75 @@ import React, { Component } from 'react';
 import ApiService from '../../ApiService';
 import Button from '@material-ui/core/Button';
 import { useQuery } from '../../util';
+import Dropdown from 'react-dropdown';
 
 import './style.css'
 
 export default class SearchPage extends Component {
     api = new ApiService();
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: null,
-            hasMorePages: false,
-            page: 1,
-            symbols: {},
-            pageName: "Unknown"
-        };
-    }
+    state = {
+        data: null,
+        hasMorePages: false,
+        page: 1,
+        symbols: {},
+        pageName: "Unknown",
+        key: "ID#",
+        langs: [],
+        langsNames: [],
+        types: [],
+        libMap: null,
+        results: [],
+        langMap: {},
+        libFlag: -1,
+        langFlag: -1,
+        typeFlag: "TYPE_NULL",
+        search: "/"
+    };
 
-    componentDidMount = () => {
-        this.refrehData();
+    defaultOption = this.state.langsNames[0];
+    defaultValue = "Select a language";
+
+    initDropdown = ({ value }) => {
+        if (value === "All") {
+            this.setState({langFlag: -1});
+            this.defaultValue = "All"
+            this.setState({ symbols: {}, 'page': 1 }, () => this.refrehData());
+        } else {
+            this.state.langs.forEach(elem => {
+                if (value === elem.displayName) {
+                    this.setState({langFlag: elem.id});
+                    this.defaultValue = elem.displayName;
+                    this.setState({ symbols: {}, 'page': 1 }, () => this.refrehData());
+                }
+            });
+        }
     }
 
     refrehData = () => {
         var q = useQuery();
         if (q.lib) {
-            this.api.getSymbolByLib(q.lib, this.state.page).then(response => {
-                this.sortResultsIntoList(response.data);
+            this.state.libMap[this.state.langFlag].forEach(elem => {
+                if (elem.id === q.lib){
+                    this.setState({search: elem.name});
+                }
             });
-            this.setState({ pageName: q.name });
-        } else if (q.path) {
-            this.api.searchSymbols(q.path, this.state.page).then(response => {
-                this.sortResultsIntoList(response.data);
-            });
-            this.setState({ pageName: q.path });
+        } else if (q.name) {
+            this.setState({search: q.name});
         }
+        let query = {
+            page: this.state.page,
+            count: 10,
+            lib: this.state.libFlag === -1 ? null : this.state.libFlag,
+            lang: this.state.langFlag === -1 ? null : this.state.langFlag,
+            type: this.state.typeFlag === "TYPE_NULL" ? null : this.state.typeFlag,
+            path: this.state.search
+        };
+            
+        this.api.SearchSymbols(query).then(response => {
+            this.sortResultsIntoList(response.data);
+        });
+        this.setState({ pageName: q.name });
     }
 
     handleNext = () => {
@@ -100,7 +135,7 @@ export default class SearchPage extends Component {
             <div>
                 {
                     Object.keys(this.state.symbols).map((key) =>
-                        <div key={key} className='search-page-results-container'>
+                        <div key={this.state.key+key} className='search-page-results-container'>
                             <div className='search-page-title'>
                                 {key[0].toUpperCase() + key.slice(1)}
                                 <span className='search-page-title-number'>{this.state.symbols[key].length} result(s)</span>
@@ -136,10 +171,27 @@ export default class SearchPage extends Component {
             <div className='search-page-container'>
                 <div className='search-page-title'>
                     Results for : '{this.state.pageName}'
+                    <Dropdown options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
                 </div>
                 {this.renderSymbolList()}
                 {this.renderFooter()}
             </div>
         );
+    }
+
+    componentDidMount = async () => {
+        await this.api.GetLangLibTable().then(langs => {
+            let map = {};
+            let tab = [];
+            tab[0] = "All";
+            map[-1] = [];
+            langs.forEach(elem => {
+                map[elem.id] = elem.libs;
+                tab.push(elem.displayName);
+            });
+            this.setState({ langs: langs, libMap: map, langsNames: tab });
+        });
+        await this.api.GetSymTypes().then(types => this.setState({ types: types }));
+        this.refrehData();
     }
 }

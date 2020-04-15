@@ -12,7 +12,6 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import Dropdown from 'react-dropdown';
 
 import './index.css'
 import 'react-dropdown/style.css';
@@ -22,7 +21,7 @@ import pp from './pp.png'
 var suggestions = [];
 
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
-    window.location = "/search?path=" + suggestion;
+    window.location = "/search?name=" + suggestion;
 }
 
 function renderInputComponent(inputProps) {
@@ -127,7 +126,6 @@ class Header extends Component {
         popper: '',
         suggestions: [],
         langs: [],
-        langsNames: [],
         types: [],
         libMap: null,
         results: [],
@@ -137,9 +135,6 @@ class Header extends Component {
         typeFlag: "TYPE_NULL",
         search: ""
     };
-
-    defaultOption = this.state.langsNames[0];
-    defaultValue = "Select a language";
 
     ///////////////////////////////////////////////////////////
 
@@ -181,23 +176,6 @@ class Header extends Component {
     handleKeyDown = (event) => {
         if (event.keyCode === 13) {
             window.location = "/search?path=" + this.state.single;
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    initDropdown = ({ value }) => {
-        if (value === "None") {
-            this.setState({langFlag: -1});
-            this.defaultValue = "None"
-        } else {
-            this.state.langs.forEach(elem => {
-                if (value === elem.displayName) {
-                    this.setState({langFlag: elem.id});
-                    this.defaultValue = elem.displayName;
-                    return;
-                }
-            });
         }
     }
 
@@ -249,7 +227,6 @@ class Header extends Component {
                         <Navbar.Brand className="fontBold" href="/" style={{ color: 'white', paddingLeft: '15px', marginRightboxShadow: '-1px -2px 10px black' }}>
                             WikiLibs
                         </Navbar.Brand>
-                        <Dropdown options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
                         <div className="inner-addon right-addon" style={{ width: '50%', position: 'relative', alignSelf: 'auto' }}>
                             <i className="fas fa-search glyphicon"></i>
                             <div className={classes.root}>
@@ -294,14 +271,11 @@ class Header extends Component {
     componentDidMount() {
         this.api.GetLangLibTable().then(langs => {
             let map = {};
-            let tab = [];
-            tab[0] = "None";
             map[-1] = [];
             langs.forEach(elem => {
                 map[elem.id] = elem.libs;
-                tab.push(elem.displayName);
             });
-            this.setState({ langs: langs, libMap: map, langsNames: tab });
+            this.setState({ langs: langs, libMap: map});
         });
         this.api.GetSymTypes().then(types => this.setState({ types: types }));
     }
