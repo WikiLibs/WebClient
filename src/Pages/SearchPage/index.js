@@ -14,7 +14,6 @@ export default class SearchPage extends Component {
         hasMorePages: false,
         page: 1,
         symbols: {},
-        pageName: "Unknown",
         key: "ID#",
         langs: [],
         langsNames: [],
@@ -33,13 +32,13 @@ export default class SearchPage extends Component {
 
     initDropdown = ({ value }) => {
         if (value === "All") {
-            this.setState({langFlag: -1});
+            this.setState({ langFlag: -1 });
             this.defaultValue = "All"
             this.setState({ symbols: {}, 'page': 1 }, () => this.refrehData());
         } else {
             this.state.langs.forEach(elem => {
                 if (value === elem.displayName) {
-                    this.setState({langFlag: elem.id});
+                    this.setState({ langFlag: elem.id });
                     this.defaultValue = elem.displayName;
                     this.setState({ symbols: {}, 'page': 1 }, () => this.refrehData());
                 }
@@ -50,27 +49,24 @@ export default class SearchPage extends Component {
     refrehData = () => {
         var q = useQuery();
         if (q.lib) {
-            this.state.libMap[this.state.langFlag].forEach(elem => {
-                if (elem.id === q.lib){
-                    this.setState({search: elem.name});
-                }
+            this.setState({ search: q.name });
+            this.api.getSymbolByLib(q.lib, this.state.page).then(response => {
+                this.sortResultsIntoList(response.data);
             });
-        } else if (q.name) {
-            this.setState({search: q.name});
+        } else if (q.path) {
+            this.setState({ search: q.path });
+            let query = {
+                page: this.state.page,
+                count: 10,
+                lib: this.state.libFlag === -1 ? null : this.state.libFlag,
+                lang: this.state.langFlag === -1 ? null : this.state.langFlag,
+                type: this.state.typeFlag === "TYPE_NULL" ? null : this.state.typeFlag,
+                path: this.state.search
+            };
+            this.api.searchSymbols(query).then(response => {
+                this.sortResultsIntoList(response.data);
+            });
         }
-        let query = {
-            page: this.state.page,
-            count: 10,
-            lib: this.state.libFlag === -1 ? null : this.state.libFlag,
-            lang: this.state.langFlag === -1 ? null : this.state.langFlag,
-            type: this.state.typeFlag === "TYPE_NULL" ? null : this.state.typeFlag,
-            path: this.state.search
-        };
-            
-        this.api.SearchSymbols(query).then(response => {
-            this.sortResultsIntoList(response.data);
-        });
-        this.setState({ pageName: q.name });
     }
 
     handleNext = () => {
@@ -135,7 +131,7 @@ export default class SearchPage extends Component {
             <div>
                 {
                     Object.keys(this.state.symbols).map((key) =>
-                        <div key={this.state.key+key} className='search-page-results-container'>
+                        <div key={this.state.key + key} className='search-page-results-container'>
                             <div className='search-page-title'>
                                 {key[0].toUpperCase() + key.slice(1)}
                                 <span className='search-page-title-number'>{this.state.symbols[key].length} result(s)</span>
@@ -170,7 +166,7 @@ export default class SearchPage extends Component {
         return (
             <div className='search-page-container'>
                 <div className='search-page-title'>
-                    Results for : '{this.state.pageName}'
+                    Results for : '{this.state.search}'
                     <Dropdown options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
                 </div>
                 {this.renderSymbolList()}
@@ -180,7 +176,7 @@ export default class SearchPage extends Component {
     }
 
     componentDidMount = async () => {
-        await this.api.GetLangLibTable().then(langs => {
+        await this.api.getLangLibTable().then(langs => {
             let map = {};
             let tab = [];
             tab[0] = "All";
@@ -191,7 +187,7 @@ export default class SearchPage extends Component {
             });
             this.setState({ langs: langs, libMap: map, langsNames: tab });
         });
-        await this.api.GetSymTypes().then(types => this.setState({ types: types }));
+        await this.api.getSymTypes().then(types => this.setState({ types: types }));
         this.refrehData();
     }
 }

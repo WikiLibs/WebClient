@@ -151,7 +151,7 @@ class Header extends Component {
             path: this.state.search
         };
 
-        var result = await this.api.SearchSymbols(query);
+        var result = await this.api.searchSymbols(query);
         for (var id in result.data.data) {
             suggestions.push(result.data.data[id].path)
         }
@@ -275,7 +275,7 @@ class Header extends Component {
             langs.forEach(elem => {
                 map[elem.id] = elem.libs;
             });
-            this.setState({ langs: langs, libMap: map});
+            this.setState({ langs: langs, libMap: map });
         });
         this.api.getSymTypes().then(types => this.setState({ types: types }));
     }
