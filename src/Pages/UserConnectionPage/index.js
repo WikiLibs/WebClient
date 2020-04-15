@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
-import ApiService from '../../ApiService';
+import { ApiService } from '../../ApiService';
 import { checkForm } from '../../util';
 
 import './index.css';

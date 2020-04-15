@@ -1,6 +1,6 @@
 #AdminActions {
     margin: 24px;
-    display: inline-block;
+    display: block;
 }
 
 #AdminActions .MuiToggleButtonGroup-root {
@@ -13,5 +13,17 @@
 }
 
 #AdminContent {
-    display: inline-block;
+    display: block;
+    margin: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+#AdminContent h2 {
+    padding-bottom: 24px;
+}
+
+#Bodqwfihjjy { /* The name here is mangled otherwise it fucks up other parts of the website */
+    display: flex;
 }

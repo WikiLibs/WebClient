@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Button, Nav } from 'react-bootstrap';
-import ApiService from '../../ApiService';
+import { ApiService } from '../../ApiService';
 
 import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
@@ -139,7 +139,7 @@ class Header extends Component {
     ///////////////////////////////////////////////////////////
 
     handleSuggestionsFetchRequested = async ({ value }) => {
-        this.state.search =  value;
+        this.state.search = value;
         suggestions = [];
 
         let query = {
@@ -151,7 +151,7 @@ class Header extends Component {
             path: this.state.search
         };
 
-        var result = await this.api.SearchSymbols(query);
+        var result = await this.api.searchSymbols(query);
         for (var id in result.data.data) {
             suggestions.push(result.data.data[id].path)
         }
@@ -269,15 +269,15 @@ class Header extends Component {
         )
     }
     componentDidMount() {
-        this.api.GetLangLibTable().then(langs => {
+        this.api.getLangLibTable().then(langs => {
             let map = {};
             map[-1] = [];
             langs.forEach(elem => {
                 map[elem.id] = elem.libs;
             });
-            this.setState({ langs: langs, libMap: map});
+            this.setState({ langs: langs, libMap: map });
         });
-        this.api.GetSymTypes().then(types => this.setState({ types: types }));
+        this.api.getSymTypes().then(types => this.setState({ types: types }));
     }
 }
 

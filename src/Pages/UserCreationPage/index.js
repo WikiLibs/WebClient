@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import ApiService from '../../ApiService';
+import { ApiService } from '../../ApiService';
 import { checkForm } from '../../util';
 
 import './index.css';

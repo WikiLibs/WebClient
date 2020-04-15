@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import ApiService from '../../ApiService';
 
 //Icons
 import GroupIcon from '@material-ui/icons/Group';
@@ -15,7 +14,7 @@ import './style.css';
 import ManageGroups from './Components/ManageGroups';
 
 const ComponentMap = {
-    Groups: ManageGroups
+    "Groups": ManageGroups
 };
 
 export default class AdminPage extends Component {
@@ -28,6 +27,8 @@ export default class AdminPage extends Component {
     }
 
     switchAdminComponent = (_, val) => {
+        if (val == null)
+            return; //Apparently MaterialUI ToggleButtonGroup does not properly handle exclusive changes
         this.setState({ component: val });
     }
 
@@ -37,7 +38,7 @@ export default class AdminPage extends Component {
         }
         let Comp = ComponentMap[this.state.component];
         return (
-            <div id="Body">
+            <div id="Bodqwfihjjy">
                 <div id="AdminActions">
                     <ToggleButtonGroup value={this.state.component} exclusive onChange={this.switchAdminComponent}>
                         {
