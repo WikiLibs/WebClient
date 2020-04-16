@@ -19,9 +19,29 @@ import 'react-dropdown/style.css';
 import pp from './pp.png'
 
 var suggestions = [];
+var suggestionsId = [];
+
+function sendToSymbolPage(query) {
+    if (query.id !== -1) {
+        window.location = query.url + query.id;    
+    } else {
+        var i = 0
+        suggestions.forEach(elem => {
+            if (elem === query.path) {
+                window.location = "/symbol?id=" + suggestionsId[i];
+                return;
+            }
+            i += 1;
+        });
+    }
+    if (i === suggestions.length) {
+    window.location = query.url + query.path;
+    }
+}
 
 function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
-    window.location = "/search?path=" + suggestion;
+    let query = {url:"/symbol?id=", id: suggestionsId[suggestionIndex], path:""}
+    sendToSymbolPage(query);
 }
 
 function renderInputComponent(inputProps) {
@@ -141,6 +161,7 @@ class Header extends Component {
     handleSuggestionsFetchRequested = async ({ value }) => {
         this.state.search = value;
         suggestions = [];
+        suggestionsId = [];
 
         let query = {
             page: 1,
@@ -154,6 +175,7 @@ class Header extends Component {
         var result = await this.api.searchSymbols(query);
         for (var id in result.data.data) {
             suggestions.push(result.data.data[id].path)
+            suggestionsId.push(result.data.data[id].id)
         }
 
         this.setState({
@@ -175,7 +197,8 @@ class Header extends Component {
 
     handleKeyDown = (event) => {
         if (event.keyCode === 13) {
-            window.location = "/search?path=" + this.state.single;
+            let query = {url:"/search?path=", id: -1, path: this.state.single}
+            sendToSymbolPage(query);
         }
     }
 
