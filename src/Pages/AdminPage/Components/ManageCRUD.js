@@ -58,7 +58,7 @@ export default class ManageCRUD extends Component {
     }
 
     openEditModal(obj) {
-        let copy = JSON.parse(JSON.stringify(obj)); //Make a copy of the group data before starting to modify
+        let copy = JSON.parse(JSON.stringify(obj)); //Make a copy of the object data before starting to modify
         this.setState({ isNew: false, showEditModal: true });
         this.props.openObjectModal(copy)
     }
@@ -75,14 +75,14 @@ export default class ManageCRUD extends Component {
         let obj = this.props.editObject;
         if (this.state.isNew)
             this.props.post(obj).then(() => {
-                this.setState({ success: "Successfully added new group", showEditModal: false });
+                this.setState({ success: "Successfully added new " + this.props.typeName, showEditModal: false });
                 this.reloadFromApi();
             }).catch((error) => {
                 this.setState({ apiError: this.api.translateErrorMessage(error), showEditModal: false });
             });
         else
             this.props.patch(obj.id, obj).then(() => {
-                this.setState({ success: "Successfully updated existing group", showEditModal: false });
+                this.setState({ success: "Successfully updated existing " + this.props.typeName, showEditModal: false });
                 this.reloadFromApi();
             }).catch((error) => {
                 this.setState({ apiError: this.api.translateErrorMessage(error), showEditModal: false });
@@ -91,7 +91,7 @@ export default class ManageCRUD extends Component {
 
     handleDelete = () => {
         this.props.delete(this.state.deleteId).then(() => {
-            this.setState({ success: "Successfully deleted group " + this.state.showConfirmModal, showConfirmModal: null, deleteId: null });
+            this.setState({ success: "Successfully deleted " + this.props.typeName + " " + this.state.showConfirmModal, showConfirmModal: null, deleteId: null });
             this.reloadFromApi();
         }).catch((error) => {
             this.setState({ apiError: this.api.translateErrorMessage(error), showConfirmModal: null, deleteId: null });

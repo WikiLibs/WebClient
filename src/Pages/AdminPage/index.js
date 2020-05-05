@@ -12,9 +12,11 @@ import './style.css';
 
 //Components
 import ManageGroups from './Components/ManageGroups';
+import ManageApiKeys from './Components/ManageApiKeys';
 
 const ComponentMap = {
-    "Groups": ManageGroups
+    "Groups": ManageGroups,
+    "ApiKeys": ManageApiKeys
 };
 
 export default class AdminPage extends Component {

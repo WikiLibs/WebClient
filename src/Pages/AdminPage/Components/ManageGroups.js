@@ -117,7 +117,7 @@ export default class ManageGroups extends Component {
         return (
             <>
                 <ManageCRUD
-                    //AXIOS
+                    // AXIOS
                     get={() => this.admin.getGroups()}
                     post={(obj) => this.admin.postGroup(obj)}
                     patch={(objid, obj) => this.admin.patchGroup(objid, obj)}
