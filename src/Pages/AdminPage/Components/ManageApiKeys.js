@@ -148,98 +148,96 @@ export default class ManageApiKeys extends Component {
 
     renderObjectModal = (obj) => {
         return (
-            <>
-                <Grid container direction="column">
-                    <TextField
-                        label="Description"
-                        placeholder="Description"
-                        value={obj.description}
-                        onChange={this.handleDescriptionChange}
-                    />
-                    <br />
-                    <TextField
-                        label="Origin restriction"
-                        placeholder="www.example.com"
-                        value={obj.origin}
-                        onChange={this.handleOriginChange}
-                    />
-                    <br />
-                    <TextField
-                        label="Number of uses (-1 for infinity)"
-                        inputProps={{ step: "1", min: "-1", max: "999999999999" }}
-                        type="number"
-                        value={obj.useNum}
-                        onChange={this.handleUseNumChange}
-                    />
-                    <br />
-                    <FormControlLabel
-                        control={
-                            <Select
-                                multiple
-                                value={apiKeyBitFieldToList(obj.flags)}
-                                onChange={this.handleBitFieldFlagsChange}
-                                renderValue={(selected) =>
-                                    <>
-                                        {
-                                            selected.map((value) =>
-                                                <Chip key={value} label={value} style={{ "fontWeight": 600 }} />
-                                            )
-                                        }
-                                    </>
-                                }
-                            >
-                                {
-                                    FLAGS.map((f) =>
-                                        <MenuItem key={f.Value} value={f.Name} style={obj.flags & f.Value ? { "fontWeight": 600 } : null}>
-                                            {f.Name}
-                                        </MenuItem>
-                                    )
-                                }
-                            </Select>
-                        }
-                        label="Flags: &nbsp;&nbsp;&nbsp;&nbsp;"
-                        labelPlacement="start"
-                    />
-                    <br />
-                    <Grid container direction="row">
-                        {
-                            !this.isDateInfinite(obj.expirationDate) ?
+            <Grid container direction="column">
+                <TextField
+                    label="Description"
+                    placeholder="Description"
+                    value={obj.description}
+                    onChange={this.handleDescriptionChange}
+                />
+                <br />
+                <TextField
+                    label="Origin restriction"
+                    placeholder="www.example.com"
+                    value={obj.origin}
+                    onChange={this.handleOriginChange}
+                />
+                <br />
+                <TextField
+                    label="Number of uses (-1 for infinity)"
+                    inputProps={{ step: "1", min: "-1", max: "999999999999" }}
+                    type="number"
+                    value={obj.useNum}
+                    onChange={this.handleUseNumChange}
+                />
+                <br />
+                <FormControlLabel
+                    control={
+                        <Select
+                            multiple
+                            value={apiKeyBitFieldToList(obj.flags)}
+                            onChange={this.handleBitFieldFlagsChange}
+                            renderValue={(selected) =>
                                 <>
-                                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                                        <KeyboardDatePicker
-                                            disableToolbar
-                                            variant="inline"
-                                            format="MM/DD/YYYY"
-                                            margin="normal"
-                                            label="Expiration date"
-                                            value={obj.expirationDate}
-                                            onChange={this.handleExpirationDateChange}
-                                            KeyboardButtonProps={{
-                                                'aria-label': 'Expiration date',
-                                            }}
-                                        />
-                                    </MuiPickersUtilsProvider>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {
+                                        selected.map((value) =>
+                                            <Chip key={value} label={value} style={{ "fontWeight": 600 }} />
+                                        )
+                                    }
                                 </>
-                                :
-                                <>
-                                    <Typography color="textSecondary">
-                                        Expiration date
+                            }
+                        >
+                            {
+                                FLAGS.map((f) =>
+                                    <MenuItem key={f.Value} value={f.Name} style={obj.flags & f.Value ? { "fontWeight": 600 } : null}>
+                                        {f.Name}
+                                    </MenuItem>
+                                )
+                            }
+                        </Select>
+                    }
+                    label="Flags: &nbsp;&nbsp;&nbsp;&nbsp;"
+                    labelPlacement="start"
+                />
+                <br />
+                <Grid container direction="row">
+                    {
+                        !this.isDateInfinite(obj.expirationDate) ?
+                            <>
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <KeyboardDatePicker
+                                        disableToolbar
+                                        variant="inline"
+                                        format="MM/DD/YYYY"
+                                        margin="normal"
+                                        label="Expiration date"
+                                        value={obj.expirationDate}
+                                        onChange={this.handleExpirationDateChange}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'Expiration date',
+                                        }}
+                                    />
+                                </MuiPickersUtilsProvider>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </>
+                            :
+                            <>
+                                <Typography color="textSecondary">
+                                    Expiration date
                                     </Typography>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
+                    }
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={this.isDateInfinite(obj.expirationDate)}
+                                onChange={this.handleSwitchDateInfinite}
+                                color="primary"
+                            />
                         }
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.isDateInfinite(obj.expirationDate)}
-                                    onChange={this.handleSwitchDateInfinite}
-                                    color="primary"
-                                />
-                            }
-                            label="Infinite"
-                        />
-                    </Grid>
+                        label="Infinite"
+                    />
                 </Grid>
-            </>
+            </Grid>
         );
     }
 
@@ -270,13 +268,11 @@ export default class ManageApiKeys extends Component {
 
     postFunc = (obj) => {
         obj.useNum = fixedParseInt(obj.useNum);
-        obj.origin = obj.origin === "" ? null : obj.origin;
         return (this.admin.postApiKey(obj));
     }
 
     patchFunc = (id, obj) => {
         obj.useNum = fixedParseInt(obj.useNum);
-        obj.origin = obj.origin === "" ? null : obj.origin;
         return (this.admin.patchApiKey(id, obj));
     }
 
