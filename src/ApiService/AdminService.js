@@ -69,7 +69,7 @@ export default class AdminService {
     }
 
     getApps() {
-        return (Axios.get(this.url + "/admin/bot", {
+        return (Axios.get(this.url + "/bot", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
@@ -77,7 +77,7 @@ export default class AdminService {
     }
 
     patchApp(id, app) {
-        return (Axios.patch(this.url + "/admin/bot/" + id, app, {
+        return (Axios.patch(this.url + "/bot/" + id, app, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
@@ -85,7 +85,7 @@ export default class AdminService {
     }
 
     postApp(app) {
-        return (Axios.post(this.url + "/admin/bot", app, {
+        return (Axios.post(this.url + "/bot", app, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
@@ -93,7 +93,7 @@ export default class AdminService {
     }
 
     deleteApp(id) {
-        return (Axios.delete(this.url + "/admin/bot/" + id, {
+        return (Axios.delete(this.url + "/bot/" + id, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
