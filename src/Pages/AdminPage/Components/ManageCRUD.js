@@ -43,17 +43,29 @@ export default class ManageCRUD extends Component {
         deleteId: null
     };
 
+    initialized = false;
+
     api = new ApiService();
+
+    callEvent(name, ...args) {
+        if (this.props.events && this.props.events[name])
+            this.props.events[name](...args);
+    }
 
     reloadFromApi() {
         this.props.get().then(response => {
             this.setState({ objects: response.data });
+            if (!this.initialized) {
+                this.initialized = true;
+                this.callEvent("postLoad", response.data);
+            }
         }).catch((error) => {
             this.setState({ apiError: this.api.translateErrorMessage(error) });
         });
     }
 
     componentDidMount() {
+        this.callEvent("preLoad");
         this.reloadFromApi();
     }
 
@@ -73,20 +85,25 @@ export default class ManageCRUD extends Component {
 
     handleModalSubmit = () => {
         let obj = this.props.editObject;
-        if (this.state.isNew)
-            this.props.post(obj).then(() => {
+        if (this.state.isNew) {
+            this.callEvent("preObjectCreate", obj);
+            this.props.post(obj).then((response) => {
                 this.setState({ success: "Successfully added new " + this.props.typeName, showEditModal: false });
                 this.reloadFromApi();
+                this.callEvent("postObjectCreate", response.data);
             }).catch((error) => {
                 this.setState({ apiError: this.api.translateErrorMessage(error), showEditModal: false });
             });
-        else
-            this.props.patch(obj.id, obj).then(() => {
+        } else {
+            this.callEvent("preObjectUpdate", obj);
+            this.props.patch(obj.id, obj).then((response) => {
                 this.setState({ success: "Successfully updated existing " + this.props.typeName, showEditModal: false });
                 this.reloadFromApi();
+                this.callEvent("postObjectUpdate", response.data);
             }).catch((error) => {
                 this.setState({ apiError: this.api.translateErrorMessage(error), showEditModal: false });
             });
+        }
     }
 
     handleDelete = () => {
