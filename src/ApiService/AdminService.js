@@ -99,4 +99,53 @@ export default class AdminService {
             }
         }));
     }
+
+    postSymbolType(type) {
+        return (Axios.post(this.url + "/symbol/type", type, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    patchSymbolType(id, type) {
+        return (Axios.patch(this.url + "/symbol/type/" + id, type, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    deleteSymbolType(id) {
+        return (Axios.delete(this.url + "/symbol/type/" + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    postSymbolLang(lang) {
+        return (Axios.post(this.url + "/symbol/lang", lang, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    patchSymbolLang(id, lang) {
+        return (Axios.patch(this.url + "/symbol/lang/" + id, lang, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    deleteSymbolLang(id) {
+        return (Axios.delete(this.url + "/symbol/lang/" + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
 }

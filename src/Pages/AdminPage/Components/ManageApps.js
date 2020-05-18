@@ -19,7 +19,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import AvatarView from '../../../Components/AvatarView';
 
 export default class ManageApps extends Component {
 
@@ -170,7 +169,6 @@ export default class ManageApps extends Component {
     renderObject = (app) => {
         return (
             <>
-                <AvatarView size="medium" />
                 <Typography variant="h5" component="h2">
                     {app.firstName} ({app.private ? "private" : "public"})
                 </Typography>

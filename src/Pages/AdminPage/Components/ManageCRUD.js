@@ -54,10 +54,18 @@ export default class ManageCRUD extends Component {
 
     reloadFromApi() {
         this.props.get().then(response => {
-            this.setState({ objects: response.data });
-            if (!this.initialized) {
-                this.initialized = true;
-                this.callEvent("postLoad", response.data);
+            if (response.data) {
+                this.setState({ objects: response.data });
+                if (!this.initialized) {
+                    this.initialized = true;
+                    this.callEvent("postLoad", response.data);
+                }    
+            } else {
+                this.setState({ objects: response });
+                if (!this.initialized) {
+                    this.initialized = true;
+                    this.callEvent("postLoad", response);
+                }    
             }
         }).catch((error) => {
             this.setState({ apiError: this.api.translateErrorMessage(error) });

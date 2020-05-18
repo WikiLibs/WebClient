@@ -55,6 +55,6 @@ export default class SideBar extends Component {
     }
 
     componentDidMount() {
-        this.api.getLangs().then(langs => this.onLangsReceived(langs));
+        this.api.getSymLangs().then(langs => this.onLangsReceived(langs));
     }
 }

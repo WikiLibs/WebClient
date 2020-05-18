@@ -14,11 +14,15 @@ import './style.css';
 import ManageGroups from './Components/ManageGroups';
 import ManageApiKeys from './Components/ManageApiKeys';
 import ManageApps from './Components/ManageApps';
+import ManageSymbolLangs from './Components/ManageSymbolLangs';
+import ManageSymbolTypes from './Components/ManageSymbolTypes';
 
 const ComponentMap = {
     "Groups": ManageGroups,
     "ApiKeys": ManageApiKeys,
-    "Bots": ManageApps
+    "Bots": ManageApps,
+    "SymbolTypes": ManageSymbolTypes,
+    "SymbolLangs": ManageSymbolLangs
 };
 
 export default class AdminPage extends Component {
