@@ -149,7 +149,7 @@ export default class ApiService {
     }
 
     connectUser(state) {
-        return (Axios.post(this.url + "auth/internal/login", {
+        return (Axios.post(this.url + "/auth/internal/login", {
             email: state.email,
             password: state.password
         },
@@ -165,7 +165,7 @@ export default class ApiService {
     }
 
     refresh() {
-        return (Axios.patch(this.url + "auth/refresh", null,
+        return (Axios.patch(this.url + "/auth/refresh", null,
             {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -177,7 +177,7 @@ export default class ApiService {
     }
 
     getMe() {
-        return (Axios.get(this.url + "user/me", {
+        return (Axios.get(this.url + "/user/me", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
@@ -186,7 +186,7 @@ export default class ApiService {
 
     patchMe(state) {
         if (state.newPassword !== "") {
-            return (Axios.patch(this.url + "user/me", {
+            return (Axios.patch(this.url + "/user/me", {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 email: state.email,
@@ -202,7 +202,7 @@ export default class ApiService {
                     }
                 }));
         } else {
-            return (Axios.patch(this.url + "user/me", {
+            return (Axios.patch(this.url + "/user/me", {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 email: state.email,
