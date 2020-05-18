@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import Alert from '@material-ui/lab/Alert';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
 
 import './index.css';
+
+import pp from '../../Components/Header/pp.png'
 
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -24,6 +32,10 @@ export default class ProfilePage extends Component {
             pseudo: this.props.user.pseudo,
             password: '',
             newPassword: '',
+            id: this.props.user.id,
+            date: this.props.user.date,
+            points: this.props.user.points,
+            group: this.props.user.group,
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -111,119 +123,109 @@ export default class ProfilePage extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <label>
-                        First Name
-                        <br />
-                        <input
-                            type="text"
-                            className=""
-                            name="firstName"
-                            disabled
-                            value={this.state.firstName}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Last Name
-                        <br />
-                        <input
-                            type="text"
-                            className=""
-                            name="lastName"
-                            disabled
-                            value={this.state.lastName}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Email
-                        <br />
-                        <input
-                            type="email"
-                            className=""
-                            name="email"
-                            disabled
-                            value={this.state.email}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Private
-                        <br />
-                        <select
-                            name="private"
-                            type="text" onChange={this.handleChange}
-                            className=""
-                            noValidate
-                        >
-                            {
-                                this.state.private === "true" ?
-                                    <option onClick={() => this.setPrivate(0)}>Yes</option> :
-                                    <option onClick={() => this.setPrivate(1)}>No</option>
-                            }
-                            {
-                                this.state.private === "true" ?
-                                    <option onClick={() => this.setPrivate(1)}>No</option> :
-                                    <option onClick={() => this.setPrivate(0)}>Yes</option>
-                            }
-                        </select>
-                    </label>
-                    <br />
-                    <label>
-                        Profil Message
-                        <br />
-                        <input
-                            type="text"
-                            className=""
-                            name="profileMsg"
-                            noValidate
-                            value={this.state.profileMsg}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Pseudo
-                        <br />
-                        <input
-                            type="text"
-                            className=""
-                            name="pseudo"
-                            noValidate
-                            value={this.state.pseudo}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Password *
-                        <br />
-                        <input
-                            type="password"
-                            className=""
-                            name="password"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        New Password
-                        <br />
-                        <input
-                            type="password"
-                            className=""
-                            name="newPassword"
-                            noValidate
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <br />
-                    {this.state.Msg === "error" ? <p>Error during the process</p> :
-                        (this.state.Msg === "success" ? <p>Your account is successfully updated !</p> : '')}
-                    <input type="submit" value="Modify Profile" />
-                </form>
+                <div id="Body">
+                    <div className="content_account">
+                        <span>{this.state.pseudo}'s Account</span>
+                        <div className="margin_in_form">
+                            <div className="form_float_right">
+                                <div>
+                                    <Card className="profile_card">
+                                        <CardMedia
+                                            className="profile_pic"
+                                            image={pp}
+                                            title=""
+                                        />
+                                    </Card>
+                                    <FormControlLabel
+                                        className="control_label"
+                                        value=""
+                                        control={<Checkbox color="primary" />}
+                                        label="Public account"
+                                        labelPlacement="end"
+                                        disabled 
+                                    />
+                                </div>
+                            </div>
+                            <div className="form_account">
+                                <TextField
+                                    id="outlined-name"
+                                    label="Pseudo"
+                                    className="text_field_acc"
+                                    value={this.state.pseudo}
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-name"
+                                    label="Firstname"
+                                    className="text_field_acc"
+                                    value={this.state.firstName}
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-name"
+                                    label="Lastname"
+                                    className="text_field_acc"
+                                    value={this.state.lastName}
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                            </div>
+                            
+                        </div>
+                        <div className="form_account">
+                            <TextField
+                                id="outlined-name"
+                                label="Email"
+                                className="text_field_acc"
+                                value={this.state.email}
+                                margin="normal"
+                                variant="outlined"
+                                InputProps={{
+                                    readOnly: true,
+                                  }}
+                            />
+                            <TextField
+                                id="outlined-name"
+                                className="text_field_acc"
+                                placeholder="Profile message"
+                                margin="normal"
+                                label="Profile message"
+                                variant="outlined"
+                                value={this.state.profileMsg}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                            <Button
+                                variant="contained"
+                                href="/updateaccount"
+                                className="submit_btn_acc"
+                            >UPDATE PROFILE</Button>
+                        </div>
+                        <div className="profile_infos">
+                            <div className="left_info">
+                                <span>Joined : {this.state.date}</span>
+                                <span>Group : {this.state.group}</span>
+                                <span className="info_down">User ID: 25</span>
+                            </div>
+                            <div className="right_info">
+                                <span>User Points</span>
+                                <p id="userPoints">{this.state.points}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {this.state.success && <Alert severity="success">{this.state.success}</Alert>}
                 {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
                 {this.state.formErrors.firstName && <Alert severity="warning">{this.state.formErrors.firstName}</Alert>}
