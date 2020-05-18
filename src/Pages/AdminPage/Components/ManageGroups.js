@@ -100,6 +100,9 @@ export default class ManageGroups extends Component {
                     {grp.name}
                 </Typography>
                 <Typography color="textSecondary">
+                    Identifier: {grp.id}
+                </Typography>
+                <Typography color="textSecondary">
                     Permissions:
                 </Typography>
                 <Typography variant="body2" component="p">

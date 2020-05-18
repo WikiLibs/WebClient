@@ -173,6 +173,9 @@ export default class ManageApps extends Component {
                     {app.firstName} ({app.private ? "private" : "public"})
                 </Typography>
                 <Typography color="textSecondary">
+                    Identifier: {app.id}
+                </Typography>
+                <Typography color="textSecondary">
                     Created on {new Date(app.registrationDate).toLocaleString()}
                 </Typography>
                 <Typography color="textSecondary">
