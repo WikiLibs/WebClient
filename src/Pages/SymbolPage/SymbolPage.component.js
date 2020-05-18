@@ -61,9 +61,9 @@ export default class SymbolPage extends Component {
           }
         var request = {
             "message": this.state.message,
-            "method": 1,
+            "method": "POST",
             "data": {},
-            "applyTo": 0
+            "applyTo": null
         }
         var cleanLines = cleanArray(splitExample);
 
