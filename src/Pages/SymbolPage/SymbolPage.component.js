@@ -10,17 +10,7 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
 
-
 import './style.css';
-
-
-// const temp = `int main() { // name of the function
-//     int i, j = 0, 10; //init vars
-//     while (i != j) {//condition in loop
-//       printf("Yoooosh")//print the result each loop
-//       i++;//incremental
-//     }
-//   }`
 
 export default class SymbolPage extends Component {
     api = new ApiService();

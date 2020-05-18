@@ -184,6 +184,14 @@ export default class ApiService {
         }));
     }
 
+    getUser(uid) {
+        return (Axios.get(this.url + "/user/" + uid, {
+            headers: {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
     patchMe(state) {
         if (state.newPassword !== "") {
             return (Axios.patch(this.url + "/user/me", {
