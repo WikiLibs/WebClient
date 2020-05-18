@@ -92,6 +92,8 @@ export default class ApiService {
     /////////////////////////////////////////////////////////
 
     translateErrorMessage(err) {
+        if (err === null || err === undefined || err.response === null || err.response === undefined)
+            return ("An impossible error has occured: AXIOS is a failure.");
         switch (err.response.status) {
             case 401:
                 return ("Bad credentials and/or Api token.");
