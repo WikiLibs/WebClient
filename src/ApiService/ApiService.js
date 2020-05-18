@@ -89,6 +89,20 @@ export default class ApiService {
             }));
     }
 
+    pushNewRequestExample(state) {
+        return (Axios.post(this.url + "/example/request", {
+            message: state.message,
+            method: state.method,
+            data: state.data,
+            applyTo: state.applyTo
+        },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
     /////////////////////////////////////////////////////////
 
     translateErrorMessage(err) {

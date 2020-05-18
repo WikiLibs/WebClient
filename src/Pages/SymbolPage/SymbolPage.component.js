@@ -6,27 +6,36 @@ import Editor from 'react-simple-code-editor';
 import Button from 'react-bootstrap/Button';
 import queryString from 'query-string'
 import { highlight, languages } from 'prismjs/components/prism-core';
+import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
 
-
 import './style.css';
 
-
-// const temp = `int main() { // name of the function
-//     int i, j = 0, 10; //init vars
-//     while (i != j) {//condition in loop
-//       printf("Yoooosh")//print the result each loop
-//       i++;//incremental
-//     }
-//   }`
+function cleanArray(arrayToClean) {
+    var clean = [];
+    arrayToClean.forEach(function (elem,index) {
+        elem = elem.trim()
+        console.log(elem)
+        if (elem[0] === '/') {
+            clean.push(index)
+        }
+    })
+    var i = 0
+    clean.forEach(elem => {
+        arrayToClean.splice(elem - i, 1);
+        i += 1
+    })
+    return arrayToClean;
+}
 
 export default class SymbolPage extends Component {
     api = new ApiService();
 
     constructor(props) {
         super(props);
+        this.handleDescription = this.handleDescription.bind(this);
         this.state = {
             userId: null,
             date: null,
@@ -35,21 +44,30 @@ export default class SymbolPage extends Component {
             path: null,
             prototypes: [],
             symbols: [],
-            code: "Write an example...",
+            code: "Write an example...", 
+            description: "", 
+            message: "" ,
             listExample: [],
             symbolId: 0
         };
     }
 
-    HandleExample = () => {
+    handleSubmit = (event) => {
         var splitExample = this.state.code.split("\n");
         var example = {
             "symbolId": this.state.symbolId,
             "code": [],
-            "description": "test"
+            "description": this.state.description,
           }
-        
-        splitExample.forEach(elem => {
+        var request = {
+            "message": this.state.message,
+            "method": 1,
+            "data": {},
+            "applyTo": 0
+        }
+        var cleanLines = cleanArray(splitExample);
+
+        cleanLines.forEach(elem => {
             var first = true;
             var tabSplit = elem.split("//");
             var cleanElem = tabSplit.filter(n => n);
@@ -62,15 +80,42 @@ export default class SymbolPage extends Component {
                     final.data = elem2.replace(/\s+/g,' ').trim();
                     first = false;
                 } else {
-                    final.comment += elem2.replace(/\s+/g,' ').trim();
+                    final.comment += elem2.replace(/\s+/g,' ').trim().replace('/','');
                 }
             });
             example.code.push(final);
         });
+        request.data = example;
 
-        this.api.pushNewExample(example).then(response => { console.log(response)});
+        if (this.props.user) {
+            if (this.props.user.hasPermission("example.create")) {
+                this.api.pushNewExample(example).then(response => { 
+                    alert("Your example was send, it's actually online");
+                    console.log(response);
+                });
+            } else {
+                this.api.pushNewRequestExample(request).then(response => {
+                    alert('Your example was send, it will be check by an administrator');
+                    console.log(response);
+                });
+            }
+        }
 
-        this.setState({code: "Write an example..."})
+        this.setState({
+            code: "Write an example...", 
+            description: "",
+            message: ""
+        });
+
+        event.preventDefault();
+    }
+
+    handleMessage = (event) => {
+        this.setState({message: event.target.value});
+    }
+
+    handleDescription = (event) => {
+        this.setState({description: event.target.value});
     }
 
     componentDidMount = async () => {
@@ -279,23 +324,60 @@ export default class SymbolPage extends Component {
         );
     }
 
+    renderBox = () => {
+        if (!this.props.user) {
+            return (<h4>You need to be connected for create an example</h4>)
+        } else if (this.props.user.hasPermission("example.create")) {
+            return (
+                <div>
+                    <p>You're an administrator so your example will be push without any verification</p>
+                    <input type="text" placeholder="Description" value={this.state.description} onChange={this.handleDescription} />
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <p>The message will be for the administrator who will check your example</p>
+                    <p>The description will be for users who will read your example</p>
+                    <input type="text" placeholder="Message" value={this.state.message} onChange={this.handleMessage} />
+                    <input type="text" placeholder="Description" value={this.state.description} onChange={this.handleDescription} />
+                    <p>You can push your own example here. It will be check by our team and validate in 2 days maximum</p>
+                    <p>You can write your code and if you want to add some comments for help the community you can add them after a "//"</p>
+                </div>
+            );
+        }
+    }
+
     renderUpload = () => {
         return (
             <div>
-                <p>You can push your own example here. It will be check by our team and validate in 2 days maximum</p>
-                <p>You can write your code and if you want to add some comments for help the community you can add them after a "//"</p>
-                <div className="container_editor_area">
-                    <Editor
-                        value={this.state.code}
-                        onValueChange={code => this.setState({ code })}
-                        highlight={code => highlight(code, languages.js)}
-                        padding={10}
-                        style={{
-                        fontFamily: '"Fira code", "Fira Mono", monospace',
-                        fontSize: 12,
-                        }}
-                    />
-                </div>
+                <form onSubmit={this.handleSubmit}>
+                    {this.renderBox()}
+                    <div className="container_editor_area">
+                        <Editor
+                            value={this.state.code}
+                            onValueChange={code => this.setState({code})}
+                            highlight={code => highlight(code, languages.js)}
+                            padding={10}
+                            style={{
+                            fontFamily: '"Fira code", "Fira Mono", monospace',
+                            fontSize: 12,
+                            }}
+                        />
+                    </div>
+
+                    {this.props.user ? 
+                        <Button variant="outline-success" type="submit">Send</Button>: 
+                        <div>
+                            <center>
+                            <Link variant="primary" to='/usercreation'>Create account</Link>
+                            </center>
+                            <center>
+                            <Link variant="primary" to='/userconnection'>Connect</Link>
+                            </center>
+                        </div>
+                    }
+                </form>
             </div>
         );
     }
@@ -330,7 +412,6 @@ export default class SymbolPage extends Component {
                             <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div className="card-body">
                                 {this.renderUpload()}
-                                <Button variant="outline-success" onClick={this.HandleExample}>Send</Button>{' '}
                             </div>
                             </div>
                         </div>

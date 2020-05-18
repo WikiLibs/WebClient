@@ -35,7 +35,7 @@ function sendToSymbolPage(query) {
         });
     }
     if (i === suggestions.length) {
-    window.location = query.url + query.path;
+        window.location = query.url + query.path;
     }
 }
 
@@ -162,6 +162,7 @@ class Header extends Component {
         this.state.search = value;
         suggestions = [];
         suggestionsId = [];
+        console.log(suggestionsId);
 
         let query = {
             page: 1,
@@ -174,7 +175,13 @@ class Header extends Component {
 
         var result = await this.api.searchSymbols(query);
         for (var id in result.data.data) {
+            if (suggestions.length === 5) { 
+                suggestions = []; 
+            }
             suggestions.push(result.data.data[id].path)
+            if (suggestionsId.length === 5) { 
+                suggestionsId = []; 
+            }
             suggestionsId.push(result.data.data[id].id)
         }
 
@@ -186,6 +193,7 @@ class Header extends Component {
     handleSuggestionsClearRequested = () => {
         this.setState({
             suggestions: [],
+            suggestionsId: [],
         });
     };
 
