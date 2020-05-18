@@ -86,7 +86,7 @@ export default class ManageSymbolLangs extends Component {
                     // Object
                     renderObject={this.renderObject}
                     getObjectName={(obj) => obj.name}
-                    typeName="symbol lang"
+                    typeName="programming language"
 
                     // Editor
                     openObjectModal={this.openObjectModal}
@@ -94,7 +94,7 @@ export default class ManageSymbolLangs extends Component {
                     editObject={this.state.editing}
 
                     //Global
-                    managerName="Manage Symbol Langs"
+                    managerName="Manage Programming Languages"
                 />
             </>
         );

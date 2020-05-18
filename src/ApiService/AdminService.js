@@ -148,4 +148,28 @@ export default class AdminService {
         }));
     }
 
+    getExampleRequests(pageNum) {
+        return (Axios.get(this.url + "/example/request?PageOptions.Page=" + pageNum + "&PageOptions.Count=100", {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    acceptExampleRequest(id) {
+        return (Axios.put(this.url + "/example/request/apply/" + id, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    deleteExampleRequest(id) {
+        return (Axios.delete(this.url + "/example/request/" + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
 }
