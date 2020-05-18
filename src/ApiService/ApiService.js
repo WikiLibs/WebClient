@@ -65,10 +65,35 @@ export default class ApiService {
             }
         }));
     }
+    /////////////////////////////////////////////////////////
+
+    getExamples(id) {
+        let symbolId = "?SymbolId=" + id;
+        return (Axios.get(this.url + "/example" + symbolId, {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
+    pushNewExample(state) {
+        return (Axios.post(this.url + "/example", {
+            symbolId: state.symbolId,
+            code: state.code,
+            description: state.description
+        },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
 
     /////////////////////////////////////////////////////////
 
     translateErrorMessage(err) {
+        if (err === null || err === undefined || err.response === null || err.response === undefined)
+            return ("An impossible error has occured: AXIOS is a failure.");
         switch (err.response.status) {
             case 401:
                 return ("Bad credentials and/or Api token.");
@@ -124,7 +149,7 @@ export default class ApiService {
     }
 
     connectUser(state) {
-        return (Axios.post(this.url + "auth/internal/login", {
+        return (Axios.post(this.url + "/auth/internal/login", {
             email: state.email,
             password: state.password
         },
@@ -140,7 +165,7 @@ export default class ApiService {
     }
 
     refresh() {
-        return (Axios.patch(this.url + "auth/refresh", null,
+        return (Axios.patch(this.url + "/auth/refresh", null,
             {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -152,7 +177,7 @@ export default class ApiService {
     }
 
     getMe() {
-        return (Axios.get(this.url + "user/me", {
+        return (Axios.get(this.url + "/user/me", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
@@ -161,7 +186,7 @@ export default class ApiService {
 
     patchMe(state) {
         if (state.newPassword !== "") {
-            return (Axios.patch(this.url + "user/me", {
+            return (Axios.patch(this.url + "/user/me", {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 email: state.email,
@@ -177,7 +202,7 @@ export default class ApiService {
                     }
                 }));
         } else {
-            return (Axios.patch(this.url + "user/me", {
+            return (Axios.patch(this.url + "/user/me", {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 email: state.email,
