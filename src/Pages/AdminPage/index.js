@@ -12,9 +12,19 @@ import './style.css';
 
 //Components
 import ManageGroups from './Components/ManageGroups';
+import ManageApiKeys from './Components/ManageApiKeys';
+import ManageApps from './Components/ManageApps';
+import ManageSymbolLangs from './Components/ManageSymbolLangs';
+import ManageSymbolTypes from './Components/ManageSymbolTypes';
+import ManageExampleRequests from './Components/ManageExampleRequests';
 
 const ComponentMap = {
-    "Groups": ManageGroups
+    "Groups": ManageGroups,
+    "ApiKeys": ManageApiKeys,
+    "Bots": ManageApps,
+    "SymbolTypes": ManageSymbolTypes,
+    "SymbolLangs": ManageSymbolLangs,
+    "ExampleRequests": ManageExampleRequests
 };
 
 export default class AdminPage extends Component {
