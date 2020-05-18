@@ -85,7 +85,7 @@ export default class ManageExampleRequests extends Component {
     }
 
     viewExample(obj) {
-        window.open("/symbol?id=" + obj.symbolId, '_blank');
+        window.open("/symbol?id=" + obj.data.symbolId, '_blank');
     }
 
     renderObject = (obj) => {
@@ -140,7 +140,7 @@ export default class ManageExampleRequests extends Component {
                     this.state.objects.map(obj =>
                         <Card key={obj.id} style={{ marginBottom: "16px" }}>
                             <CardContent>
-                                {this.props.renderObject(obj)}
+                                {this.renderObject(obj)}
                             </CardContent>
                             <CardActions style={{ justifyContent: "flex-end" }}>
                                 <Button onClick={() => this.setState({ method: "accept", current: obj })} size="small"><CheckIcon /> Accept</Button>
