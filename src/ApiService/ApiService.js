@@ -65,6 +65,29 @@ export default class ApiService {
             }
         }));
     }
+    /////////////////////////////////////////////////////////
+
+    getExamples(id) {
+        let symbolId = "?SymbolId=" + id;
+        return (Axios.get(this.url + "/example" + symbolId, {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }));
+    }
+
+    pushNewExample(state) {
+        return (Axios.post(this.url + "/example", {
+            symbolId: state.symbolId,
+            code: state.code,
+            description: state.description
+        },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
 
     /////////////////////////////////////////////////////////
 

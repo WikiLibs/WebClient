@@ -79,3 +79,11 @@ span.string {
 span.comment {
     color: #646464;
 }
+
+.container_editor_area {
+    tab-size: 4ch;
+    max-height: 400px;
+    overflow: auto;
+    margin: 1.67em 0;
+    background-color: #dcd7af;
+  }
