@@ -1,0 +1,58 @@
+.content_howtouseparser_page {
+    margin-left: 443px;
+    margin-right: 442px;
+    margin-top: 96px;
+    margin-bottom: -16px;
+}
+
+.howtouseparser_card {
+    margin-top: 60px;
+}
+
+.howtouseparser_title {
+    line-height: 40px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: #4C3DA8;
+    margin-right: 16px;
+    margin-bottom: 0;
+    font-size: 26px;
+}
+
+.howtouseparser_content {
+    margin-left: 44px;
+    margin-top: 31px;
+}
+
+.howtouseparser_description {
+    font-size: 15px;
+    font-family: 'Open Sans';
+    color: #202020;
+}
+
+.howtouseparser_inner_content {
+    margin-left: 32px;
+    margin-top: 32px;
+}
+
+.howtouseparser_inner_content_card {
+    margin-top: 32px;
+}
+
+.howtouseparser_secondary_title{
+    color: #4C3DA8;
+    font-size: 15px;
+}
+
+.howtouseparser_screenshot {
+    margin-top: 32px;
+    margin-left: 32px;
+    border: 2px solid #7B68EE;
+    border-radius: 2px;
+}
+
+.howtouseparser_secondary_desc {
+    color: #202020;
+    font-size: 15px;
+    margin-left: 32px;
+}
