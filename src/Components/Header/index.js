@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Navbar, Button, Nav } from 'react-bootstrap';
 import { ApiService } from '../../ApiService';
 
 import PropTypes from 'prop-types';
@@ -12,6 +11,11 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+
+import { Typography, Button } from '@material-ui/core';
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import InputBase from "@material-ui/core/InputBase"
 
 import './index.css'
 import 'react-dropdown/style.css';
@@ -214,15 +218,18 @@ class Header extends Component {
 
     checkConnect() {
         if (this.props.user) {
-            return (<div>
-                {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>}
-                <Link style={{ color: "white", padding: "24px" }} to='/admin'>Administration</Link>
-                <Link style={{ color: "white", padding: "24px" }} onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
+            return (<div className="right_header">
+                {/* {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>} */}
+                <Link to='/admin'>Administration</Link>
+                <Link onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
+                {this.props.user.hasPermission("user.me.update") && <Link href="/profile"><img alt="" src={pp} className="img_profile"></img></Link>}
             </div>);
         } else {
-            return (<div>
-                <Link style={{ color: "white", padding: "24px" }} to='/usercreation'>Create account</Link>
-                <Link style={{ color: "white", padding: "24px" }} to='/userconnection'>Connect</Link>
+            return (<div className="right_header">
+                {/* <Link style={{ color: "white", padding: "24px" }} to='/usercreation'>Create account</Link> */}
+                <Link to='/userconnection'>LOGIN</Link>
+                <Link to="/faq">FAQ</Link>
+                <Link to="/contact">CONTACT</Link>
             </div>);
         }
     }
@@ -242,59 +249,44 @@ class Header extends Component {
         return (
             <div className="Header">
                 <header>
-                    <Navbar className="header-bar" variant="default" style={{ backgroundColor: '#8560a8' }}>
-                        <Button
-                            variant="default"
-                            onClick={() => typeof (this.props.openNavBar) === "function" ? this.props.openNavBar() : null}
-                            style={{ color: 'white', backgroundColor: 'transparent' }}
-                            data-toggle="collapse"
-                            data-target="#navbarText"
-                            aria-controls="navbarText"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <i className="fas fa-bars"></i>
-                        </Button>
-                        <Navbar.Brand className="fontBold" href="/" style={{ color: 'white', paddingLeft: '15px', marginRightboxShadow: '-1px -2px 10px black' }}>
-                            WikiLibs
-                        </Navbar.Brand>
-                        <div className="inner-addon right-addon" style={{ width: '50%', position: 'relative', alignSelf: 'auto' }}>
-                            <i className="fas fa-search glyphicon"></i>
-                            <div className={classes.root}>
-                                <Autosuggest
-                                    {...autosuggestProps}
-                                    inputProps={{
-                                        classes,
-                                        placeholder: 'Search a function',
-                                        value: this.state.single,
-                                        onChange: this.handleChange('single'),
-                                        onKeyDown: this.handleKeyDown
-                                    }}
-                                    theme={{
-                                        container: classes.container,
-                                        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                                        suggestionsList: classes.suggestionsList,
-                                        suggestion: classes.suggestion,
-                                    }}
-                                    renderSuggestionsContainer={options => (
-                                        <Paper {...options.containerProps} square>
-                                            {options.children}
-                                        </Paper>
-                                    )}
-                                />
-                            </div>
+                    <div className="appbar_header">
+                        <div className="left_header">
+                            <button className="button_header" onClick={() => typeof (this.props.openNavBar) === "function" ? this.props.openNavBar() : null}>
+                                <MenuIcon className="menu_icon" />
+                            </button>
+                            <Button className="button_logo" href="/">
+                                <Typography className="header_title">
+                                    WikiLibs
+                                </Typography>
+                            </Button>
                         </div>
-                        <span>
-                            {this.checkConnect()}
-                        </span>
-                        <Nav className="navbar-nav navbar-right">
-                            <li>
-                                <div className="inset">
-                                    <img src={pp} alt="" />
-                                </div>
-                            </li>
-                        </Nav>
-                    </Navbar>
+                        <div className="search_bar">
+                            <Autosuggest
+                                {...autosuggestProps}
+                                inputProps={{
+                                    classes,
+                                    placeholder: 'Search a library, a function...',
+                                    value: this.state.single,
+                                    onChange: this.handleChange('single'),
+                                    onKeyDown: this.handleKeyDown
+                                }}
+                                theme={{
+                                    container: "search_input",
+                                    suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                                    suggestionsList: classes.suggestionsList,
+                                    suggestion: classes.suggestion,
+                                }}
+                                renderSuggestionsContainer={options => (
+                                    <Paper {...options.containerProps} square>
+                                        {options.children}
+                                    </Paper>
+                                )}
+                                className="search_input"
+                            />
+                            <SearchIcon className="search_icon" />
+                        </div>
+                        {this.checkConnect()}
+                    </div>
                 </header>
             </div>
         )

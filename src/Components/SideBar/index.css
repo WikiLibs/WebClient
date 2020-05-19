@@ -8,12 +8,9 @@ body {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    padding-top: 64px;
+    padding-top: 70px;
 }
 
-#wrapper.toggled {
-    padding-left: 250px;
-}
 
 #sidebar-wrapper {
     z-index: 1000;
@@ -116,10 +113,7 @@ body {
 @media(min-width:768px) {
     #wrapper {
         padding-left: 0;
-        padding-top: 64px;
-    }
-    #wrapper.toggled {
-        padding-left: 250px;
+        padding-top: 70px;
     }
     #sidebar-wrapper {
         width: 0;

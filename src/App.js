@@ -15,6 +15,12 @@ import ProfilePage from './Pages/ProfilePage';
 import NotFoundPage from './Pages/NotFoundPage'
 import AdminPage from './Pages/AdminPage'
 import DownloadPage from './Pages/DownloadPage'
+import ContactPage from './Pages/ContactPage'
+import FAQPage from './Pages/FAQPage'
+import PrivacyPolicy from './Pages/PrivacyPolicy'
+import TermsOfUse from './Pages/TermsOfUse'
+import CodeRecommendations from './Pages/CodeRecommendations'
+import HowToUseParser from './Pages/HowToUseParser'
 /* END */
 
 const history = createBrowserHistory()
@@ -32,6 +38,12 @@ export default function App()
                 <Layout exact path='/profile' component={ProfilePage} />
                 <Layout exact path='/admin' component={AdminPage} />
                 <Layout exact path='/download' component={DownloadPage} />
+                <Layout exact path='/contact' component={ContactPage} />
+                <Layout exact path='/faq' component={FAQPage} />
+                <Layout exact path='/privacypolicy' component={PrivacyPolicy} />
+                <Layout exact path='/tou' component={TermsOfUse} />
+                <Layout exact path='/coderecommendations' component={CodeRecommendations} />
+                <Layout exact path='/howtouseparser' component={HowToUseParser} />
                 <Layout component={NotFoundPage} />
             </Switch>
         </Router>

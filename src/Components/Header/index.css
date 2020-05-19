@@ -1,4 +1,4 @@
-@font-face {
+ @font-face {
     font-family: OpenSansRegular;
     src: url(./font/OpenSans-Regular.ttf);
 }
@@ -14,53 +14,94 @@
     font-family: OpenSansBold;
 }
 
-.inner-addon {
-    position: relative;
-}
-
-.right-addon .glyphicon {
-    right: 0px;
-}
-
-.inner-addon .glyphicon {
-    position: absolute;
-    padding: 10px;
-    pointer-events: none;
-}
-
-.header-bar {
-    position: fixed;
-    top: 0;
+.appbar_header {
+    background-color: #7B68EE!important;
+    padding-left: 10px;
+    padding-right: 26px;
+    height: 70px;
     width: 100%;
-    z-index: 9999;
+    display: flex;
+    position: fixed;
     justify-content: space-between;
-}
-
-.navbar-default a {
-    outline: none;
-}
-
-.inset {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 0 2px rgba(255,255,255,0.6), 
-        0 1px 1px rgba(0,0,0,0.1);
-    background-color: transparent !important;
     z-index: 999;
 }
 
-.inset img {
-    outline: none;
-    border-radius: inherit;
-    width: inherit;
-    height: inherit;
-    display: block;
-    position: relative;
-    z-index: 998;
+.left_header {
+    color: white;
+    display: flex;
+    align-items: center;
 }
 
-.inner-addon.right-addon input {
+.button_header {
+    border: none;
     color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.button_logo {
+    margin-left: 16px;
+    background-color: #7B68EE;
+    color: white;
+}
+
+.menu_icon {
+    font-size: 48px!important;
+    font-weight: bold!important;
+}
+
+.header_title {
+    font-family: 'Open Sans'!important;
+    font-weight: bold!important;
+    font-size: 26px!important;
+    color: white;
+}
+
+.right_header {
+    float: right;
+    display: flex;
+    align-items: center;
+}
+
+.right_header > a {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: white;
+    margin-left: 32px;
+    font-size: 15px;
+}
+
+.search_bar {
+    display: flex;
+    position: "relative";
+    background-color: white;
+    opacity: 0.85;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    border-radius: 4px;
+    width: 33%
+}
+
+.search_input {
+    margin-left: 16px;
+    margin-right: 16px;
+    width: 100%
+}
+
+.search_input > div {
+    margin-top: 6px;
+}
+
+.search_icon {
+    margin-bottom: 12px;
+    margin-top: 12px;
+    margin-right: 14px;
+    color: #9E9E9E;
+}
+
+.img_profile {
+    border-radius: 50%;
+    width: 48px;
+    border: white solid 2px;
 }

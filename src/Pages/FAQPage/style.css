@@ -1,0 +1,91 @@
+.content_faq_page {
+    margin-left: 443px;
+    margin-right: 442px;
+    margin-top: 96px;
+    margin-bottom: -30px;
+}
+
+.faq_description_card {
+    margin-top: 64px;
+}
+
+.faq_title {
+    line-height: 40px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: #4C3DA8;
+}
+
+.faq_content {
+    margin-left: 29px;
+    margin-top: 32px;
+}
+
+.select_question {
+    cursor: pointer;
+    margin-left: -11px;
+    margin-top: 64px;
+}
+
+.anwser_part {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.answer_content{
+    margin-left: 84px;
+    margin-top: 30px;
+}
+
+.title_question_part {
+    height: 25px;
+    font-size: 26px;
+    font-family: 'Open Sans';
+    color: #4C3DA8;
+    margin-right: 8px;
+}
+
+.grower_faq {
+    width: 41px !important;
+    height: auto !important;
+    float: left;
+    color: #4C3DA8;
+}
+
+.colored_text {
+    font-size: 15px;
+    font-family: 'Open Sans';
+    color: #7B68EE;
+    font-style: italic;
+}
+
+.ul_faq{
+    color: #7B68EE;
+}
+
+.li_faq {
+    color: #202020;
+}
+
+.dl_faq {
+    display: flex;
+    color: #202020;
+}
+
+.dd_faq {
+    margin-left: 16px;
+}
+
+.code_example_background_faq {
+    font-size: 15px;
+    font-family: 'Open Sans';
+    line-height: 14px;
+    background: #EBEBEB;
+    padding-left: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -8px;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    color: #202020;
+}
