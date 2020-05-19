@@ -70,7 +70,7 @@ export default class ProfilePage extends Component {
             `)
             if (this.state.password) {
                 this.api.patchMe(this.state)
-                    .then((Response) => {
+                    .then(_ => {
                         this.setState({ success: "Successfully updated profile." });
                     })
                     .catch(error => {
