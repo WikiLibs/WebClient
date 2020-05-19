@@ -31,7 +31,7 @@ const renderList = () => {
             </div>
             <div className="answer_part collapse" id="faq3">
                 <div className="answer_content">
-                    <p className="description">You have a question ? A feedback ? Just go to our <a className='colored_text' href='/ContactPage'>contact page</a> and check the different ways to contact us !</p>
+                    <p className="description">You have a question ? A feedback ? Just go to our <a className='colored_text' href='/contact'>contact page</a> and check the different ways to contact us !</p>
                 </div>
             </div>
             <div href="#faq4" data-toggle="collapse" className="select_question">
@@ -40,7 +40,7 @@ const renderList = () => {
             </div>
             <div className="answer_part collapse" id="faq4">
                 <div className="answer_content">
-                    <p className="description">In order to upload the library to the website, open a terminal the folder of the downloaded parser. If you have not downloaded the parser yet, click this <a className="colored_text" href="#downloadparser">link</a> to download it. If it is already done, please do the following steps: </p>
+                    <p className="description">In order to upload the library to the website, open a terminal the folder of the downloaded parser. If you have not downloaded the parser yet, click this <a className="colored_text" href="/download">link</a> to download it. If it is already done, please do the following steps: </p>
                     <ul className="ul_faq">
                         <li>
                             <p className="li_faq">Execute the command line:</p>
@@ -75,7 +75,7 @@ const renderList = () => {
             </div>
             <div className="answer_part collapse" id="faq5">
                 <div className="answer_content">
-                    <p className="description">You just need to download our parser. And please, check if you already have a Python 3 runtime installed on your computer. If not, you can follow this <a className="colored_text" href="#downloadparser">link</a>.</p>
+                    <p className="description">You just need to download our parser. And please, check if you already have a Python 3 runtime installed on your computer. If not, you can follow this <a className="colored_text" href="/download">link</a>.</p>
                 </div>
             </div>
             <div href="#faq6" data-toggle="collapse" className="select_question">
