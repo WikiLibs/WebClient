@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase"
 
 import './index.css'
 import 'react-dropdown/style.css';
@@ -118,6 +117,7 @@ const styles = theme => ({
     root: {
         height: 40,
         flexGrow: 1,
+        marginTop: 6,
     },
     container: {
         position: 'relative',
@@ -222,7 +222,7 @@ class Header extends Component {
                 {/* {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>} */}
                 <Link to='/admin'>Administration</Link>
                 <Link onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
-                {this.props.user.hasPermission("user.me.update") && <Link href="/profile"><img alt="" src={pp} className="img_profile"></img></Link>}
+                {this.props.user.hasPermission("user.me.update") && <Link to="/profile"><img alt="" src={pp} className="img_profile"></img></Link>}
             </div>);
         } else {
             return (<div className="right_header">
@@ -260,29 +260,30 @@ class Header extends Component {
                                 </Typography>
                             </Button>
                         </div>
-                        <div className="search_bar">
-                            <Autosuggest
-                                {...autosuggestProps}
-                                inputProps={{
-                                    classes,
-                                    placeholder: 'Search a library, a function...',
-                                    value: this.state.single,
-                                    onChange: this.handleChange('single'),
-                                    onKeyDown: this.handleKeyDown
-                                }}
-                                theme={{
-                                    container: "search_input",
-                                    suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                                    suggestionsList: classes.suggestionsList,
-                                    suggestion: classes.suggestion,
-                                }}
-                                renderSuggestionsContainer={options => (
-                                    <Paper {...options.containerProps} square>
-                                        {options.children}
-                                    </Paper>
-                                )}
-                                className="search_input"
-                            />
+                        <div className="inner-addon right-addon">
+                            <div className={classes.root}>
+                                <Autosuggest
+                                    {...autosuggestProps}
+                                    inputProps={{
+                                        classes,
+                                        placeholder: 'Search a function',
+                                        value: this.state.single,
+                                        onChange: this.handleChange('single'),
+                                        onKeyDown: this.handleKeyDown
+                                    }}
+                                    theme={{
+                                        container: classes.container,
+                                        suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                                        suggestionsList: classes.suggestionsList,
+                                        suggestion: classes.suggestion,
+                                    }}
+                                    renderSuggestionsContainer={options => (
+                                        <Paper {...options.containerProps} square>
+                                            {options.children}
+                                        </Paper>
+                                    )}
+                                />
+                            </div>
                             <SearchIcon className="search_icon" />
                         </div>
                         {this.checkConnect()}
