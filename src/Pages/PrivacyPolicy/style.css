@@ -1,0 +1,40 @@
+.content_pp_page {
+    margin-left: 443px;
+    margin-right: 442px;
+    margin-top: 96px;
+    margin-bottom: -30px;
+}
+
+.pp_title {
+    line-height: 40px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: #4C3DA8;
+}
+
+.pp_content {
+    margin-left: 29px;
+    margin-top: 32px;
+}
+
+.pp_content > p {
+    font-size: 15px;
+    color: #202020;
+    font-family: 'Open Sans';
+}
+
+.update {
+    margin-bottom: 64px;
+}
+
+.pp_desc_content {
+    margin-bottom: 16px;
+}
+
+.pp_headlines {
+    color: #4C3DA8;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    margin-top: 64px;
+    margin-bottom: 32px;
+}
