@@ -48,7 +48,8 @@ export default class SymbolPage extends Component {
             description: "", 
             message: "" ,
             listExample: [],
-            symbolId: 0
+            symbolId: 0,
+            pseudoExample:""
         };
     }
 
@@ -292,8 +293,13 @@ export default class SymbolPage extends Component {
                     </div>
                 );
                 if (active.length > 1) {
+                    this.api.getUser(elem.userId).then(response => {this.setState({pseudoExample: response.data.pseudo})});
                     footer.push(
-                        <p key={elem.id + elem.creationDate} >This example was pushed by {elem.userId} the {elem.creationDate}</p>
+                        <div key={elem.id + elem.userId + elem.creationDate}>
+                            <h5><b>Description</b></h5>
+                            <h6>{elem.description}</h6>
+                            <p>This example was pushed by <b>{this.state.pseudoExample}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
+                        </div>
                     );
                 }
                 active = "";
