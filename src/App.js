@@ -20,6 +20,7 @@ import FAQPage from './Pages/FAQPage'
 import PrivacyPolicy from './Pages/PrivacyPolicy'
 import TermsOfUse from './Pages/TermsOfUse'
 import CodeRecommendations from './Pages/CodeRecommendations'
+import HowToUseParser from './Pages/HowToUseParser'
 /* END */
 
 const history = createBrowserHistory()
@@ -42,6 +43,7 @@ export default function App()
                 <Layout exact path='/privacypolicy' component={PrivacyPolicy} />
                 <Layout exact path='/tou' component={TermsOfUse} />
                 <Layout exact path='/coderecommendations' component={CodeRecommendations} />
+                <Layout exact path='/howtouseparser' component={HowToUseParser} />
                 <Layout component={NotFoundPage} />
             </Switch>
         </Router>
