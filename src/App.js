@@ -18,6 +18,7 @@ import DownloadPage from './Pages/DownloadPage'
 import ContactPage from './Pages/ContactPage'
 import FAQPage from './Pages/FAQPage'
 import PrivacyPolicy from './Pages/PrivacyPolicy'
+import TermsOfUse from './Pages/TermsOfUse'
 /* END */
 
 const history = createBrowserHistory()
@@ -38,6 +39,7 @@ export default function App()
                 <Layout exact path='/ContactPage' component={ContactPage} />
                 <Layout exact path='/FAQPage' component={FAQPage} />
                 <Layout exact path='/PrivacyPolicy' component={PrivacyPolicy} />
+                <Layout exact path='/TermsOfUse' component={TermsOfUse} />
                 <Layout component={NotFoundPage} />
             </Switch>
         </Router>
