@@ -15,6 +15,8 @@ import ProfilePage from './Pages/ProfilePage';
 import NotFoundPage from './Pages/NotFoundPage'
 import AdminPage from './Pages/AdminPage'
 import DownloadPage from './Pages/DownloadPage'
+import ForgotPasswordPage from './Pages/ForgotPasswordPage'
+import UserUpdatePage from './Pages/UserUpdatePage'
 /* END */
 
 const history = createBrowserHistory()
@@ -32,6 +34,8 @@ export default function App()
                 <Layout exact path='/profile' component={ProfilePage} />
                 <Layout exact path='/admin' component={AdminPage} />
                 <Layout exact path='/download' component={DownloadPage} />
+                <Layout exact path='/forgotpassword' component={ForgotPasswordPage} />
+                <Layout exact path='/updateprofile' component={UserUpdatePage} />
                 <Layout component={NotFoundPage} />
             </Switch>
         </Router>

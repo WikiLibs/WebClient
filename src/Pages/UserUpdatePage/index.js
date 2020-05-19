@@ -23,8 +23,8 @@ export default class ProfilePage extends Component {
 
     constructor(props) {
         super(props);
-
-        console.log(this.props.user.private);
+    
+        console.log(this.props);
         this.state = {
             firstName: this.props.user.firstName,
             lastName: this.props.user.lastName,
@@ -127,7 +127,7 @@ export default class ProfilePage extends Component {
             <div>
                 <div id="Body">
                     <div className="content_account">
-                        <span>{this.state.pseudo}'s Account</span>
+                        <span>{this.state.pseudo}'s Account Update</span>
                         <div className="margin_in_form">
                             <div className="form_float_right">
                                 <div>
@@ -211,7 +211,7 @@ export default class ProfilePage extends Component {
                             />
                             <Button
                                 variant="contained"
-                                href="/updateprofile"
+                                href="/updateaccount"
                                 className="submit_btn_acc"
                             >UPDATE PROFILE</Button>
                         </div>
