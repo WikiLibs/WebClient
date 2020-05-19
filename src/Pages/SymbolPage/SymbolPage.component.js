@@ -296,9 +296,9 @@ export default class SymbolPage extends Component {
                     this.api.getUser(elem.userId).then(response => {this.setState({pseudoExample: response.data.pseudo})});
                     footer.push(
                         <div key={elem.id + elem.userId + elem.creationDate}>
-                            <h5 key={elem.id + elem.userId}><b>Description</b></h5>
-                            <h6 key={elem.description + elem.id}>{elem.description}</h6>
-                            <p key={elem.id + elem.creationDate} >This example was pushed by <b>{this.state.pseudoExample}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
+                            <h5><b>Description</b></h5>
+                            <h6>{elem.description}</h6>
+                            <p>This example was pushed by <b>{this.state.pseudoExample}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
                         </div>
                     );
                 }
