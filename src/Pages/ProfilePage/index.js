@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 import './index.css';
 
@@ -24,20 +25,25 @@ export default class ProfilePage extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props.user.private);
+        if (this.props.user == null) {
+            window.location = "/";
+        }
+
+        var tmp = this.props.user.clone();
+        console.log(tmp);
         this.state = {
-            firstName: this.props.user.firstName,
-            lastName: this.props.user.lastName,
-            email: this.props.user.email,
-            private: this.props.user.private,
-            profileMsg: this.props.user.profileMsg,
-            pseudo: this.props.user.pseudo,
+            firstName: tmp.firstName,
+            lastName: tmp.lastName,
+            email: tmp.email,
+            private: tmp.private,
+            profileMsg: tmp.profileMsg,
+            pseudo: tmp.pseudo,
             password: '',
             newPassword: '',
-            id: this.props.user.id,
-            date: this.props.user.registrationDate,
-            points: this.props.user.points,
-            group: this.props.user.group,
+            id: tmp.id,
+            date: tmp.registrationDate,
+            points: tmp.points,
+            group: tmp.group,
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -209,11 +215,12 @@ export default class ProfilePage extends Component {
                                     readOnly: true,
                                 }}
                             />
-                            <Button
-                                variant="contained"
-                                href="/updateprofile"
-                                className="submit_btn_acc"
-                            >UPDATE PROFILE</Button>
+                            <Link to="/updateprofile" > 
+                                <Button
+                                    variant="contained"
+                                    className="submit_btn_acc"
+                                >UPDATE PROFILE</Button>
+                            </Link>
                         </div>
                         <div className="profile_infos">
                             <div className="left_info">

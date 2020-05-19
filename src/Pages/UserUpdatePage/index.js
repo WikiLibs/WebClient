@@ -24,7 +24,10 @@ export default class ProfilePage extends Component {
     constructor(props) {
         super(props);
     
-        console.log(this.props);
+        if (this.props.user == null) {
+            window.location = "/";
+        }
+
         this.state = {
             firstName: this.props.user.firstName,
             lastName: this.props.user.lastName,
@@ -144,7 +147,6 @@ export default class ProfilePage extends Component {
                                         control={<Checkbox color="primary" />}
                                         label="Public account"
                                         labelPlacement="end"
-                                        disabled 
                                     />
                                 </div>
                             </div>
@@ -205,15 +207,12 @@ export default class ProfilePage extends Component {
                                 label="Profile message"
                                 variant="outlined"
                                 value={this.state.profileMsg}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
                             />
                             <Button
                                 variant="contained"
                                 href="/updateaccount"
                                 className="submit_btn_acc"
-                            >UPDATE PROFILE</Button>
+                            > SAVE UPDATE</Button>
                         </div>
                         <div className="profile_infos">
                             <div className="left_info">
