@@ -10,13 +10,13 @@ export default class Footer extends Component {
                 <div className="footer_container">
                     <div className="copyright">
                         <img className="logo_footer" src={footer} alt=""></img>
-                        <span className="copyright_txt">WikiLibs &copy; 2019</span>
+                        <span className="copyright_txt">WikiLibs &copy; 2020</span>
                     </div>
                     <div className="useful">
-                        <a href="#CONTACT">CONTACT</a>
-                        <a href="#HELP">HELP AND FAQ</a>
-                        <a href="#TERMSOFUSE">TERMS OF USE</a>
-                        <a href="#PRIVACY">PRIVACY POLICY</a>
+                        <a href="/contact">CONTACT</a>
+                        <a href="/faq">HELP AND FAQ</a>
+                        <a href="/tou">TERMS OF USE</a>
+                        <a href="/privacypolicy">PRIVACY POLICY</a>
                     </div>
                 </div>
             </div>
