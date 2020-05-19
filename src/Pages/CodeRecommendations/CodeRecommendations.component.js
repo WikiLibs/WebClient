@@ -79,7 +79,7 @@ const renderCodeExemples = () => {
             <div className="coderecom_content">
                 <div className="coderecom_code_box">
                     <p className="coderecom_code_comment">
-                        /**This is a brief description, ended by a period. Now this is the detailed description,<br />
+                        &frasl;**This is a brief description, ended by a period. Now this is the detailed description,<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;it can go on multiples lines.<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;\param integer&nbsp;&nbsp;&nbsp;&nbsp;An integer used as a parameter<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;\param string&nbsp;&nbsp;&nbsp;&nbsp;A string of characters used as a parameter<br />
@@ -93,7 +93,7 @@ const renderCodeExemples = () => {
                     </p>
                 </div>
                 <div className="coderecom_code_box">
-                    <p className="coderecom_code_comment">/**This is an example structure. This structure serves as an example..*/</p>
+                    <p className="coderecom_code_comment">&frasl;**This is an example structure. This structure serves as an example..*/</p>
                     <p><span className="coderecom_code_blue">struct</span> example_structure &#123;</p>
                     <p className="coderecom_code_comment">&nbsp;&nbsp;&nbsp;&nbsp;/**This is the brief description. This is the detailed description. It continues after the period.*/</p>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;<span className="coderecom_code_blue">char *</span> name;</p>
