@@ -12,7 +12,7 @@ import Moment from 'react-moment';
 
 import './index.css';
 
-import pp from '../../Components/Header/pp.png'
+/*import pp from '../../Components/Header/pp.png'*/
 
 
 export default class ProfilePage extends Component {
@@ -35,6 +35,7 @@ export default class ProfilePage extends Component {
             date: this.props.user.registrationDate,
             points: this.props.user.points,
             group: this.props.user.group,
+            profileImg: null,
             formErrors: {
                 private: "",
                 profileMsg: "",
@@ -101,6 +102,11 @@ export default class ProfilePage extends Component {
     handleCheckboxChange = event => {
     this.setState({ private: event.target.checked })}
 
+    profileImgUpdate = event => {
+        console.log(event.target.files[0]);
+        this.setState({ profileImg: URL.createObjectURL(event.target.files[0])});
+    }
+
     render() {
         return (
             <div>
@@ -113,10 +119,11 @@ export default class ProfilePage extends Component {
                                     <Card className="profile_card">
                                         <CardMedia
                                             className="profile_pic"
-                                            image={pp}
+                                            image={this.state.profileImg}
                                             title=""
                                         />
                                     </Card>
+                                    <input type="file" onChange={this.profileImgUpdate}/>
                                     <FormControlLabel
                                         className="control_label"
                                         value=""
