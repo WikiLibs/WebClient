@@ -19,10 +19,8 @@ export default class UserConnectionPage extends Component {
 
         this.state = {
             email: '',
-            password: '',
             formErrors: {
                 email: "",
-                password: ""
             },
             apiError: null
         };
@@ -32,8 +30,7 @@ export default class UserConnectionPage extends Component {
         e.preventDefault();
 
         if (checkForm(this.state)) {
-            //Handle errors similar to this
-            this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
+            //this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
         } else {
             console.error("FORM INVALID");
         }
@@ -48,9 +45,6 @@ export default class UserConnectionPage extends Component {
             case "email":
                 formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
-            case "Password":
-                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
-                break;
             default:
                 break;
         }
@@ -63,7 +57,7 @@ export default class UserConnectionPage extends Component {
             <div>
                 <div id="Body">
                     <div className="content_account">
-                        <span>Sign in</span>
+                        <span>Account recovery</span>
                         <div className="margin_in_form">
                             <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
                                 <TextField
@@ -78,31 +72,13 @@ export default class UserConnectionPage extends Component {
                                     className="text_field"
                                     onChange={this.handleChange}
                                 />
-                                <TextField
-                                    label="Password"
-                                    placeholder="********"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="outlined"
-                                    type="password"
-                                    name="password"
-                                    className="text_field"
-                                    onChange={this.handleChange}
-                                />
                                 <Button
                                     variant="contained"
                                     type="submit"
                                     className="submit_btn"
                                 >
-                                    LOGIN
+                                    NEXT
                                 </Button>
-                                <div className="no_account">
-                                    <span>Don't have an account yet ? You can <a href="/usercreation">register</a> !</span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span><a href="/forgotpassword">Forgot password ?</a></span>
-                                </div>
                             </form>
                             {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
                             {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}

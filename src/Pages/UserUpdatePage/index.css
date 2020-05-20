@@ -64,7 +64,7 @@
     font-weight: bold;
 }
 
-a > .submit_btn_acc {
+div > .submit_btn_acc {
     margin-top: 32px;
     width: 100%;
     background-color: #7B68EE;
@@ -84,14 +84,16 @@ a > .submit_btn_acc {
 
 .profile_pic {
     margin: 30px;
+    height: 194px;
 }
 
 .form_float_right {
     width: 100%;
     margin-top: 16px;
 }
+
 .form_float_right > div {
-    float: left;
+    float: right;
 }
 
 .control_label {
@@ -102,23 +104,25 @@ a > .submit_btn_acc {
     margin-top: 16px;
 }
 
-.top_form {
-    display: flex;
+.margin_in_form {
+    margin-bottom: 46px;
 }
 
-.top_form > .form_account {
-    width: 150%;
+.inputfile {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
 
-.top_form > .form_account > .text_field_acc {
-    width: 90%;
-}
-
-.bottom_form {
-    margin-top: -73px;
-}
-
-.bottom_form > .form_account {
-    display: grid;
-    width: 52%;
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: black;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    float: right;
 }

@@ -209,9 +209,6 @@ export default class ApiService {
     patchMe(state) {
         if (state.newPassword !== "") {
             return (Axios.patch(this.url + "/user/me", {
-                firstName: state.firstName,
-                lastName: state.lastName,
-                email: state.email,
                 private: state.private,
                 profileMsg: state.profileMsg,
                 pseudo: state.pseudo,
@@ -225,9 +222,6 @@ export default class ApiService {
                 }));
         } else {
             return (Axios.patch(this.url + "/user/me", {
-                firstName: state.firstName,
-                lastName: state.lastName,
-                email: state.email,
                 private: state.private,
                 profileMsg: state.profileMsg,
                 pseudo: state.pseudo,
