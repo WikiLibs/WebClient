@@ -42,7 +42,7 @@
     margin-top: 16px;
     width: 256px;
     height: 256px;
-    display: grid;
+    /* display: grid; */
     box-shadow: -1px 5px 5px #b1aeae;
     border: 1px solid #B7B7B7;
 }

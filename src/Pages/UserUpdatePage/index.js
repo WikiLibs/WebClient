@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
 import Moment from 'react-moment';
 
+import CreateIcon from '@material-ui/icons/Create';
+
 import './index.css';
 
 /*import pp from '../../Components/Header/pp.png'*/
@@ -113,26 +115,7 @@ export default class ProfilePage extends Component {
                 <div id="Body">
                     <div className="content_account">
                         <span>{this.state.pseudo}'s Account Update</span>
-                        <div className="margin_in_form">
-                            <div className="form_float_right">
-                                <div>
-                                    <Card className="profile_card">
-                                        <CardMedia
-                                            className="profile_pic"
-                                            image={this.state.profileImg}
-                                            title=""
-                                        />
-                                    </Card>
-                                    <input type="file" onChange={this.profileImgUpdate}/>
-                                    <FormControlLabel
-                                        className="control_label"
-                                        value=""
-                                        control={<Checkbox color="primary" checked={this.state.private} onChange={this.handleCheckboxChange}/>}
-                                        label="Public account"
-                                        labelPlacement="end"
-                                    />
-                                </div>
-                            </div>
+                        <div className="top_form">
                             <div className="form_account">
                                 <TextField
                                     name="pseudo"
@@ -155,37 +138,60 @@ export default class ProfilePage extends Component {
                                     value={this.state.profileMsg}
                                     onChange={this.handleChange}
                                 />
+                                <TextField
+                                    name="newPassword"
+                                    id="outlined-name"
+                                    className="text_field_acc"
+                                    placeholder="New Password (Optional)"
+                                    margin="normal"
+                                    label="New Password (Optional)"
+                                    variant="outlined"
+                                    value={this.state.newPassword}
+                                    onChange={this.handleChange}
+                                />
                             </div>
-                            
+                            <div className="form_float_right">
+                                <div>
+                                    <Card className="profile_card">
+                                        <div>
+                                            <input type="file" id="file" name="file" className="inputfile" onChange={this.profileImgUpdate} />
+                                            <label for="file"><CreateIcon/></label>
+                                        </div>
+                                        <CardMedia
+                                            className="profile_pic"
+                                            image={this.state.profileImg}
+                                            title=""
+                                        />
+                                    </Card>
+                                    <FormControlLabel
+                                        className="control_label"
+                                        value=""
+                                        control={<Checkbox color="primary" checked={this.state.private} onChange={this.handleCheckboxChange} />}
+                                        label="Public account"
+                                        labelPlacement="end"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div className="form_account">
-                            <TextField
-                                name="password"
-                                id="outlined-name"
-                                className="text_field_acc"
-                                placeholder="Password *"
-                                margin="normal"
-                                label="Password *"
-                                variant="outlined"
-                                value={this.state.password}
-                                onChange={this.handleChange}
-                            />
-                            <TextField
-                                name="newPassword"
-                                id="outlined-name"
-                                className="text_field_acc"
-                                placeholder="New Password (Optional)"
-                                margin="normal"
-                                label="New Password (Optional)"
-                                variant="outlined"
-                                value={this.state.newPassword}
-                                onChange={this.handleChange}
-                            />
-                            <Button
-                                variant="contained"
-                                className="submit_btn_acc"
-                                onClick={this.handleSubmit}
-                            > SAVE UPDATE</Button>
+                        <div className="bottom_form">
+                            <div className="form_account">
+                                <TextField
+                                    name="password"
+                                    id="outlined-name"
+                                    className="text_field_acc"
+                                    placeholder="Password *"
+                                    margin="normal"
+                                    label="Password *"
+                                    variant="outlined"
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                />
+                                <Button
+                                    variant="contained"
+                                    className="submit_btn_acc"
+                                    onClick={this.handleSubmit}
+                                > SAVE UPDATE</Button>
+                            </div>
                         </div>
                         <div className="profile_infos">
                             <div className="left_info">

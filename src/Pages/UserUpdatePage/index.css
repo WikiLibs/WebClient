@@ -1,13 +1,3 @@
-@font-face {
-    font-family: 'OpenSans-Bold';
-    src: url('../../Components/Header/font/OpenSans-Bold.ttf');
-}
-@font-face {
-    font-family: 'OpenSans-Regular';
-    src: url('../../Components/Header/font/OpenSans-Regular.ttf');
-}
-
-
 .content_account {
     margin-left: 23%;
     margin-right: 30%;
@@ -17,7 +7,7 @@
 
 .content_account > span {
     display: block;
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
 }
@@ -25,12 +15,6 @@
 .form_account {
     margin-top: 16px;
     margin-left: 32px;
-    display: grid;
-}
-
-.text_field_acc {
-    width: 75%;
-
 }
 
 .profile_infos {
@@ -43,10 +27,11 @@
 
 .left_info {
     display: grid;
+    width: 50%
 }
 
 .left_info > span {
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     color: #4C3DA8;
     line-height: 36px!important;
     font-style: italic;
@@ -54,7 +39,6 @@
 
 .info_down {
     margin-top: 16px;
-
 }
 
 .right_info {
@@ -62,7 +46,8 @@
 }
 
 #userPoints {
-    font-family: OpenSans-Bold;
+    font-family: 'Open Sans';
+    font-weight: bold;
     font-size: 38px;
     font-weight: normal;
     margin-top: 16px;
@@ -73,85 +58,46 @@
 }
 
 .right_info > span {
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
     font-weight: bold;
 }
 
-div > .text_field_acc {
-    margin-bottom: 32px;
-}
 div > .submit_btn_acc {
-    margin: 0;
-    width: 75%;
+    margin-top: 32px;
+    width: 100%;
     background-color: #7B68EE;
     padding: 21px;
     color: white;
     font-size: 16px;
 }
 
-.footer_container {
-    color: white;
-    background-color: #7B68EE;
-    margin-top: 96px;
-    display: flex;
-    padding-left: 12%;
-    padding-right: 12%;
-    justify-content: space-between;
-    height: 96px;
-}
-
-.copyright {
-    margin-top: auto;
-    margin-bottom: auto;
-    font-family: OpenSans-Bold;
-    vertical-align: middle;
-}
-
-.logo_footer {
-    width: 40px;
-    /* padding-right: 16px; */
-}
-
-.copyright_txt {
-    padding-left: 32px;
-}
-
-.useful {
-    margin-top: auto;
-    margin-bottom: auto;
-    vertical-align: middle;
-}
-
-.useful > a {
-    font-family: OpenSans-Regular;
-    color: white;
-    padding-left: 16px;
-}
-
 .profile_card {
     margin-top: 16px;
     width: 256px;
     height: 256px;
-    display: grid;
+    /* display: grid; */
     box-shadow: -1px 5px 5px #b1aeae;
     border: 1px solid #B7B7B7;
 }
 
 .profile_pic {
     margin: 30px;
+    height: 194px;
 }
 
 .form_float_right {
     width: 100%;
+    margin-top: 16px;
 }
+
 .form_float_right > div {
     float: right;
 }
 
 .control_label {
-    font-family: OpenSans-Regular;
+    font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
     font-weight: bold;
@@ -160,4 +106,24 @@ div > .submit_btn_acc {
 
 .margin_in_form {
     margin-bottom: 46px;
+}
+
+.inputfile {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: black;
+    display: inline-block;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    float: right;
 }

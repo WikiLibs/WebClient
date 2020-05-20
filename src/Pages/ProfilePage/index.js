@@ -90,26 +90,8 @@ export default class ProfilePage extends Component {
                 <div id="Body">
                     <div className="content_account">
                         <span>{this.state.pseudo}'s Account</span>
-                        <div className="margin_in_form">
-                            <div className="form_float_right">
-                                <div>
-                                    <Card className="profile_card">
-                                        <CardMedia
-                                            className="profile_pic"
-                                            image={pp}
-                                            title=""
-                                        />
-                                    </Card>
-                                    <FormControlLabel
-                                        className="control_label"
-                                        value=""
-                                        control={<Checkbox color="primary" checked={this.state.private}/>}
-                                        label="Public account"
-                                        labelPlacement="end"
-                                        disabled 
-                                    />
-                                </div>
-                            </div>
+                        <div className="top_form">
+                            
                             <div className="form_account">
                                 <TextField
                                     id="outlined-name"
@@ -145,38 +127,58 @@ export default class ProfilePage extends Component {
                                     }}
                                 />
                             </div>
-                            
+                            <div className="form_float_right">
+                                <div>
+                                    <Card className="profile_card">
+                                        <CardMedia
+                                            className="profile_pic"
+                                            image={pp}
+                                            title=""
+                                        />
+                                    </Card>
+                                    <FormControlLabel
+                                        className="control_label"
+                                        value=""
+                                        control={<Checkbox color="primary" checked={this.state.private} />}
+                                        label="Public account"
+                                        labelPlacement="end"
+                                        disabled
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div className="form_account">
-                            <TextField
-                                id="outlined-name"
-                                label="Email"
-                                className="text_field_acc"
-                                value={this.state.email}
-                                margin="normal"
-                                variant="outlined"
-                                InputProps={{
-                                    readOnly: true,
-                                  }}
-                            />
-                            <TextField
-                                id="outlined-name"
-                                className="text_field_acc"
-                                placeholder="Profile message"
-                                margin="normal"
-                                label="Profile message"
-                                variant="outlined"
-                                value={this.state.profileMsg}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                            />
-                            <Link to="/updateprofile" > 
-                                <Button
-                                    variant="contained"
-                                    className="submit_btn_acc"
-                                >UPDATE PROFILE</Button>
-                            </Link>
+                        <div className="bottom_form">
+                            <div className="form_account">
+                                <TextField
+                                    id="outlined-name"
+                                    label="Email"
+                                    className="text_field_acc"
+                                    value={this.state.email}
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-name"
+                                    className="text_field_acc"
+                                    placeholder="Profile message"
+                                    margin="normal"
+                                    label="Profile message"
+                                    variant="outlined"
+                                    value={this.state.profileMsg}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                <Link to="/updateprofile">
+                                    <Button
+                                        variant="contained"
+                                        className="submit_btn_acc"
+                                    >UPDATE PROFILE</Button>
+                                </Link>
+                            </div>
                         </div>
                         <div className="profile_infos">
                             <div className="left_info">
