@@ -20,6 +20,18 @@ export default class DownloadPage extends Component {
         return os;
     }
 
+    getUserOsLink = () => {
+        let os = this.getUserOs()
+
+        if (os.toLowerCase().includes('linux'))
+            return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_linux'
+        else if (os.toLowerCase().includes('windows'))
+            return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_windows.exe'
+        else if (os.toLowerCase().includes('mac'))
+            return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_mac'
+        return ''
+    }
+
     renderDownloadContent = () => {
         return (
             <div className='download-page-download-content'>
@@ -40,7 +52,8 @@ export default class DownloadPage extends Component {
                     <div className='download-page-button-container'>
                         <Button 
                             style={{backgroundColor: '#7B67EE', color: '#FFFFFF', fontWeight: 'bold'}}
-                            variant="contained" >
+                            variant="contained"
+                            target="_blank" href={this.getUserOsLink()} >
                             Download
                         </Button>
                     </div>
@@ -52,13 +65,31 @@ export default class DownloadPage extends Component {
         )
     }
 
+    renderImportant = () => {
+        return (
+            <div className='download-page-other-downloads-content'>
+                <div className='download-page-title'>
+                    Important warning
+                </div>
+                <div className='download-page-text-container'>
+                    <div className='download-page-text'>
+                        Before launching the program, you should know that Doxygen is required to run it.
+                    </div>
+                    <div className='download-page-text'>
+                        Please download it on <a href='http://www.doxygen.nl/download.html'>Doxygen's website</a>.
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     renderOtherDownloadButton = (platform, link) => {
         return (
             <div className='download-page-other'>
                 <GetAppIcon style={{color: '#7B67EE'}} />
-                <div className='download-page-other-link'>
+                <a className='download-page-other-link' href={link} download>
                     {platform}
-                </div>
+                </a>
             </div>
         )
     }
@@ -73,10 +104,16 @@ export default class DownloadPage extends Component {
                     <div className='download-page-text'>
                         Not the right OS detected ? Please check the other downloads below.
                     </div>
+                    <div className='download-page-text'>
+                        If it opens the file in another tab, just right click in the page and click "Save As...".
+                    </div>
+                    <div className='download-page-text'>
+                        You may also need to apply the correct permissions to run the file.
+                    </div>
                     <div className='download-page-other-container'>
-                        {this.renderOtherDownloadButton('Linux - x86 and x64 (not available yet)')}
-                        {this.renderOtherDownloadButton('Windows - 64 bits - 7 and later (not available yet)')}
-                        {this.renderOtherDownloadButton('MacOS - 64 bits - Catalina and later (not available yet)')}
+                        {this.renderOtherDownloadButton('Linux - x86 and x64', 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_linux')}
+                        {this.renderOtherDownloadButton('Windows - 64 bits - 7 and later', 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_windows.exe')}
+                        {this.renderOtherDownloadButton('MacOS - 64 bits - Catalina and later', 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_mac')}
                     </div>
                     <div className='download-page-text'>
                         Cannot find the right platform ?
@@ -94,6 +131,7 @@ export default class DownloadPage extends Component {
         return (
             <div className='download-page-container'>
                 {this.renderDownloadContent()}
+                {this.renderImportant()}
                 {this.renderOtherDownloads()}
             </div>
         )

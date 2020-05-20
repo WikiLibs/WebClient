@@ -8,7 +8,7 @@ export default class ApiService {
         return (Axios.get(this.url + "/debug"));
     }
 
-    getLangs() {
+    getSymLangs() {
         return (Axios.get(this.url + "/symbol/lang", {
             'headers': {
                 'Authorization': this.apiKey
@@ -19,7 +19,7 @@ export default class ApiService {
     /////////////////////////////////////////////////////////
 
     getLangLibTable() {
-        return (this.getLangs().then(async response => {
+        return (this.getSymLangs().then(async response => {
             let langs = [];
             //Required cause for some reasons after the first iteration Axios decided to fuck up it's own memory
             let forceDupe = JSON.parse(JSON.stringify(response.data));
@@ -81,6 +81,20 @@ export default class ApiService {
             symbolId: state.symbolId,
             code: state.code,
             description: state.description
+        },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
+    pushNewRequestExample(state) {
+        return (Axios.post(this.url + "/example/request", {
+            message: state.message,
+            method: state.method,
+            data: state.data,
+            applyTo: state.applyTo
         },
             {
                 headers: {
@@ -180,6 +194,14 @@ export default class ApiService {
         return (Axios.get(this.url + "/user/me", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    getUser(uid) {
+        return (Axios.get(this.url + "/user/" + uid, {
+            headers: {
+                'Authorization': this.apiKey
             }
         }));
     }
