@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 import './style.css';
+import { Link } from 'react-router-dom';
 
 export default class DownloadPage extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ export default class DownloadPage extends Component {
 
         if (os.toLowerCase().includes('linux'))
             return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_linux'
-        else if (os.toLowerCase().includes('windows'))
+        else if (os.toLowerCase().includes('win'))
             return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_windows.exe'
         else if (os.toLowerCase().includes('mac'))
             return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_mac'
@@ -43,11 +44,11 @@ export default class DownloadPage extends Component {
                         Download the WikiLibs program to upload your code on the website. 
                     </div>
                     <div className='download-page-text'>
-                        Please check the how to page to know how to operate the program.
+                        Please check the <Link to="/howtouseparser">how to</Link> page to know how to operate the program.
                     </div>
                     <br />
                     <div className='download-page-text'>
-                        Before doing it, you might want to check our code recommandations to be sure the result is as expected !
+                        Before doing it, you might want to check our <Link to="/coderecommendations">code recommandations</Link> to be sure the result is as expected !
                     </div>
                     <div className='download-page-button-container'>
                         <Button 
@@ -120,7 +121,7 @@ export default class DownloadPage extends Component {
                     </div>
                     <br />
                     <div className='download-page-text'>
-                        Maybe devlopment is in progress for this particular platform. You can contact us (see Contact) to check with us.
+                        Maybe devlopment is in progress for this particular platform. You can contact us (see <Link to="/contact">Contact</Link>) to check with us.
                     </div>
                 </div>
             </div>
