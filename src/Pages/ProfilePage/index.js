@@ -15,10 +15,6 @@ import './index.css';
 
 import pp from '../../Components/Header/pp.png'
 
-const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-
 export default class ProfilePage extends Component {
     api = new ApiService();
 
@@ -88,46 +84,6 @@ export default class ProfilePage extends Component {
         }
     };
 
-    handleChange = e => {
-        e.preventDefault();
-        const { name, value } = e.target;
-        let formErrors = { ...this.state.formErrors };
-
-        switch (name) {
-            case "firstName":
-                formErrors.firstName =
-                    value.length <= 0 ? "minimum 1 character required" : "";
-                break;
-            case "lastName":
-                formErrors.lastName =
-                    value.length <= 0 ? "minimum 1 character required" : "";
-                break;
-            case "email":
-                formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
-                break;
-            case "Pseudo":
-                formErrors.pseudo =
-                    value.length <= 0 ? "minimum 1 character required" : "";
-                break;
-            case "Password":
-                formErrors.password =
-                    value.length < 6 ? "Minimum 6 characters required" : "";
-                break;
-            default:
-                break;
-        }
-
-        this.setState({ formErrors, [name]: value });
-    };
-
-    setPrivate(nb) {
-        if (nb === 0) {
-            this.setState({ private: true });
-        } else {
-            this.setState({ private: false });
-        }
-    }
-
     render() {
         return (
             <div>
@@ -147,7 +103,7 @@ export default class ProfilePage extends Component {
                                     <FormControlLabel
                                         className="control_label"
                                         value=""
-                                        control={<Checkbox color="primary" />}
+                                        control={<Checkbox color="primary" checked={this.state.private}/>}
                                         label="Public account"
                                         labelPlacement="end"
                                         disabled 
