@@ -139,14 +139,14 @@ export default class ProfilePage extends Component {
                                     onChange={this.handleChange}
                                 />
                                 <TextField
-                                    name="newPassword"
+                                    name="password"
                                     id="outlined-name"
                                     className="text_field_acc"
-                                    placeholder="New Password (Optional)"
+                                    placeholder="Password *"
                                     margin="normal"
-                                    label="New Password (Optional)"
+                                    label="Password *"
                                     variant="outlined"
-                                    value={this.state.newPassword}
+                                    value={this.state.password}
                                     onChange={this.handleChange}
                                 />
                             </div>
@@ -175,15 +175,15 @@ export default class ProfilePage extends Component {
                         </div>
                         <div className="bottom_form">
                             <div className="form_account">
-                                <TextField
-                                    name="password"
+                            <TextField
+                                    name="newPassword"
                                     id="outlined-name"
                                     className="text_field_acc"
-                                    placeholder="Password *"
+                                    placeholder="New Password (Optional)"
                                     margin="normal"
-                                    label="Password *"
+                                    label="New Password (Optional)"
                                     variant="outlined"
-                                    value={this.state.password}
+                                    value={this.state.newPassword}
                                     onChange={this.handleChange}
                                 />
                                 <Button
