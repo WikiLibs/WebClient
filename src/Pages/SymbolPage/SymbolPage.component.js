@@ -94,12 +94,12 @@ export default class SymbolPage extends Component {
         if (this.props.user) {
             if (this.props.user.hasPermission("example.create")) {
                 this.api.pushNewExample(example).then(response => { 
-                    alert("Your example was send, it's actually online");
+                    alert("Your example was sent, it's actually online");
                     console.log(response);
                 });
             } else {
                 this.api.pushNewRequestExample(request).then(response => {
-                    alert('Your example was send, it will be check by an administrator');
+                    alert('Your example was sent, it will be check by an administrator');
                     console.log(response);
                 });
             }
