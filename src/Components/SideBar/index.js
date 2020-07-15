@@ -11,7 +11,7 @@ export default class SideBar extends Component {
         this.state[lang].data.forEach(elem => {
             let str = elem.name.split('/')[1];
             vals.push(<li key={elem.id}>
-                <a href={"/search?name=" + encodeURIComponent(this.state[lang].displayName + '/' + str) + "&lib=" + elem.id}>{str}</a>
+                <a href={"/libraries?name=" + encodeURIComponent(this.state[lang].displayName + '/' + str) + "&lib=" + elem.id}>{str}</a>
             </li>);
         });
         return (vals);
