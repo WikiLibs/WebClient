@@ -15,7 +15,7 @@ api = new ApiService();
         if (this.state.data) {
             this.state.data.forEach(elem => {
                 vals.push(
-                    <p key={elem.id} >{"ID: " + elem.id + "Path: " + elem.path}</p>
+                    <p key={elem.id} >{"ID: " + elem.id + ", Path: " + elem.path}</p>
                 );
             })
         }

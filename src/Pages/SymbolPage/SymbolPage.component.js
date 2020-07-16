@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
+import Prism from 'prismjs';
 
 import './style.css';
 
@@ -288,12 +289,15 @@ export default class SymbolPage extends Component {
         var lines = [];
         var examples = [];
         var active = " active";
+        const Prism = require('prismjs');
 
         if (this.state.listExample.length !== 0) {
             this.state.listExample.forEach(elem => {
                 elem.code.forEach(elem2 => {
+                    const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
-                        <center title={elem2.comment} key={elem2.data + elem2.comment + elem2.data + elem2.id} className="center" >{elem2.data}</center>
+                        "<p>" + html + "</p>".to
+                        //<center title={elem2.comment} key={elem2.data + elem2.comment + elem2.data + elem2.id} className="center" >{elem2.data}</center>
                     );
                     lines.push(<br key={elem.id + elem2.data + elem.id} />);
                 });
