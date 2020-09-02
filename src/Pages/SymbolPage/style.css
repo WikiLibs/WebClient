@@ -56,6 +56,10 @@ span.type {
     color: #3894D2;
 }
 
+span.operator {
+    color: #3894D2;
+}
+
 span.class {
     color: #01831A;
 }
@@ -76,6 +80,10 @@ span.string {
     color: #A48B01;
 }
 
+span.function {
+    color: #A48B01;
+}
+
 span.comment {
     color: #646464;
 }
@@ -87,3 +95,7 @@ span.comment {
     margin: 1.67em 0;
     background-color: #dcd7af;
   }
+
+.exampleWrite {
+    margin-left: 40%;
+}

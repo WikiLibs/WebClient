@@ -10,9 +10,10 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
-import Prism from 'prismjs';
-
 import './style.css';
+
+import createDOMPurify from 'dompurify'
+import { JSDOM } from 'jsdom'
 
 function cleanArray(arrayToClean) {
     var clean = [];
@@ -290,14 +291,17 @@ export default class SymbolPage extends Component {
         var examples = [];
         var active = " active";
         const Prism = require('prismjs');
+        const window = (new JSDOM('')).window
+        const DOMPurify = createDOMPurify(window)
 
         if (this.state.listExample.length !== 0) {
             this.state.listExample.forEach(elem => {
                 elem.code.forEach(elem2 => {
                     const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
-                        "<p>" + html + "</p>".to
-                        //<center title={elem2.comment} key={elem2.data + elem2.comment + elem2.data + elem2.id} className="center" >{elem2.data}</center>
+                        <span>
+                            { <span className="exampleWrite" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
+                        </span>
                     );
                     lines.push(<br key={elem.id + elem2.data + elem.id} />);
                 });
@@ -311,7 +315,9 @@ export default class SymbolPage extends Component {
                 examples.push(
                     <div className={"carousel-item" + active} key={elem.id}>
                         <div className={"container_editor_area"}>
+                            <br />
                             {lines}
+                            <br />
                         </div>
                     {footer}
                     </div>
