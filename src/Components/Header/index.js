@@ -219,6 +219,7 @@ class Header extends Component {
         if (this.props.user) {
             return (<div className="right_header">
                 {/* {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>} */}
+                <Link to="/download">Download</Link>
                 <Link to='/admin'>Administration</Link>
                 <Link onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
                 {this.props.user.hasPermission("user.me.update") && <Link to="/profile"><img alt="" src={pp} className="img_profile"></img></Link>}

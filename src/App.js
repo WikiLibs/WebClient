@@ -15,6 +15,8 @@ import ProfilePage from './Pages/ProfilePage';
 import NotFoundPage from './Pages/NotFoundPage'
 import AdminPage from './Pages/AdminPage'
 import DownloadPage from './Pages/DownloadPage'
+import ForgotPasswordPage from './Pages/ForgotPasswordPage'
+import UserUpdatePage from './Pages/UserUpdatePage'
 import ContactPage from './Pages/ContactPage'
 import FAQPage from './Pages/FAQPage'
 import PrivacyPolicy from './Pages/PrivacyPolicy'
@@ -35,9 +37,11 @@ export default function App()
                 <Layout exact path='/search' component={SearchPage} />
                 <Layout exact path='/usercreation' component={UserCreationPage} />
                 <Layout exact path='/userconnection' component={UserConnectionPage} />
-                <Layout exact path='/profile' component={ProfilePage} />
                 <Layout exact path='/admin' component={AdminPage} />
                 <Layout exact path='/download' component={DownloadPage} />
+                <Layout exact path='/forgotpassword' component={ForgotPasswordPage} />
+                <Layout exact path='/profile' component={ProfilePage} requireUser />
+                <Layout exact path='/updateprofile' component={UserUpdatePage} requireUser />
                 <Layout exact path='/contact' component={ContactPage} />
                 <Layout exact path='/faq' component={FAQPage} />
                 <Layout exact path='/privacypolicy' component={PrivacyPolicy} />
