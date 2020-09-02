@@ -300,7 +300,7 @@ export default class SymbolPage extends Component {
                     const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
                         <span>
-                            { <span className="exampleWrite" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
+                            { <span title={elem2.comment} className="exampleWrite" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
                         </span>
                     );
                     lines.push(<br key={elem.id + elem2.data + elem.id} />);
