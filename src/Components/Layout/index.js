@@ -10,6 +10,8 @@ import jwt_decode from 'jwt-decode';
 class PageBody extends Component {
     api = new ApiService();
 
+    initialized = this.props.requireUser ? false : true;
+
     constructor(props) {
         super(props);
         let flag = false;
@@ -45,10 +47,25 @@ class PageBody extends Component {
                         return (true);
                     return (false);
                 }
-                this.setState({ user: user });
+                user.clone = () => {
+                    return ({
+                        id: user.id,
+                        registrationDate: user.registrationDate,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        private: user.private,
+                        isBot: user.isBot,
+                        profileMsg: user.profileMsg,
+                        points: user.points,
+                        pseudo: user.pseudo,
+                        group: user.group
+                    });
+                }
+                this.setState({ user: user }, () => this.initialized = true);
             }).catch(() => {
                 localStorage.setItem('userToken', null);
-                this.setState({ user: null });
+                this.setState({ user: null }, () => this.initialized = true);
             });
         }
         if (this.state.userConnected) {
@@ -73,9 +90,12 @@ class PageBody extends Component {
                 <Header user={this.state.userConnected ? this.state.user : null} openNavBar={() => this.openNavBar()} />
                 <div id="wrapper" className={this.state.navBar ? "toggled" : ""}>
                     <SideBar user={this.state.userConnected ? this.state.user : null} />
-                    <div id="page-content-wrapper">
-                        <this.props.MatchedPage user={this.state.userConnected ? this.state.user : null} {...this.props} />
-                    </div>
+                    {
+                        this.initialized &&
+                        <div id="page-content-wrapper">
+                            <this.props.MatchedPage user={this.state.userConnected ? this.state.user : null} {...this.props} />
+                        </div>
+                    }
                     <Footer />
                 </div>
             </div>

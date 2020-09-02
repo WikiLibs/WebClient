@@ -9,41 +9,36 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
 import Moment from 'react-moment';
-import { Link } from 'react-router-dom';
+
+import CreateIcon from '@material-ui/icons/Create';
 
 import './index.css';
 
-import pp from '../../Components/Header/pp.png'
+/*import pp from '../../Components/Header/pp.png'*/
+
 
 export default class ProfilePage extends Component {
     api = new ApiService();
 
     constructor(props) {
         super(props);
-
+    
         if (this.props.user == null) {
             window.location = "/";
         }
 
-        var tmp = this.props.user.clone();
-        console.log(tmp);
         this.state = {
-            firstName: tmp.firstName,
-            lastName: tmp.lastName,
-            email: tmp.email,
-            private: tmp.private,
-            profileMsg: tmp.profileMsg,
-            pseudo: tmp.pseudo,
+            private: this.props.user.private,
+            profileMsg: this.props.user.profileMsg,
+            pseudo: this.props.user.pseudo,
             password: '',
             newPassword: '',
-            id: tmp.id,
-            date: tmp.registrationDate,
-            points: tmp.points,
-            group: tmp.group,
+            id: this.props.user.id,
+            date: this.props.user.registrationDate,
+            points: this.props.user.points,
+            group: this.props.user.group,
+            profileImg: null,
             formErrors: {
-                firstName: "",
-                lastName: "",
-                email: "",
                 private: "",
                 profileMsg: "",
                 pseudo: "",
@@ -61,9 +56,6 @@ export default class ProfilePage extends Component {
         if (checkForm(this.state)) {
             console.log(`
                 --SUBMITTING--
-                First name: ${this.state.firstName}
-                Last name: ${this.state.lastName}
-                Email: ${this.state.email}
                 Private: ${this.state.private}
                 profilMsg: ${this.state.profileMsg}
                 Pseudo: ${this.state.pseudo}
@@ -72,7 +64,7 @@ export default class ProfilePage extends Component {
             `)
             if (this.state.password) {
                 this.api.patchMe(this.state)
-                    .then((Response) => {
+                    .then(_ => {
                         this.setState({ success: "Successfully updated profile." });
                     })
                     .catch(error => {
@@ -84,83 +76,59 @@ export default class ProfilePage extends Component {
         }
     };
 
+    handleChange = e => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        let formErrors = { ...this.state.formErrors };
+
+        switch (name) {
+            case "pseudo":
+                formErrors.pseudo =
+                    value.length <= 0 ? "minimum 1 character required" : "";
+                break;
+            case "password":
+                formErrors.password =
+                    value.length < 6 ? "Minimum 6 characters required" : "";
+                break;
+            case "newPassword":
+                formErrors.newPassword =
+                    value.length < 6 ? "Minimum 6 characters required" : "";
+                break;
+            default:
+                break;
+        }
+
+        this.setState({ formErrors, [name]: value });
+    };
+
+    handleCheckboxChange = event => {
+    this.setState({ private: event.target.checked })}
+
+    profileImgUpdate = event => {
+        console.log(event.target.files[0]);
+        this.setState({ profileImg: URL.createObjectURL(event.target.files[0])});
+    }
+
     render() {
         return (
             <div>
                 <div id="Body">
                     <div className="content_account">
-                        <span>{this.state.pseudo}'s Account</span>
+                        <span>{this.state.pseudo}'s Account Update</span>
                         <div className="top_form">
-                            
                             <div className="form_account">
                                 <TextField
+                                    name="pseudo"
                                     id="outlined-name"
                                     label="Pseudo"
                                     className="text_field_acc"
                                     value={this.state.pseudo}
                                     margin="normal"
                                     variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
+                                    onChange={this.handleChange}
                                 />
                                 <TextField
-                                    id="outlined-name"
-                                    label="Firstname"
-                                    className="text_field_acc"
-                                    value={this.state.firstName}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-name"
-                                    label="Lastname"
-                                    className="text_field_acc"
-                                    value={this.state.lastName}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                            </div>
-                            <div className="form_float_right">
-                                <div>
-                                    <Card className="profile_card">
-                                        <CardMedia
-                                            className="profile_pic"
-                                            image={pp}
-                                            title=""
-                                        />
-                                    </Card>
-                                    <FormControlLabel
-                                        className="control_label"
-                                        value=""
-                                        control={<Checkbox color="primary" checked={this.state.private} />}
-                                        label="Public account"
-                                        labelPlacement="end"
-                                        disabled
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bottom_form">
-                            <div className="form_account">
-                                <TextField
-                                    id="outlined-name"
-                                    label="Email"
-                                    className="text_field_acc"
-                                    value={this.state.email}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <TextField
+                                    name="profileMsg"
                                     id="outlined-name"
                                     className="text_field_acc"
                                     placeholder="Profile message"
@@ -168,16 +136,61 @@ export default class ProfilePage extends Component {
                                     label="Profile message"
                                     variant="outlined"
                                     value={this.state.profileMsg}
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
+                                    onChange={this.handleChange}
                                 />
-                                <Link to="/updateprofile">
-                                    <Button
-                                        variant="contained"
-                                        className="submit_btn_acc"
-                                    >UPDATE PROFILE</Button>
-                                </Link>
+                                <TextField
+                                    name="newPassword"
+                                    id="outlined-name"
+                                    className="text_field_acc"
+                                    placeholder="New Password (Optional)"
+                                    margin="normal"
+                                    label="New Password (Optional)"
+                                    variant="outlined"
+                                    value={this.state.newPassword}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form_float_right">
+                                <div>
+                                    <Card className="profile_card">
+                                        <div>
+                                            <input type="file" id="file" name="file" className="inputfile" onChange={this.profileImgUpdate} />
+                                            <label for="file"><CreateIcon/></label>
+                                        </div>
+                                        <CardMedia
+                                            className="profile_pic"
+                                            image={this.state.profileImg}
+                                            title=""
+                                        />
+                                    </Card>
+                                    <FormControlLabel
+                                        className="control_label"
+                                        value=""
+                                        control={<Checkbox color="primary" checked={this.state.private} onChange={this.handleCheckboxChange} />}
+                                        label="Public account"
+                                        labelPlacement="end"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bottom_form">
+                            <div className="form_account">
+                                <TextField
+                                    name="password"
+                                    id="outlined-name"
+                                    className="text_field_acc"
+                                    placeholder="Password *"
+                                    margin="normal"
+                                    label="Password *"
+                                    variant="outlined"
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                />
+                                <Button
+                                    variant="contained"
+                                    className="submit_btn_acc"
+                                    onClick={this.handleSubmit}
+                                > SAVE UPDATE</Button>
                             </div>
                         </div>
                         <div className="profile_infos">
