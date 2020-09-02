@@ -166,7 +166,6 @@ class Header extends Component {
         this.state.search = value;
         suggestions = [];
         suggestionsId = [];
-        console.log(suggestionsId);
 
         let query = {
             page: 1,

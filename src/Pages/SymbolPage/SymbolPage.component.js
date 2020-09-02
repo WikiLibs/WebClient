@@ -10,14 +10,15 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
-
 import './style.css';
+
+import createDOMPurify from 'dompurify'
+import { JSDOM } from 'jsdom'
 
 function cleanArray(arrayToClean) {
     var clean = [];
     arrayToClean.forEach(function (elem,index) {
         elem = elem.trim()
-        console.log(elem)
         if (elem[0] === '/') {
             clean.push(index)
         }
@@ -49,7 +50,8 @@ export default class SymbolPage extends Component {
             message: "" ,
             listExample: [],
             symbolId: 0,
-            pseudoExample:""
+            pseudoExample: "",
+            mapIdPseudo: {},
         };
     }
 
@@ -84,6 +86,9 @@ export default class SymbolPage extends Component {
                     final.comment += elem2.replace(/\s+/g,' ').trim().replace('/','');
                 }
             });
+            if (final.data.length === 0){
+                final.data = ".";
+            }
             example.code.push(final);
         });
         request.data = example;
@@ -91,12 +96,12 @@ export default class SymbolPage extends Component {
         if (this.props.user) {
             if (this.props.user.hasPermission("example.create")) {
                 this.api.pushNewExample(example).then(response => { 
-                    alert("Your example was send, it's actually online");
+                    alert("Your example was sent, it's actually online");
                     console.log(response);
                 });
             } else {
                 this.api.pushNewRequestExample(request).then(response => {
-                    alert('Your example was send, it will be check by an administrator');
+                    alert('Your example was sent, it will be check by an administrator');
                     console.log(response);
                 });
             }
@@ -125,7 +130,14 @@ export default class SymbolPage extends Component {
         var listExample = await this.api.getExamples(values.id)
         this.setState({symbolId: values.id});
 
+        let mapId = {};
+        listExample.data.forEach(elem => {
+            this.api.getUser(elem.userId).then(response => {mapId[elem.userId] = response.data.pseudo});
+        })
+
+        this.setState({mapIdPseudo: mapId});
         this.setState({listExample: listExample.data});
+
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
 
@@ -278,32 +290,41 @@ export default class SymbolPage extends Component {
         var lines = [];
         var examples = [];
         var active = " active";
+        const Prism = require('prismjs');
+        const window = (new JSDOM('')).window
+        const DOMPurify = createDOMPurify(window)
 
         if (this.state.listExample.length !== 0) {
             this.state.listExample.forEach(elem => {
                 elem.code.forEach(elem2 => {
+                    const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
-                        <center title={elem2.comment} key={elem2.data} className="center" >{elem2.data}</center>
+                        <span>
+                            { <span title={elem2.comment} className="exampleWrite" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
+                        </span>
                     );
-                    lines.push(<br key={elem2.data + elem.id} />);
+                    lines.push(<br key={elem.id + elem2.data + elem.id} />);
                 });
-                examples.push(
-                    <div className={"carousel-item" + active} key={elem.id} >
-                        {lines}
+                footer.push(
+                    <div key={elem.id + elem.userId + elem.creationDate}>
+                        <h5><b>Description</b></h5>
+                        <h6>{elem.description}</h6>
+                <p>This example was pushed by <b>{this.state.mapIdPseudo[elem.userId]}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
                     </div>
                 );
-                if (active.length > 1) {
-                    this.api.getUser(elem.userId).then(response => {this.setState({pseudoExample: response.data.pseudo})});
-                    footer.push(
-                        <div key={elem.id + elem.userId + elem.creationDate}>
-                            <h5><b>Description</b></h5>
-                            <h6>{elem.description}</h6>
-                            <p>This example was pushed by <b>{this.state.pseudoExample}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
+                examples.push(
+                    <div className={"carousel-item" + active} key={elem.id}>
+                        <div className={"container_editor_area"}>
+                            <br />
+                            {lines}
+                            <br />
                         </div>
-                    );
-                }
+                    {footer}
+                    </div>
+                );
                 active = "";
                 lines = [];
+                footer = [];
             });
         } else {
             return (
@@ -312,7 +333,7 @@ export default class SymbolPage extends Component {
         }
         return(
         <div>
-            <div id="carouselExampleControls" className="carousel slide container_editor_area" data-ride="carousel">
+            <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
                     {examples}
                 </div>
