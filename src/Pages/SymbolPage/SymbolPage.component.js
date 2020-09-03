@@ -131,13 +131,14 @@ export default class SymbolPage extends Component {
         var listExample = await this.api.getExamples(values.id)
         this.setState({symbolId: values.id});
 
-        let mapId = {};
+        let mapIdPseudo = {};
         listExample.data.forEach(elem => {
-            this.api.getUser(elem.userId).then(response => {mapId[elem.userId] = response.data.pseudo});
+            this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
         })
 
-        this.setState({mapIdPseudo: mapId});
+        this.setState({mapIdPseudo: mapIdPseudo});
         this.setState({listExample: listExample.data});
+
 
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
@@ -299,7 +300,7 @@ export default class SymbolPage extends Component {
                 elem.code.forEach(elem2 => {
                     const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
-                        <span>
+                        <span key={elem2.data + elem2.id}>
                             { <span title={elem2.comment} className="exampleWrite" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
                         </span>
                     );
@@ -346,7 +347,6 @@ export default class SymbolPage extends Component {
                     <span className="sr-only">Next</span>
                 </a>
             </div>
-            {footer}
         </div>
         );
     }
