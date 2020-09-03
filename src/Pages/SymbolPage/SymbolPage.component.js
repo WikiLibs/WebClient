@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
+import Prism from 'prismjs';
 import './style.css';
 
 import createDOMPurify from 'dompurify'
@@ -290,7 +291,6 @@ export default class SymbolPage extends Component {
         var lines = [];
         var examples = [];
         var active = " active";
-        const Prism = require('prismjs');
         const window = (new JSDOM('')).window
         const DOMPurify = createDOMPurify(window)
 

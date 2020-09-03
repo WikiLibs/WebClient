@@ -30,7 +30,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
     "react-simple-code-editor": "^0.11.0",
-    "request": ""
+    "request": "^2.88.2"
   },
   "scripts": {
     "start": "react-scripts start",
