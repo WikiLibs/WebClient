@@ -53,6 +53,7 @@ export default class SymbolPage extends Component {
             symbolId: 0,
             pseudoExample: "",
             mapIdPseudo: {},
+            mapComments: {},
         };
     }
 
@@ -132,12 +133,16 @@ export default class SymbolPage extends Component {
         this.setState({symbolId: values.id});
 
         let mapIdPseudo = {};
+        let mapComments = {};
         listExample.data.forEach(elem => {
             this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
+            this.api.getComments(elem.id, 1).then(response => {mapComments[elem.id] = response.data});
         })
 
         this.setState({mapIdPseudo: mapIdPseudo});
         this.setState({listExample: listExample.data});
+        this.setState({mapComments: mapComments});
+        console.log(mapComments);
 
 
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
@@ -287,6 +292,10 @@ export default class SymbolPage extends Component {
         )
     } 
 
+    renderComment(id) {
+        return (this.state.mapComments[id].count);
+    }
+
     renderExample = () => {
         var footer = [];
         var lines = [];
@@ -321,6 +330,7 @@ export default class SymbolPage extends Component {
                             <br />
                         </div>
                     {footer}
+                    {this.renderComment(elem.id)}
                     </div>
                 );
                 active = "";
