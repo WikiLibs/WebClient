@@ -1,51 +1,38 @@
-.content_account {
+.update-profile-content-account {
     margin-left: 23%;
     margin-right: 30%;
     margin-top: 50px;
     margin-bottom: -48px;
 }
 
-.content_account > span {
+.update-profile-content-account > span {
     display: block;
     font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
 }
 
-.form_account {
-    margin-top: 16px;
-    margin-left: 32px;
-}
-
-.profile_infos {
-    margin-left: 32px;
-    margin-top: 48px;
-    width: 48.5%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.left_info {
+.update-profile-left-info {
     display: grid;
     width: 50%
 }
 
-.left_info > span {
+.update-profile-left-info > span {
     font-family: 'Open Sans';
     color: #4C3DA8;
     line-height: 36px!important;
     font-style: italic;
 }
 
-.info_down {
+.update-profile-info-down {
     margin-top: 16px;
 }
 
-.right_info {
+.update-profile-right-info {
     display: grid;
 }
 
-#userPoints {
+/* #userPoints {
     font-family: 'Open Sans';
     font-weight: bold;
     font-size: 38px;
@@ -55,48 +42,49 @@
     margin: 0;
     margin-bottom: -55px;
     text-align: right;
-}
+} */
 
-.right_info > span {
+.update-profile-right-info > span {
     font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
     font-weight: bold;
 }
 
-div > .submit_btn_acc {
+div > .update-profile-submit-btn-acc {
     margin-top: 32px;
     width: 100%;
     background-color: #7B68EE;
     padding: 21px;
     color: white;
     font-size: 16px;
+    font-weight: bold;
+}
+div > .update-profile-submit-btn-acc:hover {
+    background-color: #7B68EE!important;
+}
+div > .update-profile-submit-btn-acc:focus {
+    outline-width: 0;
 }
 
-.profile_card {
+.update-profile-profile-card {
     margin-top: 16px;
     width: 256px;
     height: 256px;
-    /* display: grid; */
     box-shadow: -1px 5px 5px #b1aeae;
     border: 1px solid #B7B7B7;
 }
 
-.profile_pic {
-    margin: 30px;
-    height: 194px;
-}
-
-.form_float_right {
+.update-profile-form-float-right {
     width: 100%;
     margin-top: 16px;
 }
 
-.form_float_right > div {
-    float: right;
+.update-profile-form-float-right > div {
+    float: left;
 }
 
-.control_label {
+.update-profile-control-label {
     font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
@@ -104,11 +92,7 @@ div > .submit_btn_acc {
     margin-top: 16px;
 }
 
-.margin_in_form {
-    margin-bottom: 46px;
-}
-
-.inputfile {
+.update-profile-inputfile {
     width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
@@ -117,7 +101,7 @@ div > .submit_btn_acc {
 	z-index: -1;
 }
 
-.inputfile + label {
+.update-profile-inputfile + label {
     font-size: 1.25em;
     font-weight: 700;
     color: black;

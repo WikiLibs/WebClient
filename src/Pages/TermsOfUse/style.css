@@ -1,41 +1,41 @@
-.content_tou_page {
+.terms-content-page {
     margin-left: 443px;
     margin-right: 442px;
     margin-top: 96px;
     margin-bottom: -30px;
 }
 
-.tou_title {
+.terms-title {
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
     color: #4C3DA8;
 }
 
-.tou_content {
+.terms-content {
     margin-left: 29px;
     margin-top: 32px;
 }
 
-.tou_content > p {
+.terms-content > p {
     font-size: 15px;
     color: #202020;
     font-family: 'Open Sans';
 }
 
-.update {
+.terms-updated {
     margin-bottom: 64px;
 }
 
-.tou_desc_content {
+.terms-desc-content {
     margin-bottom: 16px;
 }
 
-.tou_subtitle {
+.terms-subtitle {
     color: #6C60B7!important;
 }
 
-.tou_headlines {
+.terms-headlines {
     color: #4C3DA8;
     font-family: 'Open Sans';
     font-weight: bold;

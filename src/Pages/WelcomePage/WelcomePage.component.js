@@ -14,15 +14,15 @@ import think from './imgs/think.png'
 const renderBanner = () => {
     return (
         <div id="Head">
-            <div id="Title" className="title">
-                <img src={back} className="back_img overlay" alt=""></img>
-                <div id="headline">
-                    <img src={fullLogo}  className="logo_title" alt=""></img>
-                    <div id="description">
-                        <span className="big_title">WikiLibs,</span><br/>
-                        <span className="big_title italic">Our passion, for your time</span><br/><br/>
-                        <span className="small_title italic">Coding libraries won't be a problem anymore.</span><br/>
-                        <span className="small_title italic">Start saving time now</span><br/>
+            <div id="Title" className="welcome-title">
+                <img src={back} className="welcome-back-img welcome-overlay" alt=""></img>
+                <div id="welcome-headline">
+                    <img src={fullLogo}  className="welcome-logo-title" alt=""></img>
+                    <div id="welcome-description">
+                        <span className="welcome-big-title">WikiLibs,</span>
+                        <span className="welcome-big-title welcome-italic">Our passion, for your time</span><br/><br/>
+                        <span className="welcome-small-title welcome-italic">Coding libraries won't be a problem anymore.</span><br/>
+                        <span className="welcome-small-title welcome-italic">Start saving time now</span><br/>
                     </div>
                 </div>
             </div>
@@ -32,24 +32,24 @@ const renderBanner = () => {
 
 const renderWhatCard = () => {
     return (
-        <div className="home_card">
-            <span className="card_title">What is WikiLibs ?</span>
-            <div className="tiles_container">
-                <div className="tile">
-                    <img src={at} className="logo_tile" alt=""></img>
-                    <span className="description_tile">
+        <div className="welcome-home-card">
+            <span className="welcome-card-title">What is WikiLibs ?</span>
+            <div className="welcome-tiles-container">
+                <div className="welcome-tile">
+                    <img src={at} className="welcome-logo-tile" alt=""></img>
+                    <span className="welcome-description-tile">
                         WikiLibs regroups the documentation of coding libraries, with a unified presentation
                     </span>
                 </div>
-                <div className="tile">
-                    <img src={people} className="logo_tile" alt=""></img>
-                    <span className="description_tile">
+                <div className="welcome-tile">
+                    <img src={people} className="welcome-logo-tile" alt=""></img>
+                    <span className="welcome-description-tile">
                         You can see and add custom example to any symbol, for quicker undestanding
                     </span>
                 </div>
-                <div className="tile">
-                    <img src={tools} className="logo_tile" alt=""></img>
-                    <span className="description_tile">
+                <div className="welcome-tile">
+                    <img src={tools} className="welcome-logo-tile" alt=""></img>
+                    <span className="welcome-description-tile">
                         You can also access ressources like tutorials or installation guides
                     </span>
                 </div>
@@ -60,24 +60,24 @@ const renderWhatCard = () => {
 
 const renderHowCard = () => {
     return (
-        <div className="home_card gray_card">
-            <span className="card_title">How to use ?</span>
-            <div className="tiles_container">
-                <div className="tile">
-                    <img src={mouse} className="logo_tile" alt=""></img>
-                    <span className="description_tile">
+        <div className="welcome-home-card welcome-gray-card">
+            <span className="welcome-card-title">How to use ?</span>
+            <div className="welcome-tiles-container">
+                <div className="welcome-tile">
+                    <img src={mouse} className="welcome-logo-tile" alt=""></img>
+                    <span className="welcome-description-tile">
                         Look for a library by clicking on the top-left drawer
                     </span>
                 </div>
-                <div className="tile">
-                    <img src={search} className="logo_tile" alt=""></img>
-                    <span className="description_tile">
+                <div className="welcome-tile">
+                    <img src={search} className="welcome-logo-tile" alt=""></img>
+                    <span className="welcome-description-tile">
                         Or just search directly for a library or symbol using the search bar
                     </span>
                 </div>
-                <div className="tile">
-                    <img src={think} className="logo_tile" alt=""></img>
-                    <span className="description_tile">
+                <div className="welcome-tile">
+                    <img src={think} className="welcome-logo-tile" alt=""></img>
+                    <span className="welcome-description-tile">
                         You can also add your own examples on a symbol page !
                     </span>
                 </div>

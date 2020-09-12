@@ -98,24 +98,24 @@ export default class SearchPage extends Component {
             return;
         if (!this.state.hasMorePages && this.state.page > 1)
             return (
-                <Button variant="contained" onClick={this.handlePrev} classes={{ root: 'button-style', label: 'button-style' }}>
+                <Button variant="contained" className="search-page-previous" onClick={this.handlePrev} classes={{ root: 'button-style', label: 'button-style' }}>
                     Previous page
                 </Button>
             )
         if (this.state.page > 1)
             return (
                 <div>
-                    <Button variant="contained" onClick={this.handlePrev} classes={{ root: 'button-style', label: 'button-style' }}>
+                    <Button variant="contained" className="search-page-previous" onClick={this.handlePrev} classes={{ root: 'button-style', label: 'button-style' }}>
                         Previous page
                     </Button>
-                    <Button variant="contained" onClick={this.handleNext} classes={{ root: 'button-style', label: 'button-style' }}>
+                    <Button variant="contained" className="search-page-next" onClick={this.handleNext} classes={{ root: 'button-style', label: 'button-style' }}>
                         Next page
                     </Button>
                 </div>
             )
         else
             return (
-                <Button variant="contained" onClick={this.handleNext} classes={{ root: 'button-style', label: 'button-style' }}>
+                <Button variant="contained" className="search-page-next" onClick={this.handleNext} classes={{ root: 'button-style', label: 'button-style' }}>
                     Next page
                 </Button>
             )
@@ -138,19 +138,23 @@ export default class SearchPage extends Component {
                             </div>
                             {
                                 this.state.symbols[key].map((symbol) =>
-                                    <a key={symbol.id} className='override-a' href={'/symbol?id=' + symbol.id}>
-                                        <div className='search-page-result-container'>
+                                    <a className='search-page-result-container override-a' key={symbol.id} href={'/symbol?id=' + symbol.id}>
+                                        
                                             <div className='search-page-result-title'>
                                                 {this.getDisplayPath(symbol)}
                                             </div>
-                                            <div className='search-page-result-description'>
-                                                Description unavailable yet.
+                                        {/* <div className='search-page-card-title'>
+                                            <div className='search-page-preview-symbol'>
+                                                
                                             </div>
-                                            <div className='search-page-separator' />
-                                            <div className='search-page-result-bottom-container'>
-                                                <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: {symbol.userName})</div>
-                                                <div>Viewed {symbol.views} times(s)</div>
-                                            </div>
+                                        </div> */}
+                                        <div className='search-page-result-description'>
+                                            Description unavailable yet.
+                                        </div>
+                                        <div className='search-page-separator' />
+                                        <div className='search-page-result-bottom-container'>
+                                            <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: {symbol.userName})</div>
+                                            <div>Viewed {symbol.views} times(s)</div>
                                         </div>
                                     </a>
                                 )
@@ -166,8 +170,8 @@ export default class SearchPage extends Component {
         return (
             <div className='search-page-container'>
                 <div className='search-page-title'>
-                    Results for : '{this.state.pageName}'
-                    <Dropdown options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
+                    Results for : '{useQuery().lib ? useQuery().name : useQuery().path}'
+                    <Dropdown className="search-page-dropdown" options={this.state.langsNames} onChange={this.initDropdown} value={this.defaultOption} placeholder={this.defaultValue} />
                 </div>
                 {this.renderSymbolList()}
                 {this.renderFooter()}

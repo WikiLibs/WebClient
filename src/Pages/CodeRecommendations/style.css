@@ -1,15 +1,15 @@
-.content_coderecom_page {
+.coderecom-content-page {
     margin-left: 443px;
     margin-right: 442px;
     margin-top: 96px;
     margin-bottom: -16px;
 }
 
-.coderecom_card {
+.coderecom-card {
     margin-top: 60px;
 }
 
-.coderecom_title {
+.coderecom-title {
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
@@ -19,51 +19,28 @@
     font-size: 26px;
 }
 
-.coderecom_content {
+.coderecom-content {
     margin-left: 44px;
     margin-top: 31px;
 }
 
-.coderecom_description {
+.coderecom-description {
     font-size: 15px;
     font-family: 'Open Sans';
     color: #202020;
 }
 
-.big_title {
-    display: flex;
-}
-
-.big_title > span {
-    line-height: 42px;
-}
-
-.secondary_title_component {
-    margin-bottom: 30px;
-}
-
-.secondary_title {
-    font-size: 15px;
-    font-family: 'Open Sans';
-    color: #202020;
-}
-
-.secondary_title_description {
-    margin-top: 16px;
-    margin-left: 30px;
-}
-
-.ul_coderecom {
+.coderecom-ul {
     color: #7B68EE;
 }
 
-.li_coderecom {
+.coderecom-li {
     color: #202020;
     margin-bottom: 0;
     margin-top: 0;
 }
 
-.coderecom_code_box {
+.coderecom-code-box {
     background-color: #EBEBEB;
     padding: 32px;
     font-size: 15px;
@@ -71,19 +48,19 @@
     border-radius: 3px;
 }
 
-.coderecom_code_box > p {
+.coderecom-code-box > p {
     margin-bottom: 0;
     margin-top: 0;
 }
 
-.coderecom_code_comment {
+.coderecom-code-comment {
     color: #7B7B7B;
 }
 
-.coderecom_code_blue {
+.coderecom-code-blue {
     color: #3894D2;
 }
 
-.coderecom_code_green {
+.coderecom_coderecom-code-green {
     color: #198C2F;
 }

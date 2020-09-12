@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
+import HomeIcon from '@material-ui/icons/Home';
+import StarIcon from '@material-ui/icons/Star';
 
 import './index.css'
 
@@ -22,7 +24,7 @@ export default class SideBar extends Component {
         for (var lang in this.state) {
             vals.push(
                 <li key={lang}>
-                    <a href={"#" + lang} data-toggle="collapse" aria-expanded="false" className="fontRegular">{this.state[lang].displayName}</a>
+                    <a href={"#" + lang} data-toggle="collapse" aria-expanded="false" className="sidebar-fontRegular">{this.state[lang].displayName}</a>
                     <ul className="collapse list-unstyled" id={lang}>
                         {this.genLibList(lang)}
                     </ul>
@@ -36,8 +38,11 @@ export default class SideBar extends Component {
         return (
             <div className="SideBar">
                 <div id="sidebar-wrapper">
+                    <ul className="sidebar-nav-home sidebar-nav">
+                        <a className="title-sidebar-nav sidebar-fontRegular" href='/'><HomeIcon className="sidebar-icons"/>Home</a>
+                    </ul>
                     <ul className="sidebar-nav">
-                        <p className="title-sidebar-nav fontRegular">All Language</p>
+                        <p className="title-sidebar-nav sidebar-fontRegular"><StarIcon className="sidebar-icons"/>All Language</p>
                         {this.genLangList()}
                     </ul>
                 </div>

@@ -1,6 +1,6 @@
 .search-page-container {
     max-width: 1036px;
-    margin: 64px auto;
+    margin: 64px auto 0 auto;
     font-family: 'Open Sans';
     font-size: 15px;
     padding: 0 32px;
@@ -26,6 +26,7 @@
     padding: 32px;
     border-radius: 4px;
     cursor: pointer;
+    display: block;
 }
 
 .search-page-results-container {
@@ -68,4 +69,46 @@
 .button-style {
     background-color: #7B68EE!important;
     color: white;
+}
+
+.button-style:focus {
+    outline-width: 0;
+}
+
+.search-page-previous {
+    margin-top: 32px!important;
+    margin-right: 32px!important;
+}
+.search-page-next {
+    margin-top: 32px!important;
+}
+
+.search-page-dropdown {
+    margin-top: 16px;
+}
+
+.Dropdown-arrow-wrapper > span {
+    border-width: 10px 10px 0;
+    top: 24px;
+    right: 24px;  
+}
+
+.is-open .Dropdown-arrow {
+    border-width: 10px 10px 10px!important;
+    top: 14px!important;
+}
+
+.search-page-card-title{
+    display: flex;
+}
+
+.search-page-preview-symbol{
+    height: 100px;
+    width: 150px;
+    border: #7B68EE solid 3px;
+    border-radius: 3px;
+    display: flex;
+    position: relative;
+    top: -25px;
+    margin-left: 32px
 }

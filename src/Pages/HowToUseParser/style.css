@@ -1,15 +1,15 @@
-.content_howtouseparser_page {
+.howto-content-page {
     margin-left: 443px;
     margin-right: 442px;
     margin-top: 96px;
     margin-bottom: -16px;
 }
 
-.howtouseparser_card {
+.howto-card {
     margin-top: 60px;
 }
 
-.howtouseparser_title {
+.howto-title {
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
@@ -19,39 +19,39 @@
     font-size: 26px;
 }
 
-.howtouseparser_content {
+.howto-content {
     margin-left: 44px;
     margin-top: 31px;
 }
 
-.howtouseparser_description {
+.howto-description {
     font-size: 15px;
     font-family: 'Open Sans';
     color: #202020;
 }
 
-.howtouseparser_inner_content {
+.howto-inner-content {
     margin-left: 32px;
     margin-top: 32px;
 }
 
-.howtouseparser_inner_content_card {
+.howto-inner-content-card {
     margin-top: 32px;
 }
 
-.howtouseparser_secondary_title{
+.howto-secondary-title {
     color: #4C3DA8;
     font-size: 15px;
 }
 
-.howtouseparser_screenshot {
+.howto-screenshot {
     margin-top: 32px;
     margin-left: 32px;
     border: 2px solid #7B68EE;
     border-radius: 2px;
 }
 
-.howtouseparser_secondary_desc {
+.howto-secondary-desc {
     color: #202020;
     font-size: 15px;
     margin-left: 32px;

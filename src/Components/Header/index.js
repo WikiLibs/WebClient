@@ -218,15 +218,15 @@ class Header extends Component {
 
     checkConnect() {
         if (this.props.user) {
-            return (<div className="right_header">
+            return (<div className="header-right">
                 {/* {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>} */}
                 <Link to="/download">Download</Link>
                 <Link to='/admin'>Administration</Link>
                 <Link onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
-                {this.props.user.hasPermission("user.me.update") && <Link to="/profile"><img alt="" src={pp} className="img_profile"></img></Link>}
+                {this.props.user.hasPermission("user.me.update") && <Link to="/profile"><img alt="" src={pp} className="header-img-profile"></img></Link>}
             </div>);
         } else {
-            return (<div className="right_header">
+            return (<div className="header-right">
                 {/* <Link style={{ color: "white", padding: "24px" }} to='/usercreation'>Create account</Link> */}
                 <Link to='/userconnection'>LOGIN</Link>
                 <Link to="/faq">FAQ</Link>
@@ -250,18 +250,18 @@ class Header extends Component {
         return (
             <div className="Header">
                 <header>
-                    <div className="appbar_header">
-                        <div className="left_header">
-                            <button className="button_header" onClick={() => typeof (this.props.openNavBar) === "function" ? this.props.openNavBar() : null}>
-                                <MenuIcon className="menu_icon" />
+                    <div className="header-appbar">
+                        <div className="header-left">
+                            <button className="header-button" onClick={() => typeof (this.props.openNavBar) === "function" ? this.props.openNavBar() : null}>
+                                <MenuIcon className="header-menu-icon" />
                             </button>
-                            <Button className="button_logo" href="/">
-                                <Typography className="header_title">
+                            <Button className="header-button-logo" href="/">
+                                <Typography className="header-header-title">
                                     WikiLibs
                                 </Typography>
                             </Button>
                         </div>
-                        <div className="inner-addon right-addon">
+                        <div className="header-inner-addon header-right-addon">
                             <div className={classes.root}>
                                 <Autosuggest
                                     {...autosuggestProps}
@@ -285,7 +285,7 @@ class Header extends Component {
                                     )}
                                 />
                             </div>
-                            <SearchIcon className="search_icon" />
+                            <SearchIcon className="header-search_icon" />
                         </div>
                         {this.checkConnect()}
                     </div>

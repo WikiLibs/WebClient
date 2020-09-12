@@ -1,15 +1,15 @@
-.content_contact_page {
+.contact-content-page {
     margin-left: 443px;
     margin-right: 442px;
     margin-top: 96px;
     margin-bottom: -16px;
 }
 
-.contact_card {
+.contact-card {
     margin-top: 60px;
 }
 
-.contact_title {
+.contact-title {
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
@@ -18,41 +18,45 @@
     margin-bottom: 0;
 }
 
-.contact_content {
+.contact-content {
     margin-left: 44px;
     margin-top: 31px;
 }
 
-.description {
+.contact-description {
     font-size: 15px;
     font-family: 'Open Sans';
     color: #202020;
 }
 
-.big_title {
+.contact-description > a:hover {
+    color: #4C3DA8;
+}
+
+.contact-big-title {
     display: flex;
 }
 
-.big_title > span {
+.contact-big-title > span {
     line-height: 42px;
 }
 
-.secondary_title_component {
+.contact-secondary-title-component {
     margin-bottom: 30px;
 }
 
-.secondary_title {
+.contact-secondary-title {
     font-size: 15px;
     font-family: 'Open Sans';
     color: #202020;
 }
 
-.secondary_title_description {
+.contact-secondary-title-description {
     margin-top: 16px;
     margin-left: 30px;
 }
 
-.colored_text {
+.contact-colored-text {
     font-size: 15px;
     font-family: 'Open Sans';
     color: #7B68EE;

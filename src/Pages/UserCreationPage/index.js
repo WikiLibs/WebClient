@@ -103,11 +103,12 @@ export default class UserCreationPage extends Component {
         return (
             <div>
                 <div id="Body">
-                    <div className="content_account">
+                    <div className="user-page-content-account">
                         <span>Create Account</span>
-                        <div className="margin_in_form">
-                            <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="form_register" noValidate autoComplete="off">
+                        <div className="user-page-margin-form">
+                            <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="user-page-form-register" noValidate autoComplete="off">
                                 <TextField
+                                    autoFocus
                                     label="Firstname *"
                                     placeholder="John"
                                     InputLabelProps={{
@@ -116,7 +117,7 @@ export default class UserCreationPage extends Component {
                                     name="firstName"
                                     onChange={this.handleChange}
                                     variant="outlined"
-                                    className="text_field"
+                                    className="user-page-text-field"
                                 />
                                 <TextField
                                     label="Lastname *"
@@ -127,7 +128,7 @@ export default class UserCreationPage extends Component {
                                     name="lastName"
                                     onChange={this.handleChange}
                                     variant="outlined"
-                                    className="text_field"
+                                    className="user-page-text-field"
                                 />
                                 <TextField
                                     label="Email *"
@@ -139,10 +140,10 @@ export default class UserCreationPage extends Component {
                                     onChange={this.handleChange}
                                     variant="outlined"
                                     type="email"
-                                    className="text_field"
+                                    className="user-page-text-field"
                                 />
                                 <FormControlLabel
-                                    className="control_label"
+                                    className="connection-control-label"
                                     value="true"
                                     control={<Checkbox onChange={() => this.setState({ private: !this.state.private })} checked={!this.state.private} color="primary" />}
                                     label="Public account"
@@ -154,7 +155,7 @@ export default class UserCreationPage extends Component {
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
-                                    className="text_field"
+                                    className="user-page-text-field"
                                     placeholder="Put your message here"
                                     margin="normal"
                                     variant="outlined"
@@ -162,14 +163,13 @@ export default class UserCreationPage extends Component {
                                     onChange={this.handleChange}
                                 />
                                 <TextField
-                                    autoFocus
                                     label="Pseudo *"
                                     placeholder="Pseudo"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
                                     variant="outlined"
-                                    className="text_field"
+                                    className="user-page-text-field"
                                     name="pseudo"
                                     onChange={this.handleChange}
                                 />
@@ -181,23 +181,23 @@ export default class UserCreationPage extends Component {
                                     }}
                                     variant="outlined"
                                     type="password"
-                                    className="text_field"
+                                    className="user-page-text-field"
                                     name="password"
                                     onChange={this.handleChange}
                                 />
                                 <Button
                                     variant="contained"
                                     type="submit"
-                                    className="submit_btn"
+                                    className="user-page-submit-btn"
                                 >CREATE ACCOUNT</Button>
                             </form>
-                            {this.state.success && <Alert severity="success">{this.state.success}</Alert>}
-                            {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
-                            {this.state.formErrors.firstName && <Alert severity="warning">{this.state.formErrors.firstName}</Alert>}
-                            {this.state.formErrors.lastName && <Alert severity="warning">{this.state.formErrors.lastName}</Alert>}
-                            {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
-                            {this.state.formErrors.pseudo && <Alert severity="warning">{this.state.formErrors.pseudo}</Alert>}
-                            {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
+                            {this.state.success && <Alert className="user-warning" severity="success">{this.state.success}</Alert>}
+                            {this.state.apiError && <Alert className="user-warning" severity="error">{this.state.apiError}</Alert>}
+                            {this.state.formErrors.firstName && <Alert className="user-warning" severity="warning">{this.state.formErrors.firstName}</Alert>}
+                            {this.state.formErrors.lastName && <Alert className="user-warning" severity="warning">{this.state.formErrors.lastName}</Alert>}
+                            {this.state.formErrors.email && <Alert className="user-warning" severity="warning">{this.state.formErrors.email}</Alert>}
+                            {this.state.formErrors.pseudo && <Alert className="user-warning" severity="warning">{this.state.formErrors.pseudo}</Alert>}
+                            {this.state.formErrors.password && <Alert className="user-warning" severity="warning">{this.state.formErrors.password}</Alert>}
                         </div>
                     </div>
                 </div>

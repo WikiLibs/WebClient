@@ -1,43 +1,38 @@
-.content_faq_page {
+.faq-content-page {
     margin-left: 443px;
     margin-right: 442px;
     margin-top: 96px;
     margin-bottom: -30px;
 }
 
-.faq_description_card {
+.faq-description-card {
     margin-top: 64px;
 }
 
-.faq_title {
+.faq-title {
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
     color: #4C3DA8;
 }
 
-.faq_content {
+.faq-content {
     margin-left: 29px;
     margin-top: 32px;
 }
 
-.select_question {
+.faq-select-question {
     cursor: pointer;
     margin-left: -11px;
     margin-top: 64px;
 }
 
-.anwser_part {
-    margin-left: 3%;
-    margin-right: 3%;
-}
-
-.answer_content{
+.faq-answer-content {
     margin-left: 84px;
     margin-top: 30px;
 }
 
-.title_question_part {
+.faq-title-question-part {
     height: 25px;
     font-size: 26px;
     font-family: 'Open Sans';
@@ -45,38 +40,38 @@
     margin-right: 8px;
 }
 
-.grower_faq {
+.faq-grower {
     width: 41px !important;
     height: auto !important;
     float: left;
-    color: #4C3DA8;
+    color: #7B68EE;
 }
 
-.colored_text {
+.faq-colored-text {
     font-size: 15px;
     font-family: 'Open Sans';
     color: #7B68EE;
     font-style: italic;
 }
 
-.ul_faq{
+.faq-ul{
     color: #7B68EE;
 }
 
-.li_faq {
+.faq-li {
     color: #202020;
 }
 
-.dl_faq {
+.faq-dl {
     display: flex;
     color: #202020;
 }
 
-.dd_faq {
+.faq-dd {
     margin-left: 16px;
 }
 
-.code_example_background_faq {
+.faq-code_example_background {
     font-size: 15px;
     font-family: 'Open Sans';
     line-height: 14px;
@@ -88,4 +83,13 @@
     border-radius: 3px;
     margin-bottom: 1rem;
     color: #202020;
+}
+
+.faq-description {
+    font-size: 15px;
+    font-family: 'Open Sans';
+    color: #202020;
+}
+.faq-description > a:hover {
+    color: #4C3DA8;
 }
