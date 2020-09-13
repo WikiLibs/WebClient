@@ -308,7 +308,7 @@ export default class SymbolPage extends Component {
             alert("Your comment is sent, it's actually online");
         });
         this.setState({comment: ""});
-        // window.location.reload();
+        window.location.reload();
     }
 
     renderDeleteButton = (userId, commentId) => {
@@ -390,7 +390,7 @@ export default class SymbolPage extends Component {
                     <div key={elem.id + elem.userId + elem.creationDate}>
                         <h5><b>Description</b></h5>
                         <h6>{elem.description}</h6>
-                <p>This example was pushed by <b>{this.state.mapIdPseudo[elem.userId]}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
+                        <p>This example was pushed by <b>{this.state.mapIdPseudo[elem.userId]}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
                     </div>
                 );
                 examples.push(
