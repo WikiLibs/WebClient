@@ -103,12 +103,10 @@ export default class SymbolPage extends Component {
             if (this.props.user.hasPermission("example.create")) {
                 this.api.pushNewExample(example).then(response => { 
                     alert("Your example was sent, it's actually online");
-                    console.log(response);
                 });
             } else {
                 this.api.pushNewRequestExample(request).then(response => {
                     alert('Your example was sent, it will be check by an administrator');
-                    console.log(response);
                 });
             }
         }
@@ -148,7 +146,6 @@ export default class SymbolPage extends Component {
         this.setState({mapIdPseudo: mapIdPseudo});
         this.setState({listExample: listExample.data});
         this.setState({mapComments: mapComments});
-
 
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
@@ -299,11 +296,10 @@ export default class SymbolPage extends Component {
 
     handleDelete = (event) => {
         event.preventDefault();
-        console.log(this.state.commentId);
         this.api.destroyComment(this.state.commentId).then(response => { 
             alert("Your comment is destroyed");
-            console.log(this.props.user.id)
         });
+        document.getElementById("comment-" + this.state.commentId).style.display = "none";
     }
 
     handleSubmitComment = (event) => {
@@ -312,6 +308,7 @@ export default class SymbolPage extends Component {
             alert("Your comment is sent, it's actually online");
         });
         this.setState({comment: ""});
+        // window.location.reload();
     }
 
     renderDeleteButton = (userId, commentId) => {
@@ -329,10 +326,9 @@ export default class SymbolPage extends Component {
     renderComment = (id) => {
         let list = [];
         let comments = [];
-        //console.log(this.state.mapComments);
         this.state.mapComments[id].data.forEach(elem => {
             comments.push(
-                <span key={elem.id}>
+                <span key={elem.id} id={"comment-" + elem.id}>
                     <li className="comment-list">
                         {this.state.mapIdPseudo[elem.userId]}
                         <br />
@@ -342,10 +338,11 @@ export default class SymbolPage extends Component {
                     </li>
                     <br />
                 </span>
+
             )
         })
         list.push(
-            <ul key={comments}> {comments} </ul>
+            <ul key={comments} id={"comment-holder-" + id}> {comments} </ul>
         )
         return (
             <div>
