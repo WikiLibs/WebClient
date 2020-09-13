@@ -144,7 +144,7 @@ export default class ManageExampleRequests extends Component {
                             </CardContent>
                             <CardActions style={{ justifyContent: "flex-end" }}>
                                 <Button onClick={() => this.setState({ method: "accept", current: obj })} size="small"><CheckIcon /> Accept</Button>
-                                <Button onClick={() => this.setState({ method: "reject", current: obj })} size="small"><CloseIcon /> Rject</Button>
+                                <Button onClick={() => this.setState({ method: "reject", current: obj })} size="small"><CloseIcon /> Reject</Button>
                             </CardActions>
                         </Card>
                     )
