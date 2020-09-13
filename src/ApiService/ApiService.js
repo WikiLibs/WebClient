@@ -136,6 +136,15 @@ export default class ApiService {
             }));
     }
 
+    destroyComment(id) {
+        return (Axios.delete(this.url + "/example/comment/" + id,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
     /////////////////////////////////////////////////////////
 
     translateErrorMessage(err) {

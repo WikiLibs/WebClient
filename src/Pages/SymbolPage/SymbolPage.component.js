@@ -54,10 +54,14 @@ export default class SymbolPage extends Component {
             pseudoExample: "",
             mapIdPseudo: {},
             mapComments: {},
+            comment: "",
+            exampleId: 0,
+            commentId: 0,
         };
     }
 
     handleSubmit = (event) => {
+        event.preventDefault();
         var splitExample = this.state.code.split("\n");
         var example = {
             "symbolId": this.state.symbolId,
@@ -114,8 +118,6 @@ export default class SymbolPage extends Component {
             description: "",
             message: ""
         });
-
-        event.preventDefault();
     }
 
     handleMessage = (event) => {
@@ -124,6 +126,10 @@ export default class SymbolPage extends Component {
 
     handleDescription = (event) => {
         this.setState({description: event.target.value});
+    }
+
+    handleComment = (event) => {
+        this.setState({comment: event.target.value});
     }
 
     componentDidMount = async () => {
@@ -142,7 +148,6 @@ export default class SymbolPage extends Component {
         this.setState({mapIdPseudo: mapIdPseudo});
         this.setState({listExample: listExample.data});
         this.setState({mapComments: mapComments});
-        console.log(mapComments);
 
 
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
@@ -292,8 +297,77 @@ export default class SymbolPage extends Component {
         )
     } 
 
-    renderComment(id) {
-        return (this.state.mapComments[id].count);
+    handleDelete = (event) => {
+        event.preventDefault();
+        console.log(this.state.commentId);
+        this.api.destroyComment(this.state.commentId).then(response => { 
+            alert("Your comment is destroyed");
+            console.log(this.props.user.id)
+        });
+    }
+
+    handleSubmitComment = (event) => {
+        event.preventDefault();
+        this.api.postComment(this.state.exampleId, this.state.comment).then(response => { 
+            alert("Your comment is sent, it's actually online");
+        });
+        this.setState({comment: ""});
+    }
+
+    renderDeleteButton = (userId, commentId) => {
+        if (this.props.user) {
+            if (this.props.user.id === userId) {
+                return (
+                    <form onSubmit={this.handleDelete}>
+                        <Button variant="outline-danger" type="submit" onClick={() => this.setState({commentId: commentId})}>Delete</Button>
+                    </form>
+                );
+            }
+        } else return;
+    }
+
+    renderComment = (id) => {
+        let list = [];
+        let comments = [];
+        //console.log(this.state.mapComments);
+        this.state.mapComments[id].data.forEach(elem => {
+            comments.push(
+                <span key={elem.id}>
+                    <li className="comment-list">
+                        {this.state.mapIdPseudo[elem.userId]}
+                        <br />
+                        {elem.data}
+                        <br />
+                        {this.renderDeleteButton(elem.userId, elem.id)}
+                    </li>
+                    <br />
+                </span>
+            )
+        })
+        list.push(
+            <ul key={comments}> {comments} </ul>
+        )
+        return (
+            <div>
+                {list}
+                <form onSubmit={this.handleSubmitComment}>
+                    {this.props.user ? 
+                        <div>
+                            <input type="text" placeholder="Your comment" value={this.state.comment} onChange={this.handleComment} />
+                            <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}>Send</Button>
+                        </div>:
+                        <div>
+                            <center>
+                            <Link variant="primary" to='/usercreation'>Create account</Link>
+                            </center>
+                            <center>
+                            <Link variant="primary" to='/userconnection'>Connect</Link>
+                            </center>
+                        </div>
+                    }
+                </form>
+            </div>
+        );
     }
 
     renderExample = () => {
