@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
+import Prism from 'prismjs';
 import './style.css';
 
 import createDOMPurify from 'dompurify'
@@ -52,10 +53,15 @@ export default class SymbolPage extends Component {
             symbolId: 0,
             pseudoExample: "",
             mapIdPseudo: {},
+            mapComments: {},
+            comment: "",
+            exampleId: 0,
+            commentId: 0,
         };
     }
 
     handleSubmit = (event) => {
+        event.preventDefault();
         var splitExample = this.state.code.split("\n");
         var example = {
             "symbolId": this.state.symbolId,
@@ -97,12 +103,10 @@ export default class SymbolPage extends Component {
             if (this.props.user.hasPermission("example.create")) {
                 this.api.pushNewExample(example).then(response => { 
                     alert("Your example was sent, it's actually online");
-                    console.log(response);
                 });
             } else {
                 this.api.pushNewRequestExample(request).then(response => {
                     alert('Your example was sent, it will be check by an administrator');
-                    console.log(response);
                 });
             }
         }
@@ -112,8 +116,6 @@ export default class SymbolPage extends Component {
             description: "",
             message: ""
         });
-
-        event.preventDefault();
     }
 
     handleMessage = (event) => {
@@ -124,19 +126,26 @@ export default class SymbolPage extends Component {
         this.setState({description: event.target.value});
     }
 
+    handleComment = (event) => {
+        this.setState({comment: event.target.value});
+    }
+
     componentDidMount = async () => {
         var q = useQuery();
         const values = queryString.parse(this.props.location.search)
         var listExample = await this.api.getExamples(values.id)
         this.setState({symbolId: values.id});
 
-        let mapId = {};
+        let mapIdPseudo = {};
+        let mapComments = {};
         listExample.data.forEach(elem => {
-            this.api.getUser(elem.userId).then(response => {mapId[elem.userId] = response.data.pseudo});
+            this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
+            this.api.getComments(elem.id, 1).then(response => {mapComments[elem.id] = response.data});
         })
 
-        this.setState({mapIdPseudo: mapId});
+        this.setState({mapIdPseudo: mapIdPseudo});
         this.setState({listExample: listExample.data});
+        this.setState({mapComments: mapComments});
 
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
@@ -285,12 +294,84 @@ export default class SymbolPage extends Component {
         )
     } 
 
+    handleDelete = (event) => {
+        event.preventDefault();
+        this.api.destroyComment(this.state.commentId).then(response => { 
+            alert("Your comment is destroyed");
+        });
+        document.getElementById("comment-" + this.state.commentId).style.display = "none";
+    }
+
+    handleSubmitComment = (event) => {
+        event.preventDefault();
+        this.api.postComment(this.state.exampleId, this.state.comment).then(response => { 
+            alert("Your comment is sent, it's actually online");
+        });
+        this.setState({comment: ""});
+        window.location.reload();
+    }
+
+    renderDeleteButton = (userId, commentId) => {
+        if (this.props.user) {
+            if (this.props.user.id === userId) {
+                return (
+                    <form onSubmit={this.handleDelete}>
+                        <Button variant="outline-danger" type="submit" onClick={() => this.setState({commentId: commentId})}>Delete</Button>
+                    </form>
+                );
+            }
+        } else return;
+    }
+
+    renderComment = (id) => {
+        let list = [];
+        let comments = [];
+        this.state.mapComments[id].data.forEach(elem => {
+            comments.push(
+                <span key={elem.id} id={"comment-" + elem.id}>
+                    <li className="comment-list">
+                        {this.state.mapIdPseudo[elem.userId]}
+                        <br />
+                        {elem.data}
+                        <br />
+                        {this.renderDeleteButton(elem.userId, elem.id)}
+                    </li>
+                    <br />
+                </span>
+
+            )
+        })
+        list.push(
+            <ul key={comments} id={"comment-holder-" + id}> {comments} </ul>
+        )
+        return (
+            <div>
+                {list}
+                <form onSubmit={this.handleSubmitComment}>
+                    {this.props.user ? 
+                        <div>
+                            <input type="text" placeholder="Your comment" value={this.state.comment} onChange={this.handleComment} />
+                            <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}>Send</Button>
+                        </div>:
+                        <div>
+                            <center>
+                            <Link variant="primary" to='/usercreation'>Create account</Link>
+                            </center>
+                            <center>
+                            <Link variant="primary" to='/userconnection'>Connect</Link>
+                            </center>
+                        </div>
+                    }
+                </form>
+            </div>
+        );
+    }
+
     renderExample = () => {
         var footer = [];
         var lines = [];
         var examples = [];
         var active = " active";
-        const Prism = require('prismjs');
         const window = (new JSDOM('')).window
         const DOMPurify = createDOMPurify(window)
 
@@ -299,7 +380,7 @@ export default class SymbolPage extends Component {
                 elem.code.forEach(elem2 => {
                     const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
-                        <span>
+                        <span key={elem2.data + elem2.id}>
                             { <span title={elem2.comment} className="exampleWrite" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
                         </span>
                     );
@@ -309,7 +390,7 @@ export default class SymbolPage extends Component {
                     <div key={elem.id + elem.userId + elem.creationDate}>
                         <h5><b>Description</b></h5>
                         <h6>{elem.description}</h6>
-                <p>This example was pushed by <b>{this.state.mapIdPseudo[elem.userId]}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
+                        <p>This example was pushed by <b>{this.state.mapIdPseudo[elem.userId]}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b></p>
                     </div>
                 );
                 examples.push(
@@ -320,6 +401,7 @@ export default class SymbolPage extends Component {
                             <br />
                         </div>
                     {footer}
+                    {this.renderComment(elem.id)}
                     </div>
                 );
                 active = "";
@@ -346,7 +428,6 @@ export default class SymbolPage extends Component {
                     <span className="sr-only">Next</span>
                 </a>
             </div>
-            {footer}
         </div>
         );
     }

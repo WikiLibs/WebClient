@@ -99,3 +99,11 @@ span.comment {
 .exampleWrite {
     margin-left: 40%;
 }
+
+li.comment-list {
+    border: 1px solid black;
+    padding-right: 0px;
+    padding-left: 28px;
+    width: 50%;
+    border-radius: 5px;
+  }

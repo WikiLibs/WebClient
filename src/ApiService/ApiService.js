@@ -105,6 +105,48 @@ export default class ApiService {
 
     /////////////////////////////////////////////////////////
 
+    getComments(id, page, count) {
+        let q = "";
+        if (id) {
+            q += "?ExampleId=" + id;
+        }
+        if (page) {
+            q += "&PageOptions.Page=" + page;
+        }
+        if (count) {
+            q += "&PageOptions.Count=" + count;
+        }
+        return (Axios.get(this.url + "/example/comment" + q,
+            {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            }));
+    }
+
+    postComment(id, comment) {
+        return (Axios.post(this.url + "/example/comment", {
+            exampleId: id,
+            data: comment,
+        },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
+    destroyComment(id) {
+        return (Axios.delete(this.url + "/example/comment/" + id,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
+    /////////////////////////////////////////////////////////
+
     translateErrorMessage(err) {
         if (err === null || err === undefined || err.response === null || err.response === undefined)
             return ("An impossible error has occured: AXIOS is a failure.");
