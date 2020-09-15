@@ -19,10 +19,8 @@ export default class UserConnectionPage extends Component {
 
         this.state = {
             email: '',
-            password: '',
             formErrors: {
                 email: "",
-                password: ""
             },
             apiError: null
         };
@@ -32,8 +30,7 @@ export default class UserConnectionPage extends Component {
         e.preventDefault();
 
         if (checkForm(this.state)) {
-            //Handle errors similar to this
-            this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
+            //this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
         } else {
             console.error("FORM INVALID");
         }
@@ -48,9 +45,6 @@ export default class UserConnectionPage extends Component {
             case "email":
                 formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
-            case "Password":
-                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
-                break;
             default:
                 break;
         }
@@ -62,10 +56,10 @@ export default class UserConnectionPage extends Component {
         return (
             <div>
                 <div id="Body">
-                    <div className="user-page-content-account">
-                        <span>Sign in</span>
-                        <div className="user-page-margin-form">
-                            <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="user-page-form-register" noValidate autoComplete="off">
+                    <div className="forgot-content-account">
+                        <span>Account recovery</span>
+                        <div className="forgot-margin-form">
+                            <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="forgot-form-register" noValidate autoComplete="off">
                                 <TextField
                                     label="Email"
                                     placeholder="email"
@@ -75,36 +69,20 @@ export default class UserConnectionPage extends Component {
                                     variant="outlined"
                                     type="email"
                                     name="email"
-                                    className="user-page-text-field"
-                                    onChange={this.handleChange}
-                                />
-                                <TextField
-                                    label="Password"
-                                    placeholder="********"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="outlined"
-                                    type="password"
-                                    name="password"
-                                    className="user-page-text-field"
+                                    className="forgot-text-field"
                                     onChange={this.handleChange}
                                 />
                                 <Button
                                     variant="contained"
                                     type="submit"
-                                    className="user-page-submit-btn"
+                                    className="forgot-submit-btn"
                                 >
-                                    LOGIN
+                                    NEXT
                                 </Button>
                             </form>
-                            {this.state.apiError && <Alert className="user-warning" severity="error">{this.state.apiError}</Alert>}
-                            {this.state.formErrors.email && <Alert className="user-warning" severity="warning">{this.state.formErrors.email}</Alert>}
-                            {this.state.formErrors.password && <Alert className="user-warning" severity="warning">{this.state.formErrors.password}</Alert>}
-                            <div className="connection-no-account">
-                                <span>Don't have an account yet ? You can <a href="/usercreation">register</a> !</span>
-                                <span className="connection-span-float-right"><a href="/forgotpassword">Forgot password ?</a></span>
-                            </div>
+                            {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
+                            {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
+                            {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
                         </div>
                     </div>
                 </div>

@@ -68,7 +68,7 @@ export default class DownloadPage extends Component {
 
     renderImportant = () => {
         return (
-            <div className='download-page-other-downloads-content'>
+            <div>
                 <div className='download-page-title'>
                     Important warning
                 </div>

@@ -11,10 +11,10 @@ import inputInfo from './img/input_info_complete.png'
 
 const renderHowToUseDesc = () => {
     return (
-        <div className="howtouseparser_card">
-            <h2 className="howtouseparser_title">How to use the parser</h2>
-            <div className="howtouseparser_content">
-                <p className="howtouseparser_description">
+        <div className="howto-card">
+            <h2 className="howto-title">How to use the parser</h2>
+            <div className="howto-content">
+                <p className="howto-description">
                     To upload a new library to the website, you will need to use our program which is quite easy to use.<br />
                     Here are the steps.
                 </p>
@@ -25,33 +25,33 @@ const renderHowToUseDesc = () => {
 
 const renderTuto = () => {
     return (
-        <div className="howtouseparser_card">
-            <h2 className="howtouseparser_title">Walkthrough</h2>
-            <div className="howtouseparser_inner_content">
-                <div className="howtouseparser_inner_content_card">
-                    <p className="howtouseparser_secondary_title">Starting page</p>
-                    <img className="howtouseparser_screenshot" src={welcome} alt=""/>
+        <div className="howto-card">
+            <h2 className="howto-title">Walkthrough</h2>
+            <div className="howto-inner-content">
+                <div className="howto-inner-content-card">
+                    <p className="howto-secondary-title">Starting page</p>
+                    <img className="howto-screenshot" src={welcome} alt=""/>
                 </div>
-                <div className="howtouseparser_inner_content_card">
-                    <p className="howtouseparser_secondary_title">Fill in the infos</p>
-                    <p className="howtouseparser_secondary_desc">In this step, you need to fill the language used in your library (the program will only look for this language), the library name (no special characters) and the location of the library (choose the root).</p>
-                    <img className="howtouseparser_screenshot" src={inputInfo} alt=""/>
+                <div className="howto-inner-content-card">
+                    <p className="howto-secondary-title">Fill in the infos</p>
+                    <p className="howto-secondary-desc">In this step, you need to fill the language used in your library (the program will only look for this language), the library name (no special characters) and the location of the library (choose the root).</p>
+                    <img className="howto-screenshot" src={inputInfo} alt=""/>
                 </div>
-                <div className="howtouseparser_inner_content_card">
-                    <p className="howtouseparser_secondary_title">Summary</p>
-                    <p className="howtouseparser_secondary_desc">Verify that the informations you filled are correct, then press the button.</p>
-                    <img className="howtouseparser_screenshot" src={summary} alt=""/>
+                <div className="howto-inner-content-card">
+                    <p className="howto-secondary-title">Summary</p>
+                    <p className="howto-secondary-desc">Verify that the informations you filled are correct, then press the button.</p>
+                    <img className="howto-screenshot" src={summary} alt=""/>
                 </div>
-                <div className="howtouseparser_inner_content_card">
-                    <p className="howtouseparser_secondary_title">Processing and upload</p>
-                    <p className="howtouseparser_secondary_desc">Just wait for the processing and upload to finish.</p>
-                    <img className="howtouseparser_screenshot" src={uploading} alt=""/>
-                    <img className="howtouseparser_screenshot" src={uploading2} alt=""/>
+                <div className="howto-inner-content-card">
+                    <p className="howto-secondary-title">Processing and upload</p>
+                    <p className="howto-secondary-desc">Just wait for the processing and upload to finish.</p>
+                    <img className="howto-screenshot" src={uploading} alt=""/>
+                    <img className="howto-screenshot" src={uploading2} alt=""/>
                 </div>
-                <div className="howtouseparser_inner_content_card">
-                    <p className="howtouseparser_secondary_title">Finished</p>
-                    <p className="howtouseparser_secondary_desc">The upload has now ended, you can finally close the window ! Some more processing time may be required on our side, so please be patient !</p>
-                    <img className="howtouseparser_screenshot" src={successful} alt=""/>
+                <div className="howto-inner-content-card">
+                    <p className="howto-secondary-title">Finished</p>
+                    <p className="howto-secondary-desc">The upload has now ended, you can finally close the window ! Some more processing time may be required on our side, so please be patient !</p>
+                    <img className="howto-screenshot" src={successful} alt=""/>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@ const HowToUseParser = () => {
     return (
         <div>
             <div id="Body">
-                <div className="content_howtouseparser_page">
+                <div className="howto-content-page">
                     {renderHowToUseDesc()}
                     {renderTuto()}
                 </div>

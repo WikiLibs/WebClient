@@ -1,47 +1,47 @@
-.content_account {
+.profile-content-account {
     margin-left: 23%;
     margin-right: 30%;
     margin-top: 50px;
     margin-bottom: -48px;
 }
 
-.content_account > span {
+.profile-content-account > span {
     display: block;
     font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
 }
 
-.form_account {
+.profile-form-account {
     margin-top: 16px;
     margin-left: 32px;
 }
 
-.profile_infos {
+.profile-infos {
     margin-left: 32px;
     margin-top: 48px;
-    width: 48.5%;
+    width: 52%;
     display: flex;
     justify-content: space-between;
 }
 
-.left_info {
+.profile-left-info {
     display: grid;
     width: 50%
 }
 
-.left_info > span {
+.profile-left-info > span {
     font-family: 'Open Sans';
     color: #4C3DA8;
     line-height: 36px!important;
     font-style: italic;
 }
 
-.info_down {
+.profile-info-down {
     margin-top: 16px;
 }
 
-.right_info {
+.profile-info-right {
     display: grid;
 }
 
@@ -50,51 +50,62 @@
     font-weight: bold;
     font-size: 38px;
     font-weight: normal;
-    margin-top: 16px;
     color: #4C3DA8;
-    margin: 0;
-    margin-bottom: -55px;
     text-align: right;
+    bottom: -54px;
+    right: -2px;
+    position: relative;
 }
 
-.right_info > span {
+.profile-info-right > span {
     font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
     font-weight: bold;
 }
 
-a > .submit_btn_acc {
+.profile-form-account > a {
+    text-decoration: none;
+}
+
+a > .profile-submit-btn {
     margin-top: 32px;
     width: 100%;
     background-color: #7B68EE;
     padding: 21px;
     color: white;
     font-size: 16px;
+    font-weight: bold;
+}
+a > .profile-submit-btn:hover {
+    background-color: #7B68EE!important;
+}
+a > .profile-submit-btn:focus {
+    outline-width: 0;
 }
 
-.profile_card {
+.profile-card {
     margin-top: 16px;
     width: 256px;
     height: 256px;
-    /* display: grid; */
     box-shadow: -1px 5px 5px #b1aeae;
     border: 1px solid #B7B7B7;
 }
 
-.profile_pic {
+.profile-pic {
     margin: 30px;
+    height: 194px;
 }
 
-.form_float_right {
+.profile-float-right {
     width: 100%;
     margin-top: 16px;
 }
-.form_float_right > div {
+.profile-float-right > div {
     float: left;
 }
 
-.control_label {
+.profile-control-label {
     font-family: 'Open Sans';
     color: #4C3DA8;
     font-size: 26px;
@@ -102,23 +113,28 @@ a > .submit_btn_acc {
     margin-top: 16px;
 }
 
-.top_form {
+.profile-top-form {
     display: flex;
 }
 
-.top_form > .form_account {
+.profile-top-form > .profile-form-account {
     width: 150%;
 }
 
-.top_form > .form_account > .text_field_acc {
+.profile-top-form > .profile-form-account > .profile-text-field-acc {
     width: 90%;
 }
 
-.bottom_form {
+.profile-bottom-form {
     margin-top: -73px;
 }
 
-.bottom_form > .form_account {
+.profile-bottom-form > .profile-form-account {
     display: grid;
     width: 52%;
+}
+
+
+.profile-vertical-separator {
+    border: solid 1px #B7B7B7;
 }

@@ -7,12 +7,12 @@ export default class Footer extends Component {
     render() {
         return (
             <div id="Footer">
-                <div className="footer_container">
-                    <div className="copyright">
-                        <img className="logo_footer" src={footer} alt=""></img>
-                        <span className="copyright_txt">WikiLibs &copy; 2020</span>
+                <div className="footer-container">
+                    <div className="footer-copyright">
+                        <img className="footer-logo" src={footer} alt=""></img>
+                        <span className="footer-copyright-txt">WikiLibs &copy; 2020</span>
                     </div>
-                    <div className="useful">
+                    <div className="footer-useful">
                         <a href="/contact">CONTACT</a>
                         <a href="/faq">HELP AND FAQ</a>
                         <a href="/tou">TERMS OF USE</a>

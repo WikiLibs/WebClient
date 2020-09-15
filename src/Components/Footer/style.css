@@ -1,4 +1,4 @@
-.footer_container {
+.footer-container {
     color: white;
     background-color: #7B68EE;
     margin-top: 96px;
@@ -9,30 +9,31 @@
     height: 96px;
 }
 
-.copyright {
+.footer-copyright {
     margin-top: auto;
     margin-bottom: auto;
     font-family: 'Open Sans';
     font-weight: bold;
     vertical-align: middle;
+    display: flex;
 }
 
-.logo_footer {
+.footer-logo {
     width: 40px;
-    /* padding-right: 16px; */
 }
 
-.copyright_txt {
+.footer-copyright-txt {
     padding-left: 32px;
+    margin: auto;
 }
 
-.useful {
+.footer-useful {
     margin-top: auto;
     margin-bottom: auto;
     vertical-align: middle;
 }
 
-.useful > a {
+.footer-useful > a {
     font-family: 'Open Sans';
     color: white;
     padding-left: 16px;

@@ -16,11 +16,16 @@
     padding: 64px 0;
 }
 
-.download-page-other-downloads-content {
-}
-
 .download-page-text-container {
     padding: 32px 42px;
+}
+
+.download-page-text > a {
+    color: #7B68EE;
+    font-style: italic;
+}
+.download-page-text > a:hover {
+    color: #4C3DA8;
 }
 
 .download-page-button-container {
@@ -44,6 +49,13 @@
     display: flex;
     cursor: pointer;
     margin-bottom: 16px;
+}
+
+.download-page-other > a {
+    color: #7B68EE;
+}
+.download-page-other > a:hover {
+    color: #4C3DA8;
 }
 
 .download-page-other-link {

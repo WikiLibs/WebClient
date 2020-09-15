@@ -1,23 +1,23 @@
-.back_img {
+.welcome-back-img {
     width: 100%;
 }
 
-.overlay {
+.welcome-overlay {
     filter: brightness(50%);
 }
 
-.title {
+.welcome-title {
     position: relative;
     text-align: center;
     color: white;
 }
 
-.logo_title {
+.welcome-logo-title {
     width: 200px;
 
 }
 
-#headline {
+#welcome-headline {
     position: absolute;
     top: 50%;
     left: 35%;
@@ -26,27 +26,28 @@
     text-align: left;
 }
 
-#description {
+#welcome-description {
     padding-left: 64px;
 }
 
-.italic {
+.welcome-italic {
     font-style: italic;
 }
 
-#description .big_title {
+#welcome-description .welcome-big-title {
     font-family: 'Open Sans';
     font-weight: bold;
     font-size: 36px;
     line-height: 44px;
+    display: flex;
 }
 
-#description .small_title {
+#welcome-description .welcome-small-title {
     font-family: 'Open Sans';
     font-size: 26px;
 }
 
-.home_card {
+.welcome-home-card {
     padding: 32px;
     padding-top: 64px;
     color: #4C3DA8;
@@ -56,17 +57,17 @@
     text-align: center;
 }
 
-.gray_card {
+.welcome-gray-card {
     background-color: #E5E5E5;
 }
 
-.card_title {
+.welcome-card-title {
     font-family: 'Open Sans';
     font-weight: bold;
     font-size: 36px;
 }
 
-.tiles_container {
+.welcome-tiles-container {
     padding: 64px;
     display: flex;
     flex-wrap: wrap;
@@ -74,12 +75,12 @@
     padding-bottom: 16px;
 }
 
-.tile {
+.welcome-tile {
     padding: 32px;
     width: 400px;
 }
 
-.logo_tile {
+.welcome-logo-tile {
     width: 200px;
     display: block;
     margin-left: auto;
@@ -87,7 +88,7 @@
     padding-bottom: 32px;
 }
 
-.description_tile {
+.welcome-description-tile {
     font-family: 'Open Sans';
     line-height: 15px;
     margin: 0 auto;

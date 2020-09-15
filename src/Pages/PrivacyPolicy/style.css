@@ -1,37 +1,45 @@
-.content_pp_page {
+.privacy-content-page {
     margin-left: 443px;
     margin-right: 442px;
     margin-top: 96px;
     margin-bottom: -30px;
 }
 
-.pp_title {
+.privacy-title {
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
     color: #4C3DA8;
 }
 
-.pp_content {
+.privacy-content {
     margin-left: 29px;
     margin-top: 32px;
 }
 
-.pp_content > p {
+.privacy-content > p {
     font-size: 15px;
     color: #202020;
     font-family: 'Open Sans';
 }
 
-.update {
+.privacy-updated {
     margin-bottom: 64px;
 }
 
-.pp_desc_content {
+.privacy-desc-content {
     margin-bottom: 16px;
 }
 
-.pp_headlines {
+.privacy-desc-content > a {
+    color: #7B68EE;
+    font-style: italic;
+}
+.privacy-desc-content > a:hover {
+    color: #4C3DA8;
+}
+
+.privacy-headlines {
     color: #4C3DA8;
     font-family: 'Open Sans';
     font-weight: bold;
