@@ -88,22 +88,106 @@ span.comment {
     color: #646464;
 }
 
-.container_editor_area {
-    tab-size: 4ch;
-    max-height: 400px;
-    overflow: auto;
-    margin: 1.67em 0;
-    background-color: #dcd7af;
-  }
 
-.exampleWrite {
-    margin-left: 40%;
+.symbol-card-body {
+    margin: 32px;
 }
 
-li.comment-list {
-    border: 1px solid black;
-    padding-right: 0px;
-    padding-left: 28px;
-    width: 50%;
-    border-radius: 5px;
-  }
+.symbol-page-code-example {
+    background-color: #EBEBEB;
+    margin-top: 32px;
+    padding: 32px;
+    border-radius: 4px;
+}
+
+.symbol-page-example-sign {
+    font-size: 10px;
+    font-style: italic;
+}
+
+.symbol-page-example-sign > b {
+    color: #4C3DA8;
+}
+
+.symbol-page-spe-comment{
+    margin: 16px;
+}
+
+.symbol-page-comment-holder {
+    margin: 16px;
+}
+
+.symbol-page-comment-warp {
+    display: flow-root;
+}
+
+.symbol-page-comment-warp > form{
+    float: right;
+}
+
+.symbol-page-comment-data {
+    float: left;
+}
+
+.symbol-page-comment-data > span{
+    font-style: italic;
+    color:#91A6C2; 
+}
+
+.symbol-page-comment-data > b {
+    color: #4C3DA8;
+}
+
+.symbol-page-comment-delete {
+    padding: 0px;
+}
+
+.symbol-page-new-comment {
+    margin-bottom: 64px;
+}
+.symbol-page-new-comment > input{
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 32px;
+    border-width: 0;
+    outline: none;
+    width: calc(100% - 32px);
+}
+
+.symbol-page-new-comment > button{
+    padding: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 32px;
+    height: 32px;
+}
+
+.symbol-page-connect {
+    margin-bottom: 64px;
+}
+
+.symbol-page-connect > a {
+    text-decoration: none;
+    color: #7B68EE;
+    font-style: italic;
+}
+
+.symbol-page-example-form > div{
+    margin-bottom: 16px;
+}
+
+.symbol-page-example-form > div > p {
+    margin: 0;
+}
+
+.symbol-page-example-form > div > input {
+    outline: none;
+    width: calc(100% - 32px);
+    height: 32px;
+    padding: 2px 8px;
+    margin: 0 16px;
+}
+
+.symbol-page-send-example{
+    margin-top: 32px;
+}
