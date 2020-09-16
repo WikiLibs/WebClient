@@ -387,7 +387,7 @@ export default class SymbolPage extends Component {
                     lines.push(<br key={elem.id + elem2.data + elem.id} />);
                 });
                 description.push(
-                    <div>
+                    <div key={elem.id+elem}>
                        {elem.description}
                     </div>
                 )
@@ -397,8 +397,8 @@ export default class SymbolPage extends Component {
                     </div>
                 );
                 examples.push(
-                    <div>
-                        <div className="symbol-example-card" key={elem.id}>
+                    <div key={elem.id}>
+                        <div className="symbol-example-card">
                             <div className="symbol-exemple-desc">
                                 {description}
                             </div>
