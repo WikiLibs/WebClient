@@ -216,7 +216,8 @@ export default class ApiService {
             })
             .then((Response) => {
                 localStorage.setItem('userToken', Response.data);
-                window.location.pathname = "/";
+                //window.location.pathname = "/";
+                window.history.back();
             }));
     }
 

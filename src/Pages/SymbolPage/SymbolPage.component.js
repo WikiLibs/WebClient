@@ -56,7 +56,7 @@ export default class SymbolPage extends Component {
             pseudoExample: "",
             mapIdPseudo: {},
             mapComments: {},
-            comment: "",
+            comment: {},
             exampleId: 0,
             commentId: 0,
         };
@@ -128,8 +128,10 @@ export default class SymbolPage extends Component {
         this.setState({description: event.target.value});
     }
 
-    handleComment = (event) => {
-        this.setState({comment: event.target.value});
+    handleComment = (message, id) => {
+        let tmp = this.state.comment;
+        tmp[id] = message;
+        this.setState({comment: tmp});
     }
 
     componentDidMount = async () => {
@@ -140,14 +142,17 @@ export default class SymbolPage extends Component {
 
         let mapIdPseudo = {};
         let mapComments = {};
+        let comments = {};
         listExample.data.forEach(elem => {
             this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
             this.api.getComments(elem.id, 1).then(response => {mapComments[elem.id] = response.data});
+            comments[elem.id] = "";
         })
 
         this.setState({mapIdPseudo: mapIdPseudo});
         this.setState({listExample: listExample.data});
         this.setState({mapComments: mapComments});
+        this.setState({comment: comments});
 
         this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
     }
@@ -306,11 +311,13 @@ export default class SymbolPage extends Component {
 
     handleSubmitComment = (event) => {
         event.preventDefault();
-        this.api.postComment(this.state.exampleId, this.state.comment).then(response => { 
+        this.api.postComment(this.state.exampleId, this.state.comment[this.state.exampleId]).then(response => { 
             //alert("Your comment is sent, it's actually online");
         });
-        this.setState({comment: ""});
-        window.location.reload();
+        let tmp = this.state.comment;
+        tmp[this.state.exampleId] = "";
+        this.setState({comment: tmp});
+        //window.location.reload();
     }
 
     renderDeleteButton = (userId, commentId) => {
@@ -352,7 +359,7 @@ export default class SymbolPage extends Component {
                 <form onSubmit={this.handleSubmitComment}>
                     {this.props.user ? 
                         <div className="symbol-page-new-comment">
-                            <input type="text" placeholder="Add a comment..." value={this.state.comment} onChange={this.handleComment} />
+                            <input type="text" placeholder="Add a comment..." value={this.state.comment[id]} onChange={(event) => this.handleComment(event.target.value, id)} />
                             <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}><SendIcon></SendIcon></Button>
                         </div>:
                         <div className="symbol-page-connect">
@@ -388,6 +395,7 @@ export default class SymbolPage extends Component {
                 });
                 description.push(
                     <div key={elem.id+elem}>
+                        <h4><b>Description</b></h4>
                        {elem.description}
                     </div>
                 )
