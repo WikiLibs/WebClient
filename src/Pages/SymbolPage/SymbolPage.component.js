@@ -360,7 +360,10 @@ export default class SymbolPage extends Component {
                     {this.props.user ? 
                         <div className="symbol-page-new-comment">
                             <input type="text" placeholder="Add a comment..." value={this.state.comment[id]} onChange={(event) => this.handleComment(event.target.value, id)} />
-                            <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}><SendIcon></SendIcon></Button>
+                            {this.state.comment[id].length != 0
+                                ? <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}><SendIcon></SendIcon></Button>
+                                : <Button disabled className="symbol-page-new-comment-disabled"><SendIcon></SendIcon></Button>
+                            }
                         </div>:
                         <div className="symbol-page-connect">
                             <Link to='/userconnection'>You need to be connected to write a comment</Link>
