@@ -82,9 +82,9 @@ export default class SearchPage extends Component {
         let symbolsState = this.state.symbols
 
         symbolsTemp.forEach((sym) => {
-            if (!(sym.type in symbolsState))
-                symbolsState[sym.type] = []
-            symbolsState[sym.type].push(sym)
+            if (!(sym.typeName in symbolsState))
+                symbolsState[sym.typeName] = []
+            symbolsState[sym.typeName].push(sym)
         })
 
         this.setState({
