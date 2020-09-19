@@ -130,6 +130,10 @@ export default class SymbolPage extends Component {
         this.setState({description: event.target.value});
     }
 
+    handleVote = (event) => {
+        console.log("vote");
+    }
+
     handleComment = (message, id) => {
         let tmp = this.state.comment;
         tmp[id] = message;
@@ -362,7 +366,7 @@ export default class SymbolPage extends Component {
                     {this.props.user ? 
                         <div className="symbol-page-new-comment">
                             <input type="text" placeholder="Add a comment..." value={this.state.comment[id]} onChange={(event) => this.handleComment(event.target.value, id)} />
-                            {this.state.comment[id].length != 0
+                            {this.state.comment[id].length !== 0
                                 ? <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}><SendIcon></SendIcon></Button>
                                 : <Button disabled className="symbol-page-new-comment-disabled"><SendIcon></SendIcon></Button>
                             }
@@ -376,13 +380,30 @@ export default class SymbolPage extends Component {
         );
     }
 
+    renderVote = () => {
+        if (this.props.user) {
+                return (
+                    <div className="symbol-page-vote-example">
+                        <Button className="symbol-page-upvote" onClick={this.handleVote}><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
+                        <div id="symbol-page-vote-value">0</div>{/* put nb vote of example */}
+                        <Button className="symbol-page-downvote" onClick={this.handleVote}><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
+                    </div>
+                );
+        } else return (
+            <div className="symbol-page-vote-example">
+                <Button className="symbol-page-new-comment-disabled" disabled><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
+                <div id="symbol-page-vote-value">0</div>{/* put nb vote of example */}
+                <Button className="symbol-page-new-comment-disabled" disabled><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
+            </div>
+        );
+    }
+
     renderExample = () => {
         var footer = [];
         var lines = [];
         var examples = [];
         var description = [];
         var i = 0;
-        // var active = " active";
         const window = (new JSDOM('')).window
         const DOMPurify = createDOMPurify(window)
 
@@ -413,11 +434,7 @@ export default class SymbolPage extends Component {
                     <div key={elem.id}>
                         <div className="symbol-example-card">
                             <div className="symbol-example-fst-block-card">
-                                <div className="symbol-page-vote-example">
-                                    <Button className="symbol-page-upvote"><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
-                                    <div id="symbol-page-vote-value">0</div>{/* put nb vote of example */}
-                                    <Button className="symbol-page-downvote"><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
-                                </div>
+                                {this.renderVote()}
                                 <div className="symbol-page-inner-example">
                                     <div className="symbol-example-desc">
                                         {description}

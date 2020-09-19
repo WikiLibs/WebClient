@@ -168,7 +168,7 @@ export default class ApiService {
 
     disconnect() {
         localStorage.removeItem('userToken');
-        window.location.pathname = "/";
+        window.location.reload();
     }
 
     getLibs(lang) {
@@ -216,7 +216,6 @@ export default class ApiService {
             })
             .then((Response) => {
                 localStorage.setItem('userToken', Response.data);
-                //window.location.pathname = "/";
                 window.history.back();
             }));
     }
