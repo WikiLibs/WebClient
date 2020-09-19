@@ -203,3 +203,67 @@ span.comment {
 .symbol-page-send-example{
     margin-top: 32px;
 }
+
+.symbol-example-fst-block-card{
+    display: flex;
+}
+
+.symbol-page-vote-example {
+    margin: auto;
+    text-align: center;
+}
+
+.symbol-page-vote-example > button {
+    background-color: #fff;
+    color: #3E3E3E;
+    border-color: #3E3E3E;
+    padding: 0px;
+    height: 32px;
+    width: 32px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.symbol-page-upvote:hover {
+    color: #fff;
+    background-color: #28a745;
+    border-color:#28a745;
+}
+.symbol-page-upvote:focus {
+    color: #fff;
+    background-color: #28a745;
+    border-color:#28a745;
+}
+
+.symbol-page-downvote:hover {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.symbol-page-downvote:focus {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.symbol-page-vote-example-up {
+    color: #fff!important;
+    background-color: #28a745!important;
+    border-color:#28a745!important;
+}
+
+.symbol-page-vote-example-down {
+    color: #fff!important;
+    background-color: #dc3545!important;
+    border-color: #dc3545!important;
+}
+
+.symbol-page-inner-example {
+    width: 100%;
+    margin-left: 32px;
+    margin-right: 16px;
+}
+
+#symbol-page-vote-value{
+    font-size: 20px;
+}

@@ -14,6 +14,8 @@ import Prism from 'prismjs';
 import './style.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SendIcon from '@material-ui/icons/Send';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
@@ -398,7 +400,7 @@ export default class SymbolPage extends Component {
                 });
                 description.push(
                     <div key={elem.id+elem}>
-                        <h4><b>Description</b></h4>
+                        {/* <h4><b>Description</b></h4> */}
                        {elem.description}
                     </div>
                 )
@@ -410,13 +412,22 @@ export default class SymbolPage extends Component {
                 examples.push(
                     <div key={elem.id}>
                         <div className="symbol-example-card">
-                            <div className="symbol-exemple-desc">
-                                {description}
+                            <div className="symbol-example-fst-block-card">
+                                <div className="symbol-page-vote-example">
+                                    <Button className="symbol-page-upvote"><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
+                                    <div id="symbol-page-vote-value">0</div>{/* put nb vote of example */}
+                                    <Button className="symbol-page-downvote"><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
+                                </div>
+                                <div className="symbol-page-inner-example">
+                                    <div className="symbol-example-desc">
+                                        {description}
+                                    </div>
+                                    <div className={"symbol-page-code-example"}>
+                                        {lines}
+                                    </div>
+                                    {footer}
+                                </div>
                             </div>
-                            <div className={"symbol-page-code-example"}>
-                                {lines}
-                            </div>
-                            {footer}
                             {this.renderComment(elem.id)}
                         </div>
                         {(i !== this.state.listExample.length - 1) ? (<hr></hr>) : ('')}
