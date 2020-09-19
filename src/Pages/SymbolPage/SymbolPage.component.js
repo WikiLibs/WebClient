@@ -236,12 +236,12 @@ export default class SymbolPage extends Component {
     }
 
     renderParameters = (prototype) => {
-        if (!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0)
+        if ((!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0) || prototype.parameters[0].prototype === 'return')
             return null
         return (
             <div className='symbol-page-section-container'>
                 <div className='symbol-page-title'>
-                    Parameters
+                    Parameter(s)
                 </div>
                 <div className='symbol-page-parameters-container'>
                     {
@@ -258,12 +258,12 @@ export default class SymbolPage extends Component {
                                     </div>
                                     : null
                                 }
-                                {(index !== (prototype.parameters.length - 1) &&
+                                {/* {(index !== (prototype.parameters.length - 1) &&
                                     index !== 0 &&
                                     parameter.prototype !== 'return')
                                     ? <div className='symbol-page-separator'></div>
                                     : null
-                                }
+                                } */}
                             </div>
                         )
                     }
@@ -294,18 +294,44 @@ export default class SymbolPage extends Component {
                                 </div>
                                 : null
                             }
-                            {(index !== (prototype.parameters.length - 1) &&
+                            {/* {(index !== (prototype.parameters.length - 1) &&
                                 index !== 0 &&
-                                parameter.prototype === 'return')
+                                parameter.prototype === 'return' &&
+                                prototype.exceptions.length === 0)
                                 ? <div className='symbol-page-separator'></div>
                                 : null
-                            }
+                            } */}
                         </div>
                     )}
                 </div>
             </div>
         )
     } 
+
+    renderExceptions = (prototype) => {
+        if (prototype.exceptions.length === 0)
+            return null
+        console.log(prototype)
+        return (
+            <div className='symbol-page-section-container'>
+                <div className='symbol-page-title'>
+                    Exception(s)
+                </div>
+                <div className='symbol-page-parameters-container'>
+                    {prototype.exceptions.map((exception, index) =>
+                        <div key={index * 2}>
+                            <Link to={'/symbol?id=' + exception.ref.id} className='symbol-page-parameter-name'>
+                                {exception.ref.path}
+                            </Link>
+                            <div className='symbol-page-parameter-description'>
+                                {exception.description}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
 
     handleDelete = (event) => {
         event.preventDefault();
@@ -580,10 +606,18 @@ export default class SymbolPage extends Component {
                                 {this.renderDescription(prototype)}
                                 {this.renderParameters(prototype)}
                                 {this.renderReturns(prototype)}
-                                {this.renderUploadExample()}
+                                {this.renderExceptions(prototype)}
+                                {
+                                    (index !== (this.state.prototypes.length - 1))
+                                    ? <hr></hr>
+                                    : null
+                                }
                             </div>
                         )
                     }
+                </div>
+                <div>
+                    {this.renderUploadExample()}
                 </div>
             </div>
         )
