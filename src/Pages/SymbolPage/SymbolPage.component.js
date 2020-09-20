@@ -258,12 +258,6 @@ export default class SymbolPage extends Component {
                                     </div>
                                     : null
                                 }
-                                {/* {(index !== (prototype.parameters.length - 1) &&
-                                    index !== 0 &&
-                                    parameter.prototype !== 'return')
-                                    ? <div className='symbol-page-separator'></div>
-                                    : null
-                                } */}
                             </div>
                         )
                     }
@@ -294,13 +288,6 @@ export default class SymbolPage extends Component {
                                 </div>
                                 : null
                             }
-                            {/* {(index !== (prototype.parameters.length - 1) &&
-                                index !== 0 &&
-                                parameter.prototype === 'return' &&
-                                prototype.exceptions.length === 0)
-                                ? <div className='symbol-page-separator'></div>
-                                : null
-                            } */}
                         </div>
                     )}
                 </div>
@@ -447,7 +434,6 @@ export default class SymbolPage extends Component {
                 });
                 description.push(
                     <div key={elem.id+elem}>
-                        {/* <h4><b>Description</b></h4> */}
                        {elem.description}
                     </div>
                 )
