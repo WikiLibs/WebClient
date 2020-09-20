@@ -1,0 +1,255 @@
+.GS-content-page {
+    margin-left: 443px;
+    margin-right: 442px;
+    margin-top: 96px;
+    margin-bottom: -30px;
+}
+
+.GS-title-container {
+    display: flex;
+}
+
+.GS-title-container > div > img {
+    height: 32px;
+    width: auto;
+    margin-right: 16px;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.GS-title-container div {
+    display: flex;
+}
+
+.GS-title {
+    line-height: 40px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: #4C3DA8;
+    margin: 0;
+}
+
+.GS-title-separator {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 16px;
+
+    color:#cccccc;
+}
+
+.GS-title-lib-name, .GS-content-page:visited {
+    margin-left: 16px;
+
+    color:#3E3E3E;
+
+    line-height: 40px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.GS-title-lib-name:hover {
+    color:#4C3DA8;
+}
+
+.GS-title-lib-language {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 8px;
+
+    color:#cccccc;
+}
+
+.GS-Description {
+    margin-left: 16px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+.GS-content-page span {
+    margin-bottom: 16px;
+    display: block;
+    color: #202020;
+    font-size: 15px;
+    font-family: 'Open Sans';
+}
+
+.GS-content-page span::first-letter {
+    margin-left: 16px;
+}
+
+.GS-content-page span a, .GS-content-page span a:visited {
+    color: #7B68EE;
+}
+
+.GS-content-page span a:hover, .GS-content-page span a:focus{
+    color: #4C3DA8;
+}
+
+.GS-summary-container {
+    padding: 32px 16px 32px 16px;
+    border: #7B68EE 2px solid;
+    border-left-width: 5px;
+    border-radius: 4px;
+}
+
+
+.GS-summary-container li {
+    color: #7B68EE;
+    display: flex;
+}
+
+.GS-summary-container li::before {
+    content: "\2192";
+    display: inline-block;
+    font-weight: bold;
+    color: #7B68EE;
+}
+
+.GS-summary-container li ul li::before {
+    content: "\2022" !important;
+}
+
+.GS-summary-container li ul li ul li::before {
+    content: "\25A0"!important;
+}
+
+.GS-summary-container ul {
+    list-style: none;
+    margin-bottom: 0px;
+}
+
+.GS-summary-container li a {
+    margin-left: 9px!important;
+    color: #202020;
+}
+
+.GS-Content hr {
+    color: #868686;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.GS-Content b, .GS-Content u, .GS-Content li {
+    color: #7B68EE;
+}
+
+.GS-Content li span {
+    margin-left: 0px!important;
+}
+
+.GS-section {
+    margin-bottom: 32px;
+}
+
+.GS-section > span {
+    margin-left: 16px;
+}
+
+.GS-inner-section {
+    margin-bottom: 16px;
+}
+
+.GS-first-heading {
+    font-size: 38px;
+    font-family: 'Open Sans';
+    color: #4C3DA8;
+    margin-top: 16px;
+}
+
+.GS-second-heading {
+    font-size: 26px;
+    font-family: 'Open Sans';
+    color: #4C3DA8;
+    margin-bottom: 16px;
+}
+
+.GS-third-heading {
+    font-size: 20px;
+    font-family: 'Open Sans';
+    color: #4C3DA8;
+    margin-bottom: 16px;
+}
+
+.GS-code-section {
+    background-color: #EBEBEB;
+    padding: 32px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.GS-button-container {
+    display: flex;
+}
+
+.GS-button, .GS-button:visited {
+    padding: 8px;
+    color: #ffff;
+    background-color: #7B68EE;
+    border-radius: 4px;
+    margin: auto;
+    height: auto;
+    width: auto;
+}
+
+.GS-button:hover, .GS-button:focus {
+    background-color: #4C3DA8;
+    color: #ffff;
+    text-decoration: none;
+}
+
+.GS-button > .GS-button-title {
+    font-weight: bold;
+}
+
+.GS-button > .GS-button-description {
+    font-style: italic;
+    font-size: x-small;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.GS-note-section {
+    padding: 16px;
+    border-radius: 4px;
+    border: 2px solid #7B68EE;
+    border-left-width: 5px;
+    
+    margin-bottom: 16px;
+}
+
+.GS-note-title {
+    font-weight: bold!important;
+    font-size: 18px!important;
+}
+
+.GS-note-section > span::first-letter {
+    margin-left: 0px!important;    
+}
+
+.GS-important-section {
+    padding: 16px;
+    border-radius: 4px;
+    border: 2px solid #d64848;
+    border-left-width: 5px;
+    
+    margin-bottom: 16px;
+}
+
+.GS-inline-code {
+    background-color: #cccccc;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.GS-highlight-section {
+    padding: 16px;
+    padding-bottom: 0px;
+    border-radius: 4px;
+    border: 2px solid #7B68EE;
+    border-left-width: 5px;
+    
+    margin-bottom: 16px;
+
+    background-color: rgba(123, 104, 238, 0.4);
+}

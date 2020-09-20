@@ -24,6 +24,9 @@ import TermsOfUse from './Pages/TermsOfUse'
 import CodeRecommendations from './Pages/CodeRecommendations'
 import HowToUseParser from './Pages/HowToUseParser'
 import LibPage from './Pages/LibPage'
+
+// Templates
+import GettingStarted from './Pages/Template/GettingStartedPage'
 /* END */
 
 const history = createBrowserHistory()
@@ -50,6 +53,7 @@ export default function App()
                 <Layout exact path='/coderecommendations' component={CodeRecommendations} />
                 <Layout exact path='/howtouseparser' component={HowToUseParser} />
                 <Layout exact path='/libraries' component={LibPage}/>
+                <Layout exact path='/gettingstarted' component={GettingStarted}/>
                 <Layout component={NotFoundPage} />
             </Switch>
         </Router>
