@@ -580,11 +580,11 @@ export default class SymbolPage extends Component {
                                 {this.renderDescription(prototype)}
                                 {this.renderParameters(prototype)}
                                 {this.renderReturns(prototype)}
-                                {this.renderUploadExample()}
                             </div>
                         )
                     }
                 </div>
+                {this.renderUploadExample()}
             </div>
         )
     }

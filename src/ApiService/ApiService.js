@@ -144,6 +144,16 @@ export default class ApiService {
                 }
             }));
     }
+    /////////////////////////////////////////////////////////
+
+    getInfoTree(libId) {
+        return (Axios.get(this.url + "/symbol/lib/" + libId + "/tree/root",
+            {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            }));
+    }
 
     /////////////////////////////////////////////////////////
 
