@@ -13,7 +13,8 @@ export default class LibPage extends Component {
         data: {},
         listType: [],
         libId: -1,
-        libName: ""
+        libName: "",
+        apiError: ""
       };
     
     onClick = (event, nodeKey) => {
@@ -21,51 +22,76 @@ export default class LibPage extends Component {
     }
 
     setTree = () => {
+        let final = [];
+        let tmp = [];
 
+        this.state.listType.forEach(elem => {
+            this.state.data[elem].forEach(elem2 => {
+                tmp.push({
+                    name: elem2.firstPrototype
+                });
+            });
+            final.push({name: elem, children: tmp})
+            tmp = []
+        });
         return(
             {
                 name: this.state.libName,
-                children: []
+                children: final
             }
         );
     }
 
     render = () => {
-        let tree = this.setTree();
-        return (
-            <div className="custom-container">
-                <Tree
-	                data={tree}
-	                height={200}
-	                width={400}
-                    animated
-                    duration={1200}
-                    svgProps={{
-                        className: 'custom'
-                    }}
-                    gProps={{
-                        onClick: this.onClick,
-                    }}
-	            />
-            </div>
-        );
+        if (this.state.apiError.length === 0) {
+            let tree = this.setTree();
+             
+              return (
+                <div className="custom-container">
+                    <Tree
+	                    data={tree}
+    	                height={2000}
+	                    width={1700}
+                        animated
+                        duration={1200}
+                        svgProps={{
+                            className: 'custom'
+                        }}
+                        gProps={{
+                            onClick: this.onClick,
+                        }}
+	                />
+                </div>
+              )
+        } else {
+            return (<div>{this.state.apiError}</div>)
+        }
     }
 
     componentDidMount = async () => {
-        var q = useQuery();        
+        var q = useQuery();
+        let apiError = "";
+        let rep = await this.api.getInfoTree(parseInt(q.lib)).catch(err => apiError = this.api.translateErrorMessage(err));
         let listData = {};
         let listType = [];
 
-        this.api.getInfoTree(parseInt(q.lib)).then(response => {
-            response.data.forEach(elem => {
+        if (apiError.length === 0) {
+            rep.data.forEach(elem => {
                 if (!listData[elem.type]) {
                     listData[elem.type] = [];
                     listType.push(elem.type);
                 }
                 listData[elem.type].push(elem);
-            })
-        });
-        console.log(listData);
-        this.setState({data: listData, listType: listType, libId: parseInt(q.lib), libName: q.name});
+            });
+
+            this.setState({
+                data: listData, 
+                listType: listType, 
+                libId: parseInt(q.lib), 
+                libName: q.name
+            });
+        } else {
+            this.setState({apiError: apiError});
+        }
     };
 }
