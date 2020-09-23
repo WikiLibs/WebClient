@@ -24,3 +24,13 @@ svg.custom path.link {
 	stroke: #2593B8;
 	stroke-width: 1.5px;
 }
+
+.treeview > .toggle {
+	pointer-events: all;
+	cursor: pointer;
+}
+
+.treeview > .toggle:hover {
+	color: #63b1de;
+	fill: #63b1de;
+}
