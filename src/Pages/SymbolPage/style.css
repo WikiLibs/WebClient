@@ -46,6 +46,7 @@
 
 .symbol-page-parameter-name {
     color: #4C3DA8;
+    position: relative
 }
 
 .symbol-page-parameter-description {
@@ -266,4 +267,74 @@ span.comment {
 
 #symbol-page-vote-value{
     font-size: 20px;
+}
+
+.symbol-page-inner-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.symbol-page-inner-tooltip:hover .symbol-page-tooltip {
+    visibility:visible;
+    opacity:1;
+}
+
+.symbol-page-tooltip {
+    width: max-content;
+    top:50%;
+    left:100%;
+    margin-left:20px;
+    transform:translate(0, -50%);
+    padding:0;
+    color:#202020;
+    background-color:#cccccc;
+    font-weight:normal;
+    border-radius:4px;
+    position:absolute;
+    z-index:999;
+    box-sizing:border-box;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+    visibility:hidden;
+    opacity:0;
+    transition:opacity 0.8s;
+}
+
+.symbol-page-tooltip-text-content{
+    padding:10px 20px;
+}
+
+.symbol-page-tooltip-code-preview {
+    background-color: #EBEBEB;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.symbol-page-tooltip-title {
+    color: #4C3DA8;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+}
+
+.symbol-page-tooltip i {
+    position:absolute;
+    top:50%;
+    right:100%;
+    margin-top:-12px;
+    width:12px;
+    height:24px;
+    overflow:hidden;
+}
+
+.symbol-page-tooltip i::after {
+    content:'';
+    position:absolute;
+    width:12px;
+    height:12px;
+    left:0;
+    top:50%;
+    transform:translate(50%,-50%) rotate(-45deg);
+    background-color:#cccccc;
+    box-shadow:0 1px 8px rgba(204, 204, 204, .5);
 }
