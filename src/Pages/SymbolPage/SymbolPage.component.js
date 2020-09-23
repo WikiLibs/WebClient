@@ -298,7 +298,6 @@ export default class SymbolPage extends Component {
     renderExceptions = (prototype) => {
         if (prototype.exceptions.length === 0)
             return null
-        console.log(prototype)
         return (
             <div className='symbol-page-section-container'>
                 <div className='symbol-page-title'>
@@ -306,12 +305,23 @@ export default class SymbolPage extends Component {
                 </div>
                 <div className='symbol-page-parameters-container'>
                     {prototype.exceptions.map((exception, index) =>
-                        <div key={index * 2}>
-                            <Link to={'/symbol?id=' + exception.ref.id} className='symbol-page-parameter-name'>
-                                {exception.ref.path}
-                            </Link>
-                            <div className='symbol-page-parameter-description'>
-                                {exception.description}
+                        <div key={index * 2} className="symbol-page-inner-tooltip">
+                            <div>
+                                <Link to={'/symbol?id=' + exception.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + exception.ref.id)} className='symbol-page-parameter-name'>
+                                    {exception.ref.path}
+                                </Link>
+                                <div className='symbol-page-parameter-description'>
+                                    {exception.description}
+                                </div>
+                            </div>
+                            <div className="symbol-page-tooltip">
+                                <div className="symbol-page-tooltip-text-content">
+                                    <div className="symbol-page-tooltip-title">Preview</div>
+                                    <div className="symbol-page-tooltip-code-preview">
+                                        <div dangerouslySetInnerHTML={{ __html: protoToHtml(exception.ref.firstPrototype) }} />
+                                    </div>
+                                </div>
+                                <i></i>
                             </div>
                         </div>
                     )}
