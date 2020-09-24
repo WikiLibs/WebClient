@@ -11,8 +11,8 @@ import "./style.css";
 const treeStyles = {
     top: 40,
     left: 40,
-    color: 'white',
-    fill: 'white',
+    color: '#242424',
+    fill: '#242424',
     width: '100%',
   }
 
