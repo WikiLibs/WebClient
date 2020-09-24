@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import { useQuery } from '../../util';
 import { ApiService } from '../../ApiService';
 
-import Tree from 'react-tree-graph';
+import Tree2 from 'react-tree-graph';
+
+import Tree from 'react-animated-tree'
 
 import "./style.css";
+
+const treeStyles = {
+    top: 40,
+    left: 40,
+    color: 'white',
+    fill: 'white',
+    width: '100%',
+  }
 
 export default class LibPage extends Component {
     api = new ApiService();
@@ -14,11 +24,12 @@ export default class LibPage extends Component {
         listType: [],
         libId: -1,
         libName: "",
-        apiError: ""
+        apiError: "",
+        display: 0
       };
     
-    onClick = (event, nodeKey) => {
-        alert(`Left clicked ${nodeKey}`);
+    onClick = (event, node) => {
+        window.location = "/symbol?id=" + node.split("/%:/")[1];
     }
 
     setTree = () => {
@@ -28,7 +39,8 @@ export default class LibPage extends Component {
         this.state.listType.forEach(elem => {
             this.state.data[elem].forEach(elem2 => {
                 tmp.push({
-                    name: elem2.firstPrototype
+                    name: elem2.firstPrototype + "/%:/" + elem2.id,
+                    id: elem2.id
                 });
             });
             final.push({name: elem, children: tmp})
@@ -42,14 +54,40 @@ export default class LibPage extends Component {
         );
     }
 
-    render = () => {
-        if (this.state.apiError.length === 0) {
-            let tree = this.setTree();
-             
-              return (
+    setFolder = () => {
+        let final = [];
+        let tmp = [];
+
+        this.state.listType.forEach(elem => {
+            this.state.data[elem].forEach(elem2 => {
+                tmp.push(
+                    <Tree key={elem2.id} content={<button type="button" className="btn btn-link" onClick={() => {window.location = "/symbol?id=" + elem2.id}} >{elem2.firstPrototype}</button>} style={{ color: '#63b1de' }} />
+                );
+            });
+            final.push(
+                <Tree key={elem} content={elem}> {tmp} </Tree>
+            );
+            tmp = []
+        });
+        return(
+                <Tree content={this.state.libName} type="ITEM"  open style={treeStyles}>
+                    {final}
+                </Tree>
+        );
+    }
+
+    renderTree = () => {
+        if (this.state.display === 0) {  
+            return(
                 <div className="custom-container">
-                    <Tree
-	                    data={tree}
+                    {this.setFolder()}
+                </div>
+            );
+        } else {
+            let graphTree = this.setTree();
+            return (
+                <Tree2
+	                    data={graphTree}
     	                height={2000}
 	                    width={1700}
                         animated
@@ -58,9 +96,23 @@ export default class LibPage extends Component {
                             className: 'custom'
                         }}
                         gProps={{
+                            className: "node",
                             onClick: this.onClick,
                         }}
 	                />
+            );
+        }
+    }
+
+    render = () => {
+        if (this.state.apiError.length === 0) {
+              return (
+                <div className="custom-container">
+                    <div className="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" className="btn btn-secondary" onClick={() => {this.setState({display: 0})}}>Folder</button>
+                        <button type="button" className="btn btn-secondary" onClick={() => {this.setState({display: 1})}}>Graph</button>
+                    </div>
+                    {this.renderTree()}
                 </div>
               )
         } else {
