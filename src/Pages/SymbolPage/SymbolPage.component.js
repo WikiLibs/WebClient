@@ -366,7 +366,7 @@ export default class SymbolPage extends Component {
         let comments = [];
         this.state.mapComments[id].data.forEach(elem => {
             console.log(this.state.mapIdPseudo[elem.userId]);
-            if (elem.data != "" && this.state.mapIdPseudo[elem.userId] != undefined) {
+            if (elem.data !== "" && this.state.mapIdPseudo[elem.userId] !== undefined) {
                 comments.push(
                     <div key={elem.id} id={"comment-" + elem.id}>
                         <hr className="symbol-page-spe-comment"></hr>

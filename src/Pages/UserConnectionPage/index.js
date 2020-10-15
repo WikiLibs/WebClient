@@ -33,7 +33,7 @@ export default class UserConnectionPage extends Component {
 
         if (checkForm(this.state)) {
             //Handle errors similar to this
-            this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
+            this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err), formErrors: {email: "", password: ""} }));
         } else {
             console.error("FORM INVALID");
         }
@@ -44,11 +44,15 @@ export default class UserConnectionPage extends Component {
         const { name, value } = e.target;
         let formErrors = { ...this.state.formErrors };
 
+        formErrors.password = "";
+        formErrors.email = "";
+        this.setState({ apiError: null });
+
         switch (name) {
             case "email":
                 formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
-            case "Password":
+            case "password":
                 formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
                 break;
             default:

@@ -60,7 +60,7 @@ export default class UserCreationPage extends Component {
                     this.setState({ success: "Successfully created account, please check your email." });
                 })
                 .catch((error) => {
-                    this.setState({ apiError: this.api.translateErrorMessage(error) });
+                    this.setState({ apiError: this.api.translateErrorMessage(error), formErrors: { firstName: "", lastName: "", email: "", private: "", profilMsg: "", pseudo: "", password: "",} });
                 })
         } else {
             console.error("FORM INVALID");
@@ -71,6 +71,14 @@ export default class UserCreationPage extends Component {
         e.preventDefault();
         const { name, value } = e.target;
         let formErrors = { ...this.state.formErrors };
+    
+        if (name !== "profilMsg") {
+            formErrors.firstName = "";
+            formErrors.lastName = "";
+            formErrors.email = "";
+            formErrors.pseudo = "";
+            formErrors.password = "";
+        }
 
         switch (name) {
             case "firstName":

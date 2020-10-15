@@ -31,6 +31,7 @@ export default class UserConnectionPage extends Component {
 
         if (checkForm(this.state)) {
             //this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
+            this.setState({formErrors: { email: "" }});
         } else {
             console.error("FORM INVALID");
         }
@@ -82,7 +83,6 @@ export default class UserConnectionPage extends Component {
                             </form>
                             {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
                             {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
-                            {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
                         </div>
                     </div>
                 </div>
