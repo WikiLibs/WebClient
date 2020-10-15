@@ -12,7 +12,7 @@ const renderList = () => {
             </div>
             <div className="collapse" id="faq1">
                 <div className="faq-answer-content">
-                    <p className="faq-description">WikiLibs is a website regrouping programming library from different languages, with a unified design to enhance your learning.</p>
+                    <p className="faq-description">WikiLibs is a website regrouping programming library from different languages, with a unified design to enhance your learning experience and reduce your research time.</p>
                 </div>
             </div>
             <div href="#faq2" data-toggle="collapse" className="faq-select-question">
@@ -40,7 +40,7 @@ const renderList = () => {
             </div>
             <div className="collapse" id="faq4">
                 <div className="faq-answer-content">
-                    <p className="faq-description">In order to upload the library to the website, open a terminal the folder of the downloaded parser. If you have not downloaded the parser yet, click this <a className="faq-colored-text" href="/download">link</a> to download it. If it is already done, please do the following steps: </p>
+                    <p className="faq-description">Please first register and login to WikiLibs. You need to buy an API key by contacting us (all information on the <a className='faq-colored-text' href='/contact'>contact page</a>) in order to upload the library to the website, open a terminal the folder of the downloaded parser. If you have not downloaded the parser yet, click this <a className="faq-colored-text" href="/download">link</a> to download it. You just need to enter the API key given by the administrator in the correct field to access the download link. If it is already done, please do the following steps: </p>
                     <ul className="faq-ul">
                         <li>
                             <p className="faq-li">Execute the command line:</p>
@@ -75,7 +75,7 @@ const renderList = () => {
             </div>
             <div className="collapse" id="faq5">
                 <div className="faq-answer-content">
-                    <p className="faq-description">You just need to download our parser. And please, check if you already have a Python 3 runtime installed on your computer. If not, you can follow this <a className="faq-colored-text" href="/download">link</a>.</p>
+                    <p className="faq-description">You just need to visit the symbol page of your choice, scroll down the page to find the "<b>Create your own example</b>" section. Follow the instructions before sending the new example.</p>
                 </div>
             </div>
             <div href="#faq6" data-toggle="collapse" className="faq-select-question">
@@ -84,7 +84,7 @@ const renderList = () => {
             </div>
             <div className="collapse" id="faq6">
                 <div className="faq-answer-content">
-                    <p className="faq-description">Please check the login page and follow the links. </p>
+                    <p className="faq-description">You can change your password by following this <a className='faq-colored-text' href='/forgotpassword'>link</a></p>
                 </div>
             </div>
             <div href="#faq7" data-toggle="collapse" className="faq-select-question">
@@ -93,7 +93,16 @@ const renderList = () => {
             </div>
             <div className="collapse" id="faq7">
                 <div className="faq-answer-content">
-                    <p className="faq-description">Please check the login page and follow the links. </p>
+                    <p className="faq-description">Please contact us by using the information on the <a className='faq-colored-text' href='/contact'>contact page</a>. Make sure to give the maximum information so we can recover the email.</p>
+                </div>
+            </div>
+            <div href="#faq8" data-toggle="collapse" className="faq-select-question">
+                <ArrowDropDownRoundedIcon className="faq-grower" />
+                <span className="faq-title-question-part">How to delete my account ?</span>
+            </div>
+            <div className="collapse" id="faq8">
+                <div className="faq-answer-content">
+                    <p className="faq-description">You just need to send an email using the information on the <a className='faq-colored-text' href='/contact'>contact page</a></p>
                 </div>
             </div>
         </div>

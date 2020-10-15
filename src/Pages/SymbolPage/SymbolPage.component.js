@@ -48,6 +48,7 @@ export default class SymbolPage extends Component {
             lang: null,
             type: null,
             path: null,
+            lastModificationDate: null,
             prototypes: [],
             symbols: [],
             code: "Write an example...", 
@@ -173,6 +174,13 @@ export default class SymbolPage extends Component {
         return (arr[arr.length - 1]);
     }
 
+    getTypeSymbol = () => {
+        var str = this.state.type;
+        if (!str)
+            return ("");
+        return (str.displayName);
+    }
+
     searchStringInParameters = (string, array) => {
         for (let i = 0; i < array.parameters.length; i++) {
             if (array.parameters[i].prototype === string)
@@ -188,11 +196,23 @@ export default class SymbolPage extends Component {
         return (this.state.lang.displayName + '/' + upPath);
     }
 
+    getDateLastUpdate() {
+        if (!this.state.lastModificationDate)
+            return ("");
+        let d = new Date(this.state.lastModificationDate);
+        return (d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
+    }
+
     renderTitle = () => {
         return (
-            <div className='symbol-page-section-container'>
+            <div className='symbol-page-section-container symbol-page-section-title-container'>
                 <div className='symbol-page-title'>
                     {this.getName()}
+                </div>
+                <div className='symbol-page-title'>
+                    <div className='symbol-page-type-symbol-title'>
+                        {this.getTypeSymbol()}
+                    </div>
                 </div>
                 <div className='symbol-page-infos-path'>
                     {this.getDisplayPath()}
@@ -203,6 +223,9 @@ export default class SymbolPage extends Component {
                         {this.state.import}
                     </div>
                 }
+                <div className='symbol-page-infos-path'>
+                    last updated: {this.getDateLastUpdate()}
+                </div>
             </div>
         )
     }
@@ -365,18 +388,20 @@ export default class SymbolPage extends Component {
         let list = [];
         let comments = [];
         this.state.mapComments[id].data.forEach(elem => {
-            comments.push(
-                <div key={elem.id} id={"comment-" + elem.id}>
-                    <hr className="symbol-page-spe-comment"></hr>
-                    <div className="symbol-page-comment-warp">
-                        <div className="symbol-page-comment-data">
-                            {elem.data} – <b>{this.state.mapIdPseudo[elem.userId]}</b> <span>{(new Date(elem.creationDate)).toLocaleDateString()}</span>
+            console.log(this.state.mapIdPseudo[elem.userId]);
+            if (elem.data !== "" && this.state.mapIdPseudo[elem.userId] !== undefined) {
+                comments.push(
+                    <div key={elem.id} id={"comment-" + elem.id}>
+                        <hr className="symbol-page-spe-comment"></hr>
+                        <div className="symbol-page-comment-warp">
+                            <div className="symbol-page-comment-data">
+                                {elem.data} – <b>{this.state.mapIdPseudo[elem.userId]}</b> <span>{(new Date(elem.creationDate)).toLocaleDateString()}</span>
+                            </div>
+                            {this.renderDeleteButton(elem.userId, elem.id)}
                         </div>
-                        {this.renderDeleteButton(elem.userId, elem.id)}
                     </div>
-                </div>
-
-            )
+                )
+            }
         })
         list.push(
             <div key={comments} id={"comment-holder-" + id}> {comments} </div>

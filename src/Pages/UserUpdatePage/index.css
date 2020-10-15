@@ -110,3 +110,7 @@ div > .update-profile-submit-btn-acc:focus {
     height: 30px;
     float: right;
 }
+
+.update-profile-content-account > .profile-bottom-form {
+    margin-bottom: 200px;
+}

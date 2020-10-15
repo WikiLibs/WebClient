@@ -8,7 +8,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
-import Moment from 'react-moment';
 
 import CreateIcon from '@material-ui/icons/Create';
 
@@ -66,6 +65,9 @@ export default class ProfilePage extends Component {
                 this.api.patchMe(this.state)
                     .then(_ => {
                         this.setState({ success: "Successfully updated profile." });
+                        setTimeout(
+                            window.location.assign(window.location.origin + '/profile'), 1500
+                        )
                     })
                     .catch(error => {
                         this.setState({ apiError: this.api.translateErrorMessage(error) });
@@ -119,7 +121,6 @@ export default class ProfilePage extends Component {
                             <div className="profile-form-account">
                                 <TextField
                                     name="pseudo"
-                                    id="outlined-name"
                                     label="Pseudo"
                                     className="profile-text-field-acc"
                                     value={this.state.pseudo}
@@ -129,7 +130,6 @@ export default class ProfilePage extends Component {
                                 />
                                 <TextField
                                     name="profileMsg"
-                                    id="outlined-name"
                                     className="profile-text-field-acc"
                                     placeholder="Profile message"
                                     margin="normal"
@@ -139,8 +139,8 @@ export default class ProfilePage extends Component {
                                     onChange={this.handleChange}
                                 />
                                 <TextField
+                                    type="password"
                                     name="newPassword"
-                                    id="outlined-name"
                                     className="profile-text-field-acc"
                                     placeholder="New Password (Optional)"
                                     margin="normal"
@@ -176,8 +176,8 @@ export default class ProfilePage extends Component {
                         <div className="profile-bottom-form">
                             <div className="profile-form-account">
                                 <TextField
+                                    type="password"
                                     name="password"
-                                    id="outlined-name"
                                     className="profile-text-field-acc"
                                     placeholder="Password *"
                                     margin="normal"
@@ -191,29 +191,19 @@ export default class ProfilePage extends Component {
                                     className="update-profile-submit-btn-acc"
                                     onClick={this.handleSubmit}
                                 > SAVE UPDATE</Button>
+                                {this.state.success && <Alert className="user-warning"  severity="success">{this.state.success}</Alert>}
+                                {this.state.apiError && <Alert className="user-warning" severity="error">{this.state.apiError}</Alert>}
+                                {this.state.formErrors.firstName && <Alert className="user-warning" severity="warning">{this.state.formErrors.firstName}</Alert>}
+                                {this.state.formErrors.lastName && <Alert className="user-warning" severity="warning">{this.state.formErrors.lastName}</Alert>}
+                                {this.state.formErrors.email && <Alert className="user-warning" severity="warning">{this.state.formErrors.email}</Alert>}
+                                {this.state.formErrors.pseudo && <Alert className="user-warning" severity="warning">{this.state.formErrors.pseudo}</Alert>}
+                                {this.state.formErrors.password && <Alert className="user-warning" severity="warning">{this.state.formErrors.password}</Alert>}
                             </div>
                         </div>
-                        <div className="profile-infos">
-                            <div className="update-profile-left-info">
-                                <span>Joined : <Moment format="DD/MM/YYYY">{this.state.date}</Moment></span>
-                                <span>Group : {this.state.group}</span>
-                                <span className="update-profile-info-down">User ID: {this.state.id}</span>
-                            </div>
-                            <div className="profile-vertical-separator"></div>
-                            <div className="update-profile-right-info">
-                                <span>User Points</span>
-                                <p id="userPoints">{this.state.points}</p>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
-                {this.state.success && <Alert severity="success">{this.state.success}</Alert>}
-                {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
-                {this.state.formErrors.firstName && <Alert severity="warning">{this.state.formErrors.firstName}</Alert>}
-                {this.state.formErrors.lastName && <Alert severity="warning">{this.state.formErrors.lastName}</Alert>}
-                {this.state.formErrors.email && <Alert severity="warning">{this.state.formErrors.email}</Alert>}
-                {this.state.formErrors.pseudo && <Alert severity="warning">{this.state.formErrors.pseudo}</Alert>}
-                {this.state.formErrors.password && <Alert severity="warning">{this.state.formErrors.password}</Alert>}
+                
             </div>
         );
     }

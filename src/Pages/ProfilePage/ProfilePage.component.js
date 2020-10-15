@@ -94,7 +94,6 @@ export default class ProfilePage extends Component {
                             
                             <div className="profile-form-account">
                                 <TextField
-                                    id="outlined-name"
                                     label="Pseudo"
                                     className="profile-text-field-acc"
                                     value={this.state.pseudo}
@@ -105,7 +104,6 @@ export default class ProfilePage extends Component {
                                     }}
                                 />
                                 <TextField
-                                    id="outlined-name"
                                     label="Firstname"
                                     className="profile-text-field-acc"
                                     value={this.state.firstName}
@@ -116,7 +114,6 @@ export default class ProfilePage extends Component {
                                     }}
                                 />
                                 <TextField
-                                    id="outlined-name"
                                     label="Lastname"
                                     className="profile-text-field-acc"
                                     value={this.state.lastName}
@@ -150,7 +147,6 @@ export default class ProfilePage extends Component {
                         <div className="profile-bottom-form">
                             <div className="profile-form-account">
                                 <TextField
-                                    id="outlined-name"
                                     label="Email"
                                     className="profile-text-field-acc"
                                     value={this.state.email}
@@ -161,7 +157,6 @@ export default class ProfilePage extends Component {
                                     }}
                                 />
                                 <TextField
-                                    id="outlined-name"
                                     className="profile-text-field-acc"
                                     placeholder="Profile message"
                                     margin="normal"
