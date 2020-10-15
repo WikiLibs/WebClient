@@ -31,7 +31,6 @@
 }
 
 .symbol-page-infos-path {
-    margin-top: 16px;
     font-style: italic;
     color: #3E3E3E;
 }
@@ -337,4 +336,19 @@ span.comment {
     transform:translate(50%,-50%) rotate(-45deg);
     background-color:#cccccc;
     box-shadow:0 1px 8px rgba(204, 204, 204, .5);
+}
+
+.symbol-page-section-title-container {
+    background: #dedede;
+    padding: 16px;
+}
+
+.symbol-page-section-title-container > .symbol-page-title {
+    font-weight: 700;
+    font-style: italic;
+}
+
+.symbol-page-type-symbol-title {
+    font-size: 20px;
+    margin-top: 8px;
 }
