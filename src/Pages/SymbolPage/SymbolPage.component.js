@@ -365,18 +365,20 @@ export default class SymbolPage extends Component {
         let list = [];
         let comments = [];
         this.state.mapComments[id].data.forEach(elem => {
-            comments.push(
-                <div key={elem.id} id={"comment-" + elem.id}>
-                    <hr className="symbol-page-spe-comment"></hr>
-                    <div className="symbol-page-comment-warp">
-                        <div className="symbol-page-comment-data">
-                            {elem.data} – <b>{this.state.mapIdPseudo[elem.userId]}</b> <span>{(new Date(elem.creationDate)).toLocaleDateString()}</span>
+            console.log(this.state.mapIdPseudo[elem.userId]);
+            if (elem.data != "" && this.state.mapIdPseudo[elem.userId] != undefined) {
+                comments.push(
+                    <div key={elem.id} id={"comment-" + elem.id}>
+                        <hr className="symbol-page-spe-comment"></hr>
+                        <div className="symbol-page-comment-warp">
+                            <div className="symbol-page-comment-data">
+                                {elem.data} – <b>{this.state.mapIdPseudo[elem.userId]}</b> <span>{(new Date(elem.creationDate)).toLocaleDateString()}</span>
+                            </div>
+                            {this.renderDeleteButton(elem.userId, elem.id)}
                         </div>
-                        {this.renderDeleteButton(elem.userId, elem.id)}
                     </div>
-                </div>
-
-            )
+                )
+            }
         })
         list.push(
             <div key={comments} id={"comment-holder-" + id}> {comments} </div>
