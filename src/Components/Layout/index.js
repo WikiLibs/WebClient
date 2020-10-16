@@ -29,7 +29,8 @@ class PageBody extends Component {
 
     componentDidMount() {
         if (this.state.userConnected) {
-            this.api.getMe().then(response => {
+            this.api.refresh().then(async () => {
+                const response = await this.api.getMe();
                 let user = response.data;
                 //if the user's permission array is not null, convert it to an easy to use JS object
                 if (user.permissions && user.permissions.length > 0) {
@@ -66,7 +67,7 @@ class PageBody extends Component {
             }).catch(() => {
                 localStorage.setItem('userToken', null);
                 this.setState({ user: null }, () => this.initialized = true);
-            });
+            })
         }
         if (this.state.userConnected) {
             let token = localStorage.getItem('userToken');
