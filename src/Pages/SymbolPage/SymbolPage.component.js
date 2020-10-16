@@ -199,8 +199,7 @@ export default class SymbolPage extends Component {
     getDateLastUpdate() {
         if (!this.state.lastModificationDate)
             return ("");
-        let d = new Date(this.state.lastModificationDate);
-        return (d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
+        return ((new Date(this.state.lastModificationDate)).toLocaleDateString());
     }
 
     renderTitle = () => {
