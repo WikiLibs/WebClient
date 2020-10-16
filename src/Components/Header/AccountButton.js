@@ -9,6 +9,15 @@ import { Row, Col } from 'react-bootstrap';
 
 import pp from './pp.png'
 
+const AdminTestPerms = [
+    "symbol.lang.create",
+    "symbol.lang.update",
+    "symbol.lang.delete",
+    "symbol.type.create",
+    "symbol.type.update",
+    "symbol.type.delete"
+];
+
 export default class AccountButton extends Component {
     api = new ApiService();
 
@@ -17,6 +26,14 @@ export default class AccountButton extends Component {
     };
 
     closeMenu = () => this.setState({ showMenu: false });
+
+    isAdmin() {
+        for (const v of AdminTestPerms) {
+            if (this.props.user.hasPermission(v))
+                return (true);
+        }
+        return (false);
+    }
 
     render() {
         return (
@@ -55,7 +72,10 @@ export default class AccountButton extends Component {
                                 this.props.user.hasPermission("user.me.update") &&
                                     <MenuItem><Link onClick={this.closeMenu} to="/profile"><AccountCircleIcon /> Profile</Link></MenuItem>
                             }
-                            <MenuItem><Link onClick={this.closeMenu} to="/admin"><SupervisorAccountIcon /> Administration</Link></MenuItem>
+                            {
+                                this.isAdmin() &&
+                                    <MenuItem><Link onClick={this.closeMenu} to="/admin"><SupervisorAccountIcon /> Administration</Link></MenuItem>
+                            }
                             <MenuItem><Link onClick={() => this.api.disconnect()} to='/'><ExitToAppIcon /> Disconnect</Link></MenuItem>
                         </Col>
                     </Row>
