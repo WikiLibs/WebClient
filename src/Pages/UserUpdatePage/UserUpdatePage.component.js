@@ -102,7 +102,8 @@ export default class UserUpdatePage extends Component {
     };
 
     handleCheckboxChange = event => {
-    this.setState({ private: event.target.checked })}
+        this.setState({ private: event.target.checked })
+    }
 
     profileImgUpdate = event => {
         this.setState({ profileImg: URL.createObjectURL(event.target.files[0])});
