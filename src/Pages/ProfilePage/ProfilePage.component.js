@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import Alert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -116,7 +115,7 @@ export default class ProfilePage extends Component {
                                     <div className="profile-value-label-form">Profile message</div>
                                     <div className="profile-value-form">{this.state.profileMsg}</div>
                                 </div>
-                                <hr />{/* yes or no ? */}
+                                <hr />
                                 <Link to="/updateprofile">
                                     <Button
                                         variant="contained"
