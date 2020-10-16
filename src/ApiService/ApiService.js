@@ -269,6 +269,12 @@ export default class ApiService {
         });
     }
 
+    hackMUIMotherShit(dataStr) { //MUI is a fucking framework unable to respect the HTTP standard, guess what let's hack it
+        const typeId = dataStr.indexOf(",");
+        const val = dataStr.substring(typeId + 1);
+        return "data:image/jpeg;base64," + val;
+    }
+
     getUserIcon(uid) {
         return new Promise((resolve, reject) => {
             if (uid in this.userIconMap)
@@ -279,8 +285,8 @@ export default class ApiService {
                         'Authorization': this.apiKey
                     }
                 }).then(response => {
-                    this.userIconMap[uid] = response;
-                    resolve(response);
+                    this.userIconMap[uid] = this.hackMUIMotherShit(response.data);
+                    resolve(this.userIconMap[uid]);
                 }).catch(err => {
                     if (err.response.status === 404) //No icon uploaded for user id fine just return NULL instead
                         resolve(null);
