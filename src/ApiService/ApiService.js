@@ -3,6 +3,7 @@ import Axios from "axios";
 export default class ApiService {
     url = process.env.REACT_APP_API_URL;
     apiKey = process.env.REACT_APP_API_KEY;
+    userMap = {};
 
     getDebug() {
         return (Axios.get(this.url + "/debug"));
@@ -251,11 +252,20 @@ export default class ApiService {
     }
 
     getUser(uid) {
-        return (Axios.get(this.url + "/user/" + uid, {
-            headers: {
-                'Authorization': this.apiKey
+        return new Promise((resolve, reject) => {
+            if (uid in this.userMap)
+                resolve(this.userMap[uid]);
+            else {
+                Axios.get(this.url + "/user/" + uid, {
+                    headers: {
+                        'Authorization': this.apiKey
+                    }
+                }).then(response => {
+                    this.userMap[uid] = response;
+                    resolve(response);
+                }).catch(err => reject(err));
             }
-        }));
+        });
     }
 
     patchMe(state) {
