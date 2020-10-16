@@ -4,6 +4,7 @@ export default class ApiService {
     url = process.env.REACT_APP_API_URL;
     apiKey = process.env.REACT_APP_API_KEY;
     userMap = {};
+    userIconMap = {};
 
     getDebug() {
         return (Axios.get(this.url + "/debug"));
@@ -264,6 +265,36 @@ export default class ApiService {
                     this.userMap[uid] = response;
                     resolve(response);
                 }).catch(err => reject(err));
+            }
+        });
+    }
+
+    getUserIcon(uid) {
+        return new Promise((resolve, reject) => {
+            if (uid in this.userIconMap)
+                resolve(this.userIconMap[uid]);
+            else {
+                Axios.get(this.url + "/user/" + uid + "/icon", {
+                    headers: {
+                        'Authorization': this.apiKey
+                    }
+                }).then(response => {
+                    this.userIconMap[uid] = response;
+                    resolve(response);
+                }).catch(err => {
+                    if (err.response.status === 404) //No icon uploaded for user id fine just return NULL instead
+                        resolve(null);
+                    else
+                        reject(err);
+                });
+            }
+        });
+    }
+
+    setIconMe(data) {
+        return Axios.put(this.url + "/user/me/icon", data, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
         });
     }
