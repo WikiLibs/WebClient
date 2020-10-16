@@ -86,7 +86,7 @@ class PageBody extends Component {
 
     render() {
         return (
-            <div>
+            <div className="inner-root">
                 <Header user={this.state.userConnected ? this.state.user : null} openNavBar={() => this.openNavBar()} />
                 <div id="wrapper" className={this.state.navBar ? "toggled" : ""}>
                     <SideBar user={this.state.userConnected ? this.state.user : null} />

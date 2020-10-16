@@ -47,7 +47,6 @@ form > .user-page-submit-btn:focus {
 .user-page-content-account {
     margin-left: 35%;
     margin-top: 50px;
-    margin-bottom: -48px;
     margin-right: 37%;
 }
 
@@ -61,7 +60,6 @@ form > .user-page-submit-btn:focus {
 
 .connection-no-account{
     margin-top: 48px;
-    margin-bottom: 70.6%;
 }
 
 .connection-no-account > span > a {
