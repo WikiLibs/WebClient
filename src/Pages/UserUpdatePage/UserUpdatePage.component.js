@@ -105,7 +105,6 @@ export default class UserUpdatePage extends Component {
     this.setState({ private: event.target.checked })}
 
     profileImgUpdate = event => {
-        console.log(event.target.files[0]);
         this.setState({ profileImg: URL.createObjectURL(event.target.files[0])});
         this.api.setIconMe(event.target.files[0]);
     }

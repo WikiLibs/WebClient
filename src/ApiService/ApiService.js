@@ -292,9 +292,12 @@ export default class ApiService {
     }
 
     setIconMe(data) {
-        return Axios.put(this.url + "/user/me/icon", data, {
+        const f = new FormData();
+        f.append("File", data);
+        return Axios.put(this.url + "/user/me/icon", f, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken'),
+                'Content-Type': 'multipart/form-data'
             }
         });
     }
