@@ -47,6 +47,12 @@ export default class UserUpdatePage extends Component {
         };
     }
 
+    componentDidMount() {
+        this.api.getUserIcon(this.props.user.id).then(response => {
+            this.setState({profileImg: response});
+        });
+    }
+
     handleSubmit = e => {
         e.preventDefault();
 

@@ -7,7 +7,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import { checkForm } from '../../util';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
@@ -38,6 +37,7 @@ export default class ProfilePage extends Component {
             date: tmp.registrationDate,
             points: tmp.points,
             group: tmp.group,
+            profileImg: pp,
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -53,34 +53,11 @@ export default class ProfilePage extends Component {
         };
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-
-        if (checkForm(this.state)) {
-            console.log(`
-                --SUBMITTING--
-                First name: ${this.state.firstName}
-                Last name: ${this.state.lastName}
-                Email: ${this.state.email}
-                Private: ${this.state.private}
-                profilMsg: ${this.state.profileMsg}
-                Pseudo: ${this.state.pseudo}
-                Password: ${this.state.password}
-                newPassword: ${this.state.newPassword}
-            `)
-            if (this.state.password) {
-                this.api.patchMe(this.state)
-                    .then((Response) => {
-                        this.setState({ success: "Successfully updated profile." });
-                    })
-                    .catch(error => {
-                        this.setState({ apiError: this.api.translateErrorMessage(error) });
-                    });
-            }
-        } else {
-            console.error("FORM INVALID");
-        }
-    };
+    componentDidMount() {
+        this.api.getUserIcon(this.props.user.id).then(response => {
+            this.setState({profileImg: response});
+        });
+    }
 
     render() {
         return (
@@ -127,7 +104,7 @@ export default class ProfilePage extends Component {
                                     <Card className="profile-card">
                                         <CardMedia
                                             className="profile-pic"
-                                            image={pp}
+                                            image={this.state.profileImg}
                                             title=""
                                         />
                                     </Card>
