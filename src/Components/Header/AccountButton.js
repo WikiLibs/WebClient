@@ -22,7 +22,8 @@ export default class AccountButton extends Component {
     api = new ApiService();
 
     state = {
-        showMenu: false
+        showMenu: false,
+        profileImg: pp
     };
 
     closeMenu = () => this.setState({ showMenu: false });
@@ -35,6 +36,10 @@ export default class AccountButton extends Component {
         return (false);
     }
 
+    componentDidMount() {
+        this.api.getUserIcon(this.props.user.id).then(response => this.setState({profileImg: response}))
+    }
+
     render() {
         return (
             <>
@@ -45,7 +50,7 @@ export default class AccountButton extends Component {
                     color="primary"
                     onClick={() => this.setState({ showMenu: !this.state.showMenu })}
                 >
-                    <img alt="" src={pp} className="header-img-profile"></img>
+                    <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
                 </Button>
                 <Menu
                     style={{top: "64px"}}
@@ -62,7 +67,7 @@ export default class AccountButton extends Component {
                     <h3 className="text-center" style={{marginBottom: "15px"}}>My Account</h3>
                     <Row>
                         <Col>
-                            <img alt="" src={pp} className="header-img-profile"></img>
+                            <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
                         </Col>
                         <Col>
                             <h5>{this.props.user.firstName} {this.props.user.lastName}</h5>
