@@ -18,12 +18,10 @@ import pp from '../../Components/Header/pp.png'
 export default class ProfilePage extends Component {
     api = new ApiService();
 
+    static REQUIRE_SESSION = true;
+
     constructor(props) {
         super(props);
-
-        if (this.props.user == null) {
-            window.location = "/";
-        }
 
         var tmp = this.props.user.clone();
         console.log(tmp);
