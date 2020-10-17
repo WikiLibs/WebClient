@@ -287,12 +287,7 @@ export default class ApiService {
                 }).then(response => {
                     this.userIconMap[uid] = this.hackMUIMotherShit(response.data);
                     resolve(this.userIconMap[uid]);
-                }).catch(err => {
-                    if (err.response.status === 404) //No icon uploaded for user id fine just return NULL instead
-                        resolve(null);
-                    else
-                        reject(err);
-                });
+                }).catch(err => reject(err));
             }
         });
     }
