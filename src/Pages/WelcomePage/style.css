@@ -68,11 +68,10 @@
 }
 
 .welcome-tiles-container {
-    padding: 64px;
+    padding: 16px 64px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding-bottom: 16px;
 }
 
 .welcome-tile {
@@ -93,4 +92,28 @@
     line-height: 15px;
     margin: 0 auto;
     text-align: center;
+}
+
+.welcome-icon-title {
+    width: 150px;
+    margin: auto;
+    background: #7B68EE;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    box-shadow: 0px 5px 10px #3E3E3E;
+}
+
+.welcome-icon-title > svg {
+    color: #ffffff;
+    height: auto;
+    width: auto;
+    margin: 16px;
+}
+
+.welcome-people > svg {
+    margin: 24px;
+}
+
+.welcome-tool > svg {
+    margin: 32px;
 }

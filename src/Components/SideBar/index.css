@@ -1,10 +1,28 @@
+html, body {
+    height: 100%;
+    font-family: sans-serif;
+}
+
 body {
     overflow-x: hidden;
     overflow-y: auto !important;
-    padding-right: 0 !important
+    padding-right: 0 !important;
+    margin: 0;
+    padding: 0;
 }
-  
+
+#root {
+    height: 100%;
+}
+
+.inner-root {
+    height: 100%;
+}
+
 #wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -36,6 +54,7 @@ body {
 }
 
 #page-content-wrapper {
+    flex: 1 0 auto;
     width: 100%;
     position: absolute;
 }

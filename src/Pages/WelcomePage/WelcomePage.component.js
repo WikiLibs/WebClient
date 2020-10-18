@@ -1,16 +1,14 @@
 import React from 'react';
-
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import PeopleIcon from '@material-ui/icons/People';
+import BuildIcon from '@material-ui/icons/Build';
+import NearMeIcon from '@material-ui/icons/NearMe';
+import SearchIcon from '@material-ui/icons/Search';
+import ChatIcon from '@material-ui/icons/Chat';
 import './style.css';
 
 import back from './imgs/back.jpg'
 import fullLogo from './imgs/WikiLibs_Logo.png'
-import at from './imgs/at.png'
-import people from './imgs/people.png'
-import tools from './imgs/tools.png'
-import mouse from './imgs/mouse.png'
-import search from './imgs/search.png'
-import think from './imgs/think.png'
-
 const renderBanner = () => {
     return (
         <div id="Head">
@@ -36,19 +34,26 @@ const renderWhatCard = () => {
             <span className="welcome-card-title">What is WikiLibs ?</span>
             <div className="welcome-tiles-container">
                 <div className="welcome-tile">
-                    <img src={at} className="welcome-logo-tile" alt=""></img>
+                    {/* <img src={at} className="welcome-logo-tile" alt=""></img> */}
+                    <div className="welcome-icon-title">
+                        <AlternateEmailIcon />
+                    </div>
                     <span className="welcome-description-tile">
                         WikiLibs regroups the documentation of coding libraries, with a unified presentation
                     </span>
                 </div>
                 <div className="welcome-tile">
-                    <img src={people} className="welcome-logo-tile" alt=""></img>
+                    <div className="welcome-icon-title welcome-people">
+                        <PeopleIcon />
+                    </div>
                     <span className="welcome-description-tile">
                         You can see and add custom example to any symbol, for quicker undestanding
                     </span>
                 </div>
                 <div className="welcome-tile">
-                    <img src={tools} className="welcome-logo-tile" alt=""></img>
+                    <div className="welcome-icon-title welcome-tool">
+                        <BuildIcon />
+                    </div>
                     <span className="welcome-description-tile">
                         You can also access ressources like tutorials or installation guides
                     </span>
@@ -64,19 +69,25 @@ const renderHowCard = () => {
             <span className="welcome-card-title">How to use ?</span>
             <div className="welcome-tiles-container">
                 <div className="welcome-tile">
-                    <img src={mouse} className="welcome-logo-tile" alt=""></img>
+                    <div className="welcome-icon-title welcome-tool">
+                        <NearMeIcon />
+                    </div>
                     <span className="welcome-description-tile">
                         Look for a library by clicking on the top-left drawer
                     </span>
                 </div>
                 <div className="welcome-tile">
-                    <img src={search} className="welcome-logo-tile" alt=""></img>
+                    <div className="welcome-icon-title welcome-people">
+                        <SearchIcon />
+                    </div>
                     <span className="welcome-description-tile">
                         Or just search directly for a library or symbol using the search bar
                     </span>
                 </div>
                 <div className="welcome-tile">
-                    <img src={think} className="welcome-logo-tile" alt=""></img>
+                    <div className="welcome-icon-title welcome-tool">
+                        <ChatIcon />
+                    </div>
                     <span className="welcome-description-tile">
                         You can also add your own examples on a symbol page !
                     </span>
