@@ -14,11 +14,13 @@ import Dialog from '@material-ui/core/Dialog';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import UserInfoPopup from '../../../Components/UserInfoPopup';
 
 export default class ManageExampleRequests extends Component {
 
     state = {
         objects: [],
+        viewData: false,
         hasMorePages: false,
         apiError: null,
         success: null,
@@ -84,6 +86,31 @@ export default class ManageExampleRequests extends Component {
         );
     }
 
+    renderDataModal() {
+        return (
+            <Dialog open={this.state.current ? true : false} onClose={() => this.setState({ current: null, viewData: false })}>
+                <DialogTitle>Confirmation</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Are you sure to {this.state.method} {this.state.current.message}?</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="primary" onClick={() => this.setState({ current: null, viewData: false })}>Close</Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+    getRequestType(type) {
+        switch (type) {
+            case 1:
+                return "POST"
+            case 2:
+                return "PATCH"
+            case 3:
+                return "DELETE"
+        }
+    }
+
     viewExample(obj) {
         window.open("/symbol?id=" + obj.data.symbolId, '_blank');
     }
@@ -92,7 +119,10 @@ export default class ManageExampleRequests extends Component {
         return (
             <>
                 <Typography variant="h5" component="h2">
-                    {obj.message}
+                    {obj.message} {obj.data && <>(by: <UserInfoPopup userId={obj.data.userId} />)</>}
+                </Typography>
+                <Typography color="textSecondary">
+                    Type of request: {this.getRequestType(obj.type)}
                 </Typography>
                 <Typography color="textSecondary">
                     Identifier: {obj.id}
