@@ -18,7 +18,7 @@ class PageBody extends Component {
         this.state = {
             navBar: false,
             userConnected: flag,
-            error: false
+            error: this.props.MatchedPage.REQUIRE_SESSION && !flag
         };
     }
 

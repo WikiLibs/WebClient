@@ -123,6 +123,8 @@
     top: 0px!important;
     width: 320px;
     border-radius: 0px 0px 4px 4px;
+    right: 0px!important;
+    left: auto!important;
 }
 
 .account-btn-menu > .MuiPaper-root > ul {
