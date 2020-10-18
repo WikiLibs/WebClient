@@ -43,17 +43,10 @@ export default class UserInfoPopup extends Component {
         }
     }
 
-    getUserNameDisplay() {
-        if (!this.props.userName)
-            return this.state.userData.userName;
-        else
-            return this.props.userName;
-    }
-
     render() {
         return (
             <>
-                <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.getUserNameDisplay()}</span>
+                <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.props.userName ? this.props.userName : this.state.userData.pseudo}</span>
                 <Menu
                     getContentAnchorEl={null}
                     anchorEl={document.getElementById("root")}
@@ -73,7 +66,7 @@ export default class UserInfoPopup extends Component {
                         <Col>
                             <h5>{this.state.userData.pseudo}</h5>
                             <h5>{this.state.userData.points} point(s)</h5>
-                            <h5>{this.state.userData.group}</h5>
+                            <h5>Group: {this.state.userData.group}</h5>
                             {
                                 !this.state.userData.private &&
                                     <h5>{this.state.userData.firstName} {this.state.userData.lastName}</h5>
@@ -82,6 +75,7 @@ export default class UserInfoPopup extends Component {
                                 !this.state.userData.private &&
                                     <h5>{this.state.userData.email}</h5>
                             }
+                            {this.state.userData.private && <h5 className="text-danger">This profile is private</h5>}
                             <MenuItem><span onClick={this.closeMenu}><CloseIcon /> Close</span></MenuItem>
                         </Col>
                     </Row>
