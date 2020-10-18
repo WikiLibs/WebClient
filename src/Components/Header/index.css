@@ -123,7 +123,6 @@
     top: 0px!important;
     width: 320px;
     border-radius: 0px 0px 4px 4px;
-    right: 0px!important;
     left: auto!important;
 }
 
@@ -131,6 +130,25 @@
    padding: 0px!important;
    margin-left: 16px;
    outline: none;
+}
+
+.account-btn-title-container {
+    display: flex;
+    outline: none;
+}
+
+.account-btn-title-container > span {
+    margin: auto;
+    padding: 3px;
+    border-radius: 4px;
+    background: #7B68EE;
+    margin-right: 0px;
+    cursor: pointer;
+}
+
+.account-btn-title-container > span > svg {
+    font-size: 33px;
+    color: #ffffff;
 }
 
 .account-btn-title {

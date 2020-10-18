@@ -5,7 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Link } from 'react-router-dom';
-// import { Row, Col } from 'react-bootstrap';
+import CloseIcon from '@material-ui/icons/Close';
 
 import pp from './pp.png'
 
@@ -66,7 +66,10 @@ export default class AccountButton extends Component {
                     open={this.state.showMenu}
                     onClose={this.closeMenu}
                 >
-                    <div className="account-btn-title">My account</div>
+                    <div className="account-btn-title-container">
+                        <div className="account-btn-title">My account</div>
+                        {/* <span onClick={this.closeMenu}><CloseIcon /></span> */}
+                    </div>
                     <div className="account-btn-infos">
                         <div className="account-btn-profile-picture">
                             <img alt="" src={this.state.profileImg} className="header-img-profile"></img>

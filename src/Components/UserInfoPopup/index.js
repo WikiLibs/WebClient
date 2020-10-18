@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { MenuItem, Menu } from '@material-ui/core';
+import {  Menu } from '@material-ui/core';
 import { ApiService } from '../../ApiService';
-import { Row, Col } from 'react-bootstrap';
 import CloseIcon from '@material-ui/icons/Close';
 
 import pp from '../Header/pp.png';
@@ -48,6 +47,7 @@ export default class UserInfoPopup extends Component {
             <>
                 <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.props.userName ? this.props.userName : this.state.userData.pseudo}</span>
                 <Menu
+                    className="user-info-popup-menu"
                     getContentAnchorEl={null}
                     anchorEl={document.getElementById("root")}
                     anchorOrigin={{
@@ -58,27 +58,29 @@ export default class UserInfoPopup extends Component {
                     open={this.state.showMenu}
                     onClose={this.closeMenu}
                 >
-                    <h3 className="text-center" style={{marginBottom: "15px"}}>User Information</h3>
-                    <Row>
-                        <Col>
+                    <div className="user-info-popup-title-container">
+                        <div className="user-info-popup-title">User Information</div>
+                        <span onClick={this.closeMenu}><CloseIcon /></span>
+                    </div>
+                    <div className="user-info-popup-infos">
+                        <div className="user-info-popup-profile-picture">
                             <img alt="" src={this.state.userIcon} className="header-img-profile"></img>
-                        </Col>
-                        <Col>
-                            <h5>{this.state.userData.pseudo}</h5>
-                            <h5>{this.state.userData.points} point(s)</h5>
-                            <h5>Group: {this.state.userData.group}</h5>
+                        </div>
+                        <div className="user-info-popup-profile-useful">
+                            <div className="user-info-popup-pseudo">{this.state.userData.pseudo}</div>
+                            <div className="user-info-popup-pts">{this.state.userData.points} point(s)</div>
+                            <div className="user-info-popup-group">Group: {this.state.userData.group}</div>
                             {
                                 !this.state.userData.private &&
-                                    <h5>{this.state.userData.firstName} {this.state.userData.lastName}</h5>
+                                    <div className="user-info-popup-private">{this.state.userData.firstName} {this.state.userData.lastName}</div>
                             }
                             {
                                 !this.state.userData.private &&
-                                    <h5>{this.state.userData.email}</h5>
+                                    <div className="user-info-popup-private">{this.state.userData.email}</div>
                             }
-                            {this.state.userData.private && <h5 className="text-danger">This profile is private</h5>}
-                            <MenuItem><span onClick={this.closeMenu}><CloseIcon /> Close</span></MenuItem>
-                        </Col>
-                    </Row>
+                            {this.state.userData.private && <div className="user-info-popup-danger">This profile is private</div>}
+                        </div>
+                    </div>
                 </Menu>
             </>
         )
