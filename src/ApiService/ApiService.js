@@ -264,9 +264,9 @@ export default class ApiService {
                 }).then(response => {
                     this.userMap[uid] = response;
                     resolve(response);
-                }).catch(err => reject(err));
+                }, err => reject(err));
             }
-        });
+        }).catch((err) => Promise.reject(err)); //HACK/JS Defect: JS refuses to skip then block in case a promise has failed like it should
     }
 
     hackMUIMotherShit(dataStr) { //MUI is a fucking framework unable to respect the HTTP standard, guess what let's hack it
@@ -289,7 +289,7 @@ export default class ApiService {
                     resolve(this.userIconMap[uid]);
                 }).catch(err => reject(err));
             }
-        });
+        }).catch((err) => Promise.reject(err)); //HACK/JS Defect: JS refuses to skip then block in case a promise has failed like it should
     }
 
     setIconMe(data) {

@@ -3,6 +3,7 @@ import { ApiService } from '../../ApiService';
 import Button from '@material-ui/core/Button';
 import { useQuery } from '../../util';
 import Dropdown from 'react-dropdown';
+import UserInfoPopup from '../../Components/UserInfoPopup';
 
 import './style.css'
 
@@ -153,7 +154,7 @@ export default class SearchPage extends Component {
                                         </div>
                                         <div className='search-page-separator' />
                                         <div className='search-page-result-bottom-container'>
-                                            <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: {symbol.userName})</div>
+                                            <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: <UserInfoPopup userName={symbol.userName} userId={symbol.userId} />)</div>
                                             <div>Viewed {symbol.views} times(s)</div>
                                         </div>
                                     </a>
