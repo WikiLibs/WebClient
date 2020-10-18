@@ -1,0 +1,7 @@
+.user-info-popup-link {
+    cursor: pointer;
+}
+
+.user-info-popup-link:hover {
+    text-decoration: underline;
+}

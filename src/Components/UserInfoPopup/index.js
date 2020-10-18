@@ -6,6 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import pp from '../Header/pp.png';
 
+import './style.css';
+
 export default class UserInfoPopup extends Component {
     api = new ApiService();
 
@@ -23,8 +25,6 @@ export default class UserInfoPopup extends Component {
         userIcon: pp
     };
 
-    _ref = React.createRef();
-
     openMenu = (ev) => {
         ev.stopPropagation();
         ev.preventDefault();
@@ -40,14 +40,13 @@ export default class UserInfoPopup extends Component {
     render() {
         return (
             <>
-                <span onClick={this.openMenu} ref={this._ref}>{this.props.userName}</span>
+                <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.props.userName}</span>
                 <Menu
-                    style={{top: "64px"}}
                     getContentAnchorEl={null}
-                    anchorEl={this._ref.current}
+                    anchorEl={document.getElementById("root")}
                     anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
+                        vertical: 'center',
+                        horizontal: 'center',
                     }}
                     keepMounted
                     open={this.state.showMenu}
