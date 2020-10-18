@@ -15,6 +15,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import UserInfoPopup from '../../../Components/UserInfoPopup';
+import createDOMPurify from 'dompurify'
+import Prism from 'prismjs';
+
+const DOMPurify = createDOMPurify(window)
 
 export default class ManageExampleRequests extends Component {
 
@@ -73,7 +77,7 @@ export default class ManageExampleRequests extends Component {
 
     renderConfirmModal() {
         return (
-            <Dialog open={this.state.current ? true : false} onClose={() => this.setState({ current: null })}>
+            <Dialog open={(this.state.current && !this.state.viewData) ? true : false} onClose={() => this.setState({ current: null })}>
                 <DialogTitle>Confirmation</DialogTitle>
                 <DialogContent>
                     <DialogContentText>Are you sure to {this.state.method} {this.state.current.message}?</DialogContentText>
@@ -88,10 +92,21 @@ export default class ManageExampleRequests extends Component {
 
     renderDataModal() {
         return (
-            <Dialog open={this.state.current ? true : false} onClose={() => this.setState({ current: null, viewData: false })}>
-                <DialogTitle>Confirmation</DialogTitle>
+            <Dialog open={this.state.viewData} onClose={() => this.setState({ current: null, viewData: false })}>
+                <DialogTitle>View example data</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Are you sure to {this.state.method} {this.state.current.message}?</DialogContentText>
+                    <Typography color="primary">Description: {this.state.current.data.description}</Typography>
+                    <Typography color="primary">Created: {new Date(this.state.current.data.creationDate).toLocaleDateString()}</Typography>
+                    <Typography color="primary">Last modifed: {new Date(this.state.current.data.lastModificationDate).toLocaleDateString()}</Typography>
+                    <Typography>Identifier: {this.state.current.data.id}</Typography>
+                    {
+                        this.state.current.data.code.map(elem => {
+                            const html = Prism.highlight(elem.data + " // " + elem.comment, Prism.languages.javascript, 'javascript');
+                            return (
+                                <span key={elem.data + elem.comment} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> 
+                            );
+                        })
+                    }
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="primary" onClick={() => this.setState({ current: null, viewData: false })}>Close</Button>
@@ -112,7 +127,7 @@ export default class ManageExampleRequests extends Component {
     }
 
     viewExample(obj) {
-        window.open("/symbol?id=" + obj.data.symbolId, '_blank');
+        this.setState({current: obj, viewData: true});
     }
 
     renderObject = (obj) => {
@@ -181,6 +196,7 @@ export default class ManageExampleRequests extends Component {
                 }
                 {this.renderFooter()}
                 {this.state.current && this.renderConfirmModal()}
+                {this.state.current && this.renderDataModal()}
                 {this.state.success && <Alert severity="success">{this.state.success}</Alert>}
                 {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
             </>
