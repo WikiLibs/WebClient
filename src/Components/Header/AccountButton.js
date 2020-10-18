@@ -5,7 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+// import { Row, Col } from 'react-bootstrap';
 
 import pp from './pp.png'
 
@@ -49,11 +49,13 @@ export default class AccountButton extends Component {
                     variant="contained"
                     color="primary"
                     onClick={() => this.setState({ showMenu: !this.state.showMenu })}
+                    className="header-profile-btn"
                 >
                     <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
                 </Button>
                 <Menu
-                    style={{top: "64px"}}
+                    className="account-btn-menu"
+                    style={{top: "70px"}}
                     getContentAnchorEl={null}
                     anchorEl={document.getElementById("root") /* Holy hack, thank you MUI you're a peace of shit */}
                     anchorOrigin={{
@@ -64,26 +66,28 @@ export default class AccountButton extends Component {
                     open={this.state.showMenu}
                     onClose={this.closeMenu}
                 >
-                    <h3 className="text-center" style={{marginBottom: "15px"}}>My Account</h3>
-                    <Row>
-                        <Col>
+                    <div className="account-btn-title">My account</div>
+                    <div className="account-btn-infos">
+                        <div className="account-btn-profile-picture">
                             <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
-                        </Col>
-                        <Col>
-                            <h5>{this.props.user.firstName} {this.props.user.lastName}</h5>
-                            <h5>{this.props.user.pseudo}</h5>
-                            <h5>{this.props.user.points} point(s)</h5>
-                            {
-                                this.props.user.hasPermission("user.me.update") &&
-                                    <MenuItem><Link onClick={this.closeMenu} to="/profile"><AccountCircleIcon /> Profile</Link></MenuItem>
-                            }
-                            {
-                                this.isAdmin() &&
-                                    <MenuItem><Link onClick={this.closeMenu} to="/admin"><SupervisorAccountIcon /> Administration</Link></MenuItem>
-                            }
-                            <MenuItem><Link onClick={() => this.api.disconnect()} to='/'><ExitToAppIcon /> Disconnect</Link></MenuItem>
-                        </Col>
-                    </Row>
+                        </div>
+                        <div className="account-btn-profile-useful">
+                            <div className="account-btn-name">{this.props.user.firstName} {this.props.user.lastName}</div>
+                            <div className="account-btn-email">{this.props.user.email}</div>
+                            <div className="account-btn-pts">{this.props.user.points > 1 ? this.props.user.points + " points" : this.props.user.points + " point"}</div>
+                            <div className="account-btn-links">
+                                {
+                                    this.props.user.hasPermission("user.me.update") &&
+                                        <Link onClick={this.closeMenu} to="/profile"><AccountCircleIcon /> Profile</Link>
+                                }
+                                {
+                                    this.isAdmin() &&
+                                        <Link onClick={this.closeMenu} to="/admin"><SupervisorAccountIcon /> Administration</Link>
+                                }
+                                <Link onClick={() => this.api.disconnect()} to='/'><ExitToAppIcon /> Disconnect</Link>
+                            </div>
+                        </div>
+                    </div>
                 </Menu>
             </>
         );
