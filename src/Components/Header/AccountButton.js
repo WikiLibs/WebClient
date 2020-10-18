@@ -1,4 +1,4 @@
-import { MenuItem, Menu, Button } from '@material-ui/core';
+import { Menu, Button } from '@material-ui/core';
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
