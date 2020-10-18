@@ -17,6 +17,7 @@ import CardActions from '@material-ui/core/CardActions';
 import UserInfoPopup from '../../../Components/UserInfoPopup';
 import createDOMPurify from 'dompurify'
 import Prism from 'prismjs';
+import { Link } from 'react-router-dom';
 
 const DOMPurify = createDOMPurify(window)
 
@@ -99,14 +100,17 @@ export default class ManageExampleRequests extends Component {
                     <Typography color="primary">Created: {new Date(this.state.current.data.creationDate).toLocaleDateString()}</Typography>
                     <Typography color="primary">Last modifed: {new Date(this.state.current.data.lastModificationDate).toLocaleDateString()}</Typography>
                     <Typography>Identifier: {this.state.current.data.id}</Typography>
+                    <p className="admin-code-block">
                     {
                         this.state.current.data.code.map(elem => {
-                            const html = Prism.highlight(elem.data + " // " + elem.comment, Prism.languages.javascript, 'javascript');
+                            const html = Prism.highlight(elem.data + (elem.comment ? " // " + elem.comment : ""), Prism.languages.javascript, 'javascript');
                             return (
                                 <span key={elem.data + elem.comment} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> 
                             );
                         })
                     }
+                    </p>
+                    <a target="_blank" href={"/symbol?id=" + this.state.current.data.symbolId}>View symbol</a>
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="primary" onClick={() => this.setState({ current: null, viewData: false })}>Close</Button>
