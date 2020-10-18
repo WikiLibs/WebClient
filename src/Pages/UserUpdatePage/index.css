@@ -2,7 +2,6 @@
     margin-left: 23%;
     margin-right: 30%;
     margin-top: 50px;
-    margin-bottom: -48px;
 }
 
 .update-profile-content-account > span {
@@ -109,8 +108,4 @@ div > .update-profile-submit-btn-acc:focus {
     width: 30px;
     height: 30px;
     float: right;
-}
-
-.update-profile-content-account > .profile-bottom-form {
-    margin-bottom: 200px;
 }

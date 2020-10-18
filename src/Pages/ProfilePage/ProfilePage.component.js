@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import Alert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -91,38 +90,38 @@ export default class ProfilePage extends Component {
                     <div className="profile-content-account">
                         <span>{this.state.pseudo}'s Account</span>
                         <div className="profile-top-form">
-                            
                             <div className="profile-form-account">
-                                <TextField
-                                    label="Pseudo"
-                                    className="profile-text-field-acc"
-                                    value={this.state.pseudo}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <TextField
-                                    label="Firstname"
-                                    className="profile-text-field-acc"
-                                    value={this.state.firstName}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <TextField
-                                    label="Lastname"
-                                    className="profile-text-field-acc"
-                                    value={this.state.lastName}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
+                                <div className="profile-value-container">
+                                    <div className="profile-value-label-form">Username</div>
+                                    <div className="profile-value-form">{this.state.pseudo}</div>
+                                </div>
+                                <hr />
+                                <div className="profile-value-container">
+                                    <div className="profile-value-label-form">Firstname</div>
+                                    <div className="profile-value-form">{this.state.firstName}</div>
+                                </div>
+                                <hr />
+                                <div className="profile-value-container">
+                                    <div className="profile-value-label-form">Lastname</div>
+                                    <div className="profile-value-form">{this.state.lastName}</div>
+                                </div>
+                                <hr />
+                                <div className="profile-value-container">
+                                    <div className="profile-value-label-form">Email</div>
+                                    <div className="profile-value-form">{this.state.email}</div>
+                                </div>
+                                <hr />
+                                <div className="profile-value-container">
+                                    <div className="profile-value-label-form">Profile message</div>
+                                    <div className="profile-value-form">{this.state.profileMsg}</div>
+                                </div>
+                                <hr />
+                                <Link to="/updateprofile">
+                                    <Button
+                                        variant="contained"
+                                        className="profile-submit-btn"
+                                    >MODIFY PROFILE</Button>
+                                </Link>
                             </div>
                             <div className="profile-float-right">
                                 <div>
@@ -144,48 +143,18 @@ export default class ProfilePage extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="profile-bottom-form">
-                            <div className="profile-form-account">
-                                <TextField
-                                    label="Email"
-                                    className="profile-text-field-acc"
-                                    value={this.state.email}
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <TextField
-                                    className="profile-text-field-acc"
-                                    placeholder="Profile message"
-                                    margin="normal"
-                                    label="Profile message"
-                                    variant="outlined"
-                                    value={this.state.profileMsg}
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <Link to="/updateprofile">
-                                    <Button
-                                        variant="contained"
-                                        className="profile-submit-btn"
-                                    >UPDATE PROFILE</Button>
-                                </Link>
-                            </div>
-                        </div>
                         <div className="profile-infos">
                             <div className="profile-left-info">
                                 <span>Joined : <Moment format="DD/MM/YYYY">{this.state.date}</Moment></span>
                                 <span>Group : {this.state.group}</span>
                                 <span className="profile-info-down">User ID: {this.state.id}</span>
                             </div>
-                            <div className="profile-vertical-separator"></div>
+                            {/* uncomment when usefull */}
+                            {/* <div className="profile-vertical-separator"></div>
                             <div className="profile-info-right">
                                 <span>User Points</span>
                                 <p id="userPoints">{this.state.points}</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
