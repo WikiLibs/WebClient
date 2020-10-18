@@ -139,16 +139,10 @@ export default class SearchPage extends Component {
                             </div>
                             {
                                 this.state.symbols[key].map((symbol) =>
-                                    <a className='search-page-result-container override-a' key={symbol.id} href={'/symbol?id=' + symbol.id}>
-                                        
-                                            <div className='search-page-result-title'>
-                                                {this.getDisplayPath(symbol)}
-                                            </div>
-                                        {/* <div className='search-page-card-title'>
-                                            <div className='search-page-preview-symbol'>
-                                                
-                                            </div>
-                                        </div> */}
+                                    <div className='search-page-result-container override-a' key={symbol.id}>
+                                        <a href={'/symbol?id=' + symbol.id} className='search-page-result-title'>
+                                            {this.getDisplayPath(symbol)}
+                                        </a>
                                         <div className='search-page-result-description'>
                                             Description unavailable yet.
                                         </div>
@@ -157,7 +151,7 @@ export default class SearchPage extends Component {
                                             <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: <UserInfoPopup userName={symbol.userName} userId={symbol.userId} />)</div>
                                             <div>Viewed {symbol.views} times(s)</div>
                                         </div>
-                                    </a>
+                                    </div>
                                 )
                             }
                         </div>
