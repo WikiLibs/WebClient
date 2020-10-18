@@ -14,7 +14,7 @@ export default class UserInfoPopup extends Component {
     state = {
         showMenu: false,
         userData: {
-            pseudo: this.props.userName,
+            pseudo: this.props.userName ? this.props.userName : "",
             points: 0,
             email: "",
             firstName: "",
@@ -37,10 +37,23 @@ export default class UserInfoPopup extends Component {
         this.setState({showMenu: false});
     }
 
+    componentDidMount() {
+        if (!this.props.userName) {
+            this.api.getUser(this.props.userId).then(response => this.setState({userData: response.data}));
+        }
+    }
+
+    getUserNameDisplay() {
+        if (!this.props.userName)
+            return this.state.userData.userName;
+        else
+            return this.props.userName;
+    }
+
     render() {
         return (
             <>
-                <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.props.userName}</span>
+                <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.getUserNameDisplay()}</span>
                 <Menu
                     getContentAnchorEl={null}
                     anchorEl={document.getElementById("root")}
