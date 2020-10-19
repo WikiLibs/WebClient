@@ -181,7 +181,7 @@
     padding-left: 10px
 }
 
-.account-btn-name {
+.account-btn-pseudo {
     font-family: 'Open Sans';
     font-weight: 600;
     font-size: 16px;
@@ -190,20 +190,12 @@
     text-overflow: ellipsis;
 }
 
-.account-btn-email {
+.account-btn-secondary {
     font-family: 'Open Sans';
     font-size: 14px;
     color: #3E3E3E;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.account-btn-pts {
-    font-family: 'Open Sans';
-    color: #3E3E3E;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
 }
 
 .account-btn-links {

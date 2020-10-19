@@ -16,6 +16,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import UserInfoPopup from '../../Components/UserInfoPopup';
 
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
@@ -394,7 +395,12 @@ export default class SymbolPage extends Component {
                         <hr className="symbol-page-spe-comment"></hr>
                         <div className="symbol-page-comment-warp">
                             <div className="symbol-page-comment-data">
-                                {elem.data} – <b>{this.state.mapIdPseudo[elem.userId]}</b> <span>{(new Date(elem.creationDate)).toLocaleDateString()}</span>
+                                <span>
+                                    {elem.data}
+                                </span>
+                                <div>
+                                    <b><UserInfoPopup userName={this.state.mapIdPseudo[elem.userId]} userId={elem.userId} /></b> - <span>{(new Date(elem.creationDate)).toLocaleDateString()}</span>
+                                </div>
                             </div>
                             {this.renderDeleteButton(elem.userId, elem.id)}
                         </div>
@@ -419,7 +425,7 @@ export default class SymbolPage extends Component {
                             }
                         </div>:
                         <div className="symbol-page-connect">
-                            <Link to='/userconnection'>You need to be connected to write a comment</Link>
+                            <Link to='/userconnection'>You should login to post comments</Link>
                         </div>
                     }
                 </form>
@@ -473,7 +479,7 @@ export default class SymbolPage extends Component {
                 )
                 footer.push(
                     <div className='symbol-page-example-sign' key={elem.id + elem.userId + elem.creationDate}>
-                        This example was published by <b>{this.state.mapIdPseudo[elem.userId]}</b> on the <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b>
+                        Last modification : <b><UserInfoPopup userName={this.state.mapIdPseudo[elem.userId]} userId={elem.userId} /></b> - <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b>
                     </div>
                 );
                 examples.push(
@@ -491,6 +497,7 @@ export default class SymbolPage extends Component {
                                     {footer}
                                 </div>
                             </div>
+                            <span className="symbol-page-comment-title">Comments</span>
                             {this.renderComment(elem.id)}
                         </div>
                         {(i !== this.state.listExample.length - 1) ? (<hr></hr>) : ('')}
@@ -567,7 +574,7 @@ export default class SymbolPage extends Component {
                     {this.props.user ? 
                         <Button className="symbol-page-send-example" variant="outline-success" type="submit">Send</Button>: 
                         <div className="symbol-page-connect">
-                            <Link to='/userconnection'>You need to be connected to write an example</Link>
+                            <Link to='/userconnection'>You should login to post examples</Link>
                         </div>
                     }
                 </form>
