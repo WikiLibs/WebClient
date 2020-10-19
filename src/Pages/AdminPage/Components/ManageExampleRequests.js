@@ -93,14 +93,16 @@ export default class ManageExampleRequests extends Component {
 
     renderDataModal() {
         return (
-            <Dialog open={this.state.viewData} onClose={() => this.setState({ current: null, viewData: false })}>
-                <DialogTitle>View example data</DialogTitle>
-                <DialogContent>
-                    <Typography color="primary">Description: {this.state.current.data.description}</Typography>
-                    <Typography color="primary">Created: {new Date(this.state.current.data.creationDate).toLocaleDateString()}</Typography>
-                    <Typography color="primary">Last modifed: {new Date(this.state.current.data.lastModificationDate).toLocaleDateString()}</Typography>
-                    <Typography>Identifier: {this.state.current.data.id}</Typography>
-                    <p className="admin-code-block">
+            <Dialog className="admin-page-example-dialog" open={this.state.viewData} onClose={() => this.setState({ current: null, viewData: false })}>
+                
+                <div className="admin-page-example-title-container">
+                        <div className="admin-page-example-title">View example data</div>
+                        <span onClick={() => this.setState({ current: null, viewData: false })}><CloseIcon /></span>
+                </div>
+                <div className="admin-page-example-content-title">Raw example preview</div>
+                <div className="admin-page-example-content">
+                    <div className="admin-page-example-description">{this.state.current.data.description}</div>
+                    <div className="admin-code-block">
                     {
                         this.state.current.data.code.map(elem => {
                             const html = Prism.highlight(elem.data + (elem.comment ? " // " + elem.comment : ""), Prism.languages.javascript, 'javascript');
@@ -109,12 +111,15 @@ export default class ManageExampleRequests extends Component {
                             );
                         })
                     }
-                    </p>
-                    <a target="_blank" href={"/symbol?id=" + this.state.current.data.symbolId}>View symbol</a>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="primary" onClick={() => this.setState({ current: null, viewData: false })}>Close</Button>
-                </DialogActions>
+                    </div>
+                    <div className="admin-page-example-edit">Last modification: <b><UserInfoPopup userId={this.state.current.data.userId} /></b> - <b>{new Date(this.state.current.data.creationDate).toLocaleDateString()}</b></div>
+                </div>
+                <div className="admin-page-example-useful">
+                    <div className="admin-page-example-info">Example ID: <span>{this.state.current.data.id}</span></div>
+                    <div className="admin-page-example-info">Creation date: <span>{new Date(this.state.current.data.creationDate).toLocaleDateString()}</span></div>
+                    <div className="admin-page-example-info">Pseudo: <span><UserInfoPopup userId={this.state.current.data.userId} /></span></div>
+                </div>
+                <a className="admin-page-example-link" target="_blank" rel="noopener noreferrer" href={"/symbol?id=" + this.state.current.data.symbolId}>View symbol page</a>
             </Dialog>
         );
     }
