@@ -17,7 +17,6 @@ import CardActions from '@material-ui/core/CardActions';
 import UserInfoPopup from '../../../Components/UserInfoPopup';
 import createDOMPurify from 'dompurify'
 import Prism from 'prismjs';
-import { Link } from 'react-router-dom';
 
 const DOMPurify = createDOMPurify(window)
 
@@ -132,6 +131,8 @@ export default class ManageExampleRequests extends Component {
                 return "PATCH"
             case 3:
                 return "DELETE"
+            default:
+                break;
         }
     }
 
