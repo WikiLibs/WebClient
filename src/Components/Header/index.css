@@ -208,6 +208,7 @@
     color: #7B68EE;
     font-style: italic;
     display: block;
+    width: fit-content;
 }
 
 .account-btn-links > a > svg {
