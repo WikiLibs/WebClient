@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Menu } from '@material-ui/core';
+import { Menu } from '@material-ui/core';
 import { ApiService } from '../../ApiService';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -7,8 +7,12 @@ import pp from '../Header/pp.png';
 
 import './style.css';
 
+window.handle = 0;
+
 export default class UserInfoPopup extends Component {
     api = new ApiService();
+
+    _handle = window.handle++;
 
     state = {
         showMenu: false,
@@ -23,6 +27,8 @@ export default class UserInfoPopup extends Component {
         },
         userIcon: pp
     };
+
+    _ref = React.createRef();
 
     openMenu = (ev) => {
         ev.stopPropagation();
@@ -40,19 +46,34 @@ export default class UserInfoPopup extends Component {
         if (!this.props.userName) {
             this.api.getUser(this.props.userId).then(response => this.setState({userData: response.data}));
         }
+        document.addEventListener("scroll", this.handleScroll);
+    }
+
+    handleScroll = () => {
+        if (!this.state.showMenu)
+            return;
+        this.forceUpdate();
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("scroll", this.handleScroll);
     }
 
     render() {
         return (
             <>
-                <span className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.props.userName ? this.props.userName : this.state.userData.pseudo}</span>
+                <span ref={this._ref} className={"user-info-popup-link " + this.props.className} onClick={this.openMenu}>{this.props.userName ? this.props.userName : this.state.userData.pseudo}</span>
                 <Menu
                     className="user-info-popup-menu"
                     getContentAnchorEl={null}
-                    anchorEl={document.getElementById("root")}
+                    anchorEl={this._ref.current}
                     anchorOrigin={{
-                        vertical: 'center',
-                        horizontal: 'center',
+                        vertical: 'bottom',
+                        horizontal: 'center'
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center'
                     }}
                     keepMounted
                     open={this.state.showMenu}
@@ -85,5 +106,4 @@ export default class UserInfoPopup extends Component {
             </>
         )
     }
-
 }
