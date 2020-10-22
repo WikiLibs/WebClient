@@ -1,6 +1,7 @@
 .symbol-page-container {
     max-width: 1036px;
     margin: 64px auto;
+    margin-bottom: 0px;
     font-family: 'Open Sans';
     font-size: 15px;
     padding: 0 32px;
@@ -101,7 +102,7 @@ span.comment {
 }
 
 .symbol-page-example-sign {
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
 }
 
@@ -131,12 +132,16 @@ span.comment {
     float: left;
 }
 
-.symbol-page-comment-data > span{
+.symbol-page-comment-data > div > span{
     font-style: italic;
     color:#91A6C2; 
 }
 
-.symbol-page-comment-data > b {
+.symbol-page-comment-data > div {
+    font-size: 13px;
+}
+
+.symbol-page-comment-data > div > b {
     color: #4C3DA8;
 }
 
@@ -351,4 +356,12 @@ span.comment {
 .symbol-page-type-symbol-title {
     font-size: 20px;
     margin-top: 8px;
+}
+
+.symbol-page-comment-title {
+    margin-top: 16px;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4C3DA8;
 }

@@ -5,7 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Link } from 'react-router-dom';
-// import { Row, Col } from 'react-bootstrap';
+// import CloseIcon from '@material-ui/icons/Close';
 
 import pp from './pp.png'
 
@@ -66,15 +66,19 @@ export default class AccountButton extends Component {
                     open={this.state.showMenu}
                     onClose={this.closeMenu}
                 >
-                    <div className="account-btn-title">My account</div>
+                    <div className="account-btn-title-container">
+                        <div className="account-btn-title">My account</div>
+                        {/* <span onClick={this.closeMenu}><CloseIcon /></span> */}
+                    </div>
                     <div className="account-btn-infos">
                         <div className="account-btn-profile-picture">
                             <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
                         </div>
                         <div className="account-btn-profile-useful">
-                            <div className="account-btn-name">{this.props.user.firstName} {this.props.user.lastName}</div>
-                            <div className="account-btn-email">{this.props.user.email}</div>
-                            <div className="account-btn-pts">{this.props.user.points > 1 ? this.props.user.points + " points" : this.props.user.points + " point"}</div>
+                            <div className="account-btn-pseudo">{this.props.user.pseudo}</div>
+                            <div className="account-btn-secondary">{this.props.user.firstName} {this.props.user.lastName}</div>
+                            <div className="account-btn-secondary">{this.props.user.email}</div>
+                            <div className="account-btn-secondary">{this.props.user.points > 1 ? this.props.user.points + " points" : this.props.user.points + " point"}</div>
                             <div className="account-btn-links">
                                 {
                                     this.props.user.hasPermission("user.me.update") &&

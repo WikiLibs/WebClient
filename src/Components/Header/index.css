@@ -123,7 +123,6 @@
     top: 0px!important;
     width: 320px;
     border-radius: 0px 0px 4px 4px;
-    right: 0px!important;
     left: auto!important;
 }
 
@@ -131,6 +130,25 @@
    padding: 0px!important;
    margin-left: 16px;
    outline: none;
+}
+
+.account-btn-title-container {
+    display: flex;
+    outline: none;
+}
+
+.account-btn-title-container > span {
+    margin: auto;
+    padding: 3px;
+    border-radius: 4px;
+    background: #7B68EE;
+    margin-right: 0px;
+    cursor: pointer;
+}
+
+.account-btn-title-container > span > svg {
+    font-size: 33px;
+    color: #ffffff;
 }
 
 .account-btn-title {
@@ -163,7 +181,7 @@
     padding-left: 10px
 }
 
-.account-btn-name {
+.account-btn-pseudo {
     font-family: 'Open Sans';
     font-weight: 600;
     font-size: 16px;
@@ -172,20 +190,12 @@
     text-overflow: ellipsis;
 }
 
-.account-btn-email {
+.account-btn-secondary {
     font-family: 'Open Sans';
     font-size: 14px;
     color: #3E3E3E;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.account-btn-pts {
-    font-family: 'Open Sans';
-    color: #3E3E3E;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
 }
 
 .account-btn-links {
@@ -198,6 +208,7 @@
     color: #7B68EE;
     font-style: italic;
     display: block;
+    width: fit-content;
 }
 
 .account-btn-links > a > svg {
