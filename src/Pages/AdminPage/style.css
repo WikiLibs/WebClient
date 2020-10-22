@@ -27,3 +27,100 @@
 #Bodqwfihjjy { /* The name here is mangled otherwise it fucks up other parts of the website */
     display: flex;
 }
+
+.admin-code-block {
+    background-color: #EBEBEB !important;
+    padding: 32px !important;
+    margin-top: 32px;
+    margin-bottom: 0 !important;
+    border-radius: 4px;
+    font-family: 'Open Sans';
+}
+
+.admin-page-example-dialog > .MuiDialog-container > .MuiDialog-paper {
+    width: 750px;
+    max-width: 750px;
+    outline: none;
+    padding: 20px 24px;
+}
+
+.admin-page-example-title-container {
+    display: flex;
+    outline: none;
+    margin-bottom: 32px;
+}
+
+.admin-page-example-title-container > span {
+    margin: auto;
+    padding: 3px;
+    border-radius: 4px;
+    background: #7B68EE;
+    margin-right: 0px;
+    cursor: pointer;
+}
+
+.admin-page-example-title-container > span > svg {
+    font-size: 33px;
+    color: #ffffff;
+}
+
+.admin-page-example-title {
+    outline: none;
+    font-size: 26px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #4C3DA8;
+}
+
+.admin-page-example-content {
+    border: #dedede 1px solid;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.admin-page-example-description {
+    font-family: 'Open Sans';
+    font-size: 15px;
+    color: #202020;
+}
+
+.admin-page-example-edit {
+    font-size: 10px;
+    font-style: italic;
+}
+
+.admin-page-example-edit > b {
+    color: #4C3DA8;
+}
+
+.admin-page-example-useful {
+    margin: 8px 0;
+}
+
+.admin-page-example-info {
+    font-family: 'Open Sans';
+    font-size: 16px;
+    font-weight: 600;
+    color: #202020;
+}
+
+.admin-page-example-info > span {
+    color: #3E3E3E;
+    font-weight: normal;
+}
+
+.admin-page-example-content-title {
+    font-size: 19px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #3E3E3E;
+}
+
+.admin-page-example-link {
+    width: fit-content;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    color: #7B68EE;
+    font-style: italic;
+    display: block;
+}

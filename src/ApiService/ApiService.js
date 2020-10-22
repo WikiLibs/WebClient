@@ -287,7 +287,11 @@ export default class ApiService {
                 }).then(response => {
                     this.userIconMap[uid] = this.hackMUIMotherShit(response.data);
                     resolve(this.userIconMap[uid]);
-                }).catch(err => reject(err));
+                }).catch(err => {
+                    if (err.response.status === 404)
+                        return;
+                    reject(err)
+                });
             }
         });
     }
