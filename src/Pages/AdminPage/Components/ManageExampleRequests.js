@@ -15,10 +15,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import UserInfoPopup from '../../../Components/UserInfoPopup';
-import createDOMPurify from 'dompurify'
-import Prism from 'prismjs';
-
-const DOMPurify = createDOMPurify(window)
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export default class ManageExampleRequests extends Component {
 
@@ -91,26 +89,22 @@ export default class ManageExampleRequests extends Component {
     }
 
     renderDataModal() {
+        let code = ""
+        this.state.current.data.code.forEach(elem => {
+            code += elem.data + (elem.comment ? " // " + elem.comment : "");
+        });
         return (
             <Dialog className="admin-page-example-dialog" open={this.state.viewData} onClose={() => this.setState({ current: null, viewData: false })}>
-                
                 <div className="admin-page-example-title-container">
                         <div className="admin-page-example-title">View example data</div>
                         <span onClick={() => this.setState({ current: null, viewData: false })}><CloseIcon /></span>
                 </div>
-                <div className="admin-page-example-content-title">Raw example preview</div>
+                <div className="admin-page-example-content-title">Example preview</div>
                 <div className="admin-page-example-content">
                     <div className="admin-page-example-description">{this.state.current.data.description}</div>
-                    <div className="admin-code-block">
-                    {
-                        this.state.current.data.code.map(elem => {
-                            const html = Prism.highlight(elem.data + (elem.comment ? " // " + elem.comment : ""), Prism.languages.javascript, 'javascript');
-                            return (
-                                <span key={elem.data + elem.comment} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> 
-                            );
-                        })
-                    }
-                    </div>
+                    <SyntaxHighlighter className="admin-code-block" language="javascript" style={docco}>
+                        {code}
+                    </SyntaxHighlighter>
                     <div className="admin-page-example-edit">Last modification: <b><UserInfoPopup userId={this.state.current.data.userId} /></b> - <b>{new Date(this.state.current.data.creationDate).toLocaleDateString()}</b></div>
                 </div>
                 <div className="admin-page-example-useful">

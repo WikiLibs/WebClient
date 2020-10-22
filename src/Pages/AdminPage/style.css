@@ -29,9 +29,10 @@
 }
 
 .admin-code-block {
-    background-color: #EBEBEB;
-    padding: 32px;
+    background-color: #EBEBEB !important;
+    padding: 32px !important;
     margin-top: 32px;
+    margin-bottom: 0 !important;
     border-radius: 4px;
     font-family: 'Open Sans';
 }
