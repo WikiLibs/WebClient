@@ -44,8 +44,8 @@ export default function App()
                 <Layout exact path='/admin' component={AdminPage} />
                 <Layout exact path='/download' component={DownloadPage} />
                 <Layout exact path='/forgotpassword' component={ForgotPasswordPage} />
-                <Layout exact path='/profile' component={ProfilePage} requireUser />
-                <Layout exact path='/updateprofile' component={UserUpdatePage} requireUser />
+                <Layout exact path='/profile' component={ProfilePage} />
+                <Layout exact path='/updateprofile' component={UserUpdatePage} />
                 <Layout exact path='/contact' component={ContactPage} />
                 <Layout exact path='/faq' component={FAQPage} />
                 <Layout exact path='/privacypolicy' component={PrivacyPolicy} />

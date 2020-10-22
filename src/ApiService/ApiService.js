@@ -3,6 +3,8 @@ import Axios from "axios";
 export default class ApiService {
     url = process.env.REACT_APP_API_URL;
     apiKey = process.env.REACT_APP_API_KEY;
+    userMap = {};
+    userIconMap = {};
 
     getDebug() {
         return (Axios.get(this.url + "/debug"));
@@ -251,11 +253,54 @@ export default class ApiService {
     }
 
     getUser(uid) {
-        return (Axios.get(this.url + "/user/" + uid, {
-            headers: {
-                'Authorization': this.apiKey
+        return new Promise((resolve, reject) => {
+            if (uid in this.userMap)
+                resolve(this.userMap[uid]);
+            else {
+                Axios.get(this.url + "/user/" + uid, {
+                    headers: {
+                        'Authorization': this.apiKey
+                    }
+                }).then(response => {
+                    this.userMap[uid] = response;
+                    resolve(response);
+                }, err => reject(err));
             }
-        }));
+        });
+    }
+
+    hackMUIMotherShit(dataStr) { //MUI is a fucking framework unable to respect the HTTP standard, guess what let's hack it
+        const typeId = dataStr.indexOf(",");
+        const val = dataStr.substring(typeId + 1);
+        return "data:image/jpeg;base64," + val;
+    }
+
+    getUserIcon(uid) {
+        return new Promise((resolve, reject) => {
+            if (uid in this.userIconMap)
+                resolve(this.userIconMap[uid]);
+            else {
+                Axios.get(this.url + "/user/" + uid + "/icon", {
+                    headers: {
+                        'Authorization': this.apiKey
+                    }
+                }).then(response => {
+                    this.userIconMap[uid] = this.hackMUIMotherShit(response.data);
+                    resolve(this.userIconMap[uid]);
+                }).catch(err => reject(err));
+            }
+        });
+    }
+
+    setIconMe(data) {
+        const f = new FormData();
+        f.append("File", data);
+        return Axios.put(this.url + "/user/me/icon", f, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken'),
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
     patchMe(state) {

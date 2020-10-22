@@ -1,0 +1,113 @@
+.user-info-popup-link {
+    cursor: pointer;
+}
+
+.user-info-popup-link:hover {
+    text-decoration: underline;
+}
+
+.user-info-popup-menu > .MuiPaper-root{
+    bottom: 0px!important;
+    width: 320px;
+    border-radius: 4px 4px 0px 0px;
+    height: 205px;
+}
+
+.user-info-popup-menu > .MuiPaper-root > ul {
+   padding: 0px!important;
+   margin-left: 16px;
+   margin-right: 16px;
+   outline: none;
+}
+
+.user-info-popup-title-container {
+    display: flex;
+    outline: none;
+}
+
+.user-info-popup-title-container > span {
+    margin: auto;
+    padding: 3px;
+    border-radius: 4px;
+    background: #7B68EE;
+    margin-right: 0px;
+    cursor: pointer;
+}
+
+.user-info-popup-title-container > span > svg {
+    font-size: 33px;
+    color: #ffffff;
+}
+
+.user-info-popup-title {
+    margin: 20px 0px 18px 0px;
+    outline: none;
+    font-size: 26px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #4C3DA8;
+}
+
+.user-info-popup-infos {
+    display: flex;
+    margin-bottom: 18px;
+}
+
+.user-info-popup-profile-picture {
+    display: flex;
+}
+
+.user-info-popup-profile-picture > img {
+    width: 88px;
+    margin: auto;
+    border: 4px solid #4C3DA8;
+    background-color: #4C3DA8;
+}
+
+.user-info-popup-profile-useful {
+    width: 100%;
+    padding-left: 10px
+}
+
+.user-info-popup-pseudo {
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 16px;
+    color: #3E3E3E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info-popup-pts {
+    font-family: 'Open Sans';
+    color: #3E3E3E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.user-info-popup-group {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #3E3E3E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info-popup-private {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #3E3E3E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+}
+
+.user-info-popup-danger {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #f44336;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+}

@@ -29,6 +29,8 @@ const ComponentMap = {
 
 export default class AdminPage extends Component {
 
+    static REQUIRE_SESSION = true;
+
     constructor(props) {
         super(props)
         this.state = {

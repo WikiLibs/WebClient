@@ -19,7 +19,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import './index.css'
 import 'react-dropdown/style.css';
 
-import pp from './pp.png'
+import AccountButton from './AccountButton';
 
 var suggestions = [];
 var suggestionsId = [];
@@ -216,22 +216,20 @@ class Header extends Component {
     ////////////////////////////////////////////////////////////////////////
 
     checkConnect() {
-        if (this.props.user) {
-            return (<div className="header-right">
-                {/* {this.props.user.hasPermission("user.me.update") && <Link style={{ color: "white", padding: "24px" }} to='/profile'>My Profile</Link>} */}
-                <Link to="/download">Download</Link>
-                <Link to='/admin'>Administration</Link>
-                <Link onClick={() => this.api.disconnect()} to='/'>Disconnect</Link>
-                {this.props.user.hasPermission("user.me.update") && <Link to="/profile"><img alt="" src={pp} className="header-img-profile"></img></Link>}
-            </div>);
-        } else {
-            return (<div className="header-right">
-                {/* <Link style={{ color: "white", padding: "24px" }} to='/usercreation'>Create account</Link> */}
-                <Link to='/userconnection'>LOGIN</Link>
-                <Link to="/faq">FAQ</Link>
-                <Link to="/contact">CONTACT</Link>
-            </div>);
-        }
+        return (
+            <>
+                {
+                    this.props.user ?
+                        <AccountButton user={this.props.user} />
+                    :
+                        <div className="header-right">
+                            <Link to='/userconnection'>LOGIN</Link>
+                            <Link to="/faq">FAQ</Link>
+                            <Link to="/contact">CONTACT</Link>
+                        </div>
+                }
+            </>
+        )
     }
 
     render() {

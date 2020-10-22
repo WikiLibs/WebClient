@@ -3,6 +3,7 @@ import { ApiService } from '../../ApiService';
 import Button from '@material-ui/core/Button';
 import { useQuery } from '../../util';
 import Dropdown from 'react-dropdown';
+import UserInfoPopup from '../../Components/UserInfoPopup';
 
 import './style.css'
 
@@ -138,25 +139,19 @@ export default class SearchPage extends Component {
                             </div>
                             {
                                 this.state.symbols[key].map((symbol) =>
-                                    <a className='search-page-result-container override-a' key={symbol.id} href={'/symbol?id=' + symbol.id}>
-                                        
-                                            <div className='search-page-result-title'>
-                                                {this.getDisplayPath(symbol)}
-                                            </div>
-                                        {/* <div className='search-page-card-title'>
-                                            <div className='search-page-preview-symbol'>
-                                                
-                                            </div>
-                                        </div> */}
+                                    <div className='search-page-result-container override-a' key={symbol.id}>
+                                        <a href={'/symbol?id=' + symbol.id} className='search-page-result-title'>
+                                            {this.getDisplayPath(symbol)}
+                                        </a>
                                         <div className='search-page-result-description'>
                                             Description unavailable yet.
                                         </div>
                                         <div className='search-page-separator' />
                                         <div className='search-page-result-bottom-container'>
-                                            <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: {symbol.userName})</div>
+                                            <div>Last update : {(new Date(symbol.lastModificationDate)).toLocaleDateString()} (by: <UserInfoPopup userName={symbol.userName} userId={symbol.userId} />)</div>
                                             <div>Viewed {symbol.views} times(s)</div>
                                         </div>
-                                    </a>
+                                    </div>
                                 )
                             }
                         </div>

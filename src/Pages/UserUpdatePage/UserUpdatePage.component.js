@@ -13,18 +13,16 @@ import CreateIcon from '@material-ui/icons/Create';
 
 import './index.css';
 
-/*import pp from '../../Components/Header/pp.png'*/
+import pp from '../../Components/Header/pp.png'
 
 
-export default class ProfilePage extends Component {
+export default class UserUpdatePage extends Component {
     api = new ApiService();
+
+    static REQUIRE_SESSION = true;
 
     constructor(props) {
         super(props);
-    
-        if (this.props.user == null) {
-            window.location = "/";
-        }
 
         this.state = {
             private: this.props.user.private,
@@ -36,7 +34,7 @@ export default class ProfilePage extends Component {
             date: this.props.user.registrationDate,
             points: this.props.user.points,
             group: this.props.user.group,
-            profileImg: null,
+            profileImg: pp,
             formErrors: {
                 private: "",
                 profileMsg: "",
@@ -47,6 +45,12 @@ export default class ProfilePage extends Component {
             apiError: null,
             success: null
         };
+    }
+
+    componentDidMount() {
+        this.api.getUserIcon(this.props.user.id).then(response => {
+            this.setState({profileImg: response});
+        });
     }
 
     handleSubmit = e => {
@@ -104,11 +108,12 @@ export default class ProfilePage extends Component {
     };
 
     handleCheckboxChange = event => {
-    this.setState({ private: event.target.checked })}
+        this.setState({ private: event.target.checked })
+    }
 
     profileImgUpdate = event => {
-        console.log(event.target.files[0]);
         this.setState({ profileImg: URL.createObjectURL(event.target.files[0])});
+        this.api.setIconMe(event.target.files[0]);
     }
 
     render() {
@@ -155,7 +160,7 @@ export default class ProfilePage extends Component {
                                     <Card className="update-profile-profile-card">
                                         <div>
                                             <input type="file" id="file" name="file" className="update-profile-inputfile" onChange={this.profileImgUpdate} />
-                                            <label for="file"><CreateIcon/></label>
+                                            <label htmlFor="file"><CreateIcon/></label>
                                         </div>
                                         <CardMedia
                                             className="profile-pic"
