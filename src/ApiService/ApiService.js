@@ -1,10 +1,11 @@
 import Axios from "axios";
 
+window.userMap = {};
+window.userIconMap = {};
+
 export default class ApiService {
     url = process.env.REACT_APP_API_URL;
     apiKey = process.env.REACT_APP_API_KEY;
-    userMap = {};
-    userIconMap = {};
 
     getDebug() {
         return (Axios.get(this.url + "/debug"));
@@ -254,15 +255,15 @@ export default class ApiService {
 
     getUser(uid) {
         return new Promise((resolve, reject) => {
-            if (uid in this.userMap)
-                resolve(this.userMap[uid]);
+            if (uid in window.userMap)
+                resolve(window.userMap[uid]);
             else {
                 Axios.get(this.url + "/user/" + uid, {
                     headers: {
                         'Authorization': this.apiKey
                     }
                 }).then(response => {
-                    this.userMap[uid] = response;
+                    window.userMap[uid] = response;
                     resolve(response);
                 }, err => reject(err));
             }
@@ -277,16 +278,16 @@ export default class ApiService {
 
     getUserIcon(uid) {
         return new Promise((resolve, reject) => {
-            if (uid in this.userIconMap)
-                resolve(this.userIconMap[uid]);
+            if (uid in window.userIconMap)
+                resolve(window.userIconMap[uid]);
             else {
                 Axios.get(this.url + "/user/" + uid + "/icon", {
                     headers: {
                         'Authorization': this.apiKey
                     }
                 }).then(response => {
-                    this.userIconMap[uid] = this.hackMUIMotherShit(response.data);
-                    resolve(this.userIconMap[uid]);
+                    window.userIconMap[uid] = this.hackMUIMotherShit(response.data);
+                    resolve(window.userIconMap[uid]);
                 }).catch(err => {
                     if (err.response.status === 404)
                         return;
@@ -297,6 +298,7 @@ export default class ApiService {
     }
 
     setIconMe(data) {
+        window.userIconMap = {};
         const f = new FormData();
         f.append("File", data);
         return Axios.put(this.url + "/user/me/icon", f, {
