@@ -7,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import CreateIcon from "@material-ui/icons/Create";
 import CardMedia from "@material-ui/core/CardMedia";
 import {Col, Row} from "react-bootstrap";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import pp from "../../../Components/Header/pp.png"
 import Dialog from "@material-ui/core/Dialog";
@@ -119,8 +120,9 @@ export default class ManageSymbolLangs extends Component {
     renderLoadingDialog() {
         return (
             <Dialog open={this.state.loading}>
-                <DialogContent>
-                    Uploading new image...
+                <DialogContent className="dialog-upload-img">
+                    <CircularProgress />
+                    <span>Uploading new image</span>
                 </DialogContent>
             </Dialog>
         );

@@ -109,3 +109,21 @@ div > .update-profile-submit-btn-acc:focus {
     height: 30px;
     float: right;
 }
+
+.dialog-upload-img {
+    padding: 24px 8!important;
+}
+
+.dialog-upload-img > div {
+    color: #4C3DA8!important;
+    margin: auto!important;
+    display: block!important;
+    margin-bottom: 16px!important;
+}
+
+.dialog-upload-img > span {
+    font-family: 'Open Sans';
+    text-align: center;
+    display: block;
+    color: #3E3E3E;
+}

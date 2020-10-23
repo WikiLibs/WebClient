@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CreateIcon from '@material-ui/icons/Create';
 
 import './index.css';
@@ -122,8 +123,9 @@ export default class UserUpdatePage extends Component {
     renderLoadingDialog() {
         return (
             <Dialog open={this.state.loading}>
-                <DialogContent>
-                    Uploading new image...
+                <DialogContent className="dialog-upload-img">
+                    <CircularProgress />
+                    <span>Uploading new image</span>
                 </DialogContent>
             </Dialog>
         );
