@@ -8,6 +8,18 @@ const checkForm = ({ formErrors }) => {
     return valid;
 };
 
+const LNG_TBL = {
+    "PYTHON3": "python",
+    "PYTHON2": "python"
+};
+
+//Give it the name NEVER ever the displayName
+function getSyntaxHighlighterLanguage(langName) {
+    if (langName in LNG_TBL)
+        return LNG_TBL[langName];
+    return langName.toLowerCase();
+}
+
 function useQuery() {
     let obj = new URLSearchParams(window.location.search);
     let res = {}
@@ -47,4 +59,4 @@ function setClipboardData(data) {
     document.body.removeChild(useless);
 }
 
-export { checkForm, useQuery, fixedParseInt, setClipboardData };
+export { checkForm, useQuery, fixedParseInt, setClipboardData, getSyntaxHighlighterLanguage };
