@@ -85,7 +85,7 @@ export default class UserInfoPopup extends Component {
                     </div>
                     <div className="user-info-popup-infos">
                         <div className="user-info-popup-profile-picture">
-                            <img alt="" src={this.state.userIcon} className="header-img-profile"></img>
+                            <img alt="" src={this.state.userIcon} className="header-img-profile" />
                         </div>
                         <div className="user-info-popup-profile-useful">
                             <div className="user-info-popup-pseudo">{this.state.userData.pseudo}</div>

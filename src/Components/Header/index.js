@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 
-import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -42,7 +41,7 @@ function sendToSymbolPage(query) {
     }
 }
 
-function onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
+function onSuggestionSelected(event, { suggestionIndex }) {
     let query = {url:"/symbol?id=", id: suggestionsId[suggestionIndex], path:""}
     sendToSymbolPage(query);
 }
@@ -302,9 +301,5 @@ class Header extends Component {
         this.api.getSymTypes().then(types => this.setState({ types: types }));
     }
 }
-
-Header.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(Header);

@@ -40,12 +40,10 @@ class PageBody extends Component {
                 }
                 user.hasPermission = (str) => {
                     if (user.permissionMap == null)
-                        return (false);
+                        return false;
                     if (user.permissionMap["*"])
-                        return (true);
-                    if (user.permissionMap[str])
-                        return (true);
-                    return (false);
+                        return true;
+                    return !!user.permissionMap[str];
                 }
                 user.clone = () => {
                     return ({
@@ -73,7 +71,7 @@ class PageBody extends Component {
             let jwt = jwt_decode(token);
             let curtm = new Date().getTime() / 1000;
             if (jwt.exp - curtm <= 60) { // if the token remaining life time is less or equal to 60
-                this.api.refresh().catch(err => {
+                this.api.refresh().catch(() => {
                     localStorage.setItem('userToken', null);
                     this.setState({ user: null, error: true });
                 });
@@ -137,6 +135,6 @@ function Layout({ component: MatchedPage, ...rest }) {
             return (<PageBody MatchedPage={MatchedPage} {...matchProps} />);
         }} />
     );
-};
+}
 
 export default withRouter(Layout);
