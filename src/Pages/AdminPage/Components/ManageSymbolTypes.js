@@ -3,6 +3,7 @@ import { AdminService, ApiService } from '../../../ApiService';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import ManageCRUD from './ManageCRUD';
+import {Row} from "react-bootstrap";
 
 export default class ManageSymbolTypes extends Component {
 
@@ -41,18 +42,22 @@ export default class ManageSymbolTypes extends Component {
     renderObjectModal = (obj) => {
         return (
             <>
-                <TextField
-                    label="Identifier (string)"
-                    placeholder="Identifier (string)"
-                    value={obj.name}
-                    onChange={this.handleNameChange}
-                />
-                <TextField
-                    label="Display name"
-                    placeholder="Display name"
-                    value={obj.displayName}
-                    onChange={this.handleDisplayNameChange}
-                />
+                <Row style={{marginBottom: "32px"}}>
+                    <TextField
+                        label="Identifier (string)"
+                        placeholder="Identifier (string)"
+                        value={obj.name}
+                        onChange={this.handleNameChange}
+                    />
+                </Row>
+                <Row style={{marginBottom: "32px"}}>
+                    <TextField
+                        label="Display name"
+                        placeholder="Display name"
+                        value={obj.displayName}
+                        onChange={this.handleDisplayNameChange}
+                    />
+                </Row>
             </>
         );
     }
