@@ -3,11 +3,18 @@ import { AdminService, ApiService } from '../../../ApiService';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import ManageCRUD from './ManageCRUD';
+import Card from "@material-ui/core/Card";
+import CreateIcon from "@material-ui/icons/Create";
+import CardMedia from "@material-ui/core/CardMedia";
+import {Col, Row} from "react-bootstrap";
+
+import pp from "../../../Components/Header/pp.png"
 
 export default class ManageSymbolLangs extends Component {
 
     state = {
-        editing: null
+        editing: null,
+        langPictures: {}
     };
 
     admin = new AdminService();
@@ -41,18 +48,39 @@ export default class ManageSymbolLangs extends Component {
     renderObjectModal = (obj) => {
         return (
             <>
-                <TextField
-                    label="Identifier (string)"
-                    placeholder="Identifier (string)"
-                    value={obj.name}
-                    onChange={this.handleNameChange}
-                />
-                <TextField
-                    label="Display name"
-                    placeholder="Display name"
-                    value={obj.displayName}
-                    onChange={this.handleDisplayNameChange}
-                />
+                <Row>
+                    <Col>
+                        <Card style={{marginBottom: "32px"}} className="update-profile-profile-card">
+                            <div>
+                                <input type="file" id="file" name="file" className="update-profile-inputfile" onChange={this.profileImgUpdate} />
+                                <label htmlFor="file"><CreateIcon/></label>
+                            </div>
+                            <CardMedia
+                                className="profile-pic"
+                                image={(obj.id in this.state.langPictures) ? this.state.langPictures[obj.id] : pp}
+                                title=""
+                            />
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Row style={{marginBottom: "32px"}}>
+                            <TextField
+                                label="Identifier (string)"
+                                placeholder="Identifier (string)"
+                                value={obj.name}
+                                onChange={this.handleNameChange}
+                            />
+                        </Row>
+                        <Row style={{marginBottom: "32px"}}>
+                            <TextField
+                                label="Display name"
+                                placeholder="Display name"
+                                value={obj.displayName}
+                                onChange={this.handleDisplayNameChange}
+                            />
+                        </Row>
+                    </Col>
+                </Row>
             </>
         );
     }
