@@ -88,7 +88,7 @@ export default class UserInfoPopup extends Component {
                             <img alt="" src={this.state.userIcon} className="header-img-profile" />
                         </div>
                         <div className="user-info-popup-profile-useful">
-                            <div className="user-info-popup-pseudo">{this.state.userData.pseudo}</div>
+                            <div className="user-info-popup-pseudo">{this.state.userData.pseudo} {this.state.userData.isBot ? "(Bot)" : ""}</div>
                             <div className="user-info-popup-pts">{this.state.userData.points} point(s)</div>
                             <div className="user-info-popup-group">Group: {this.state.userData.group}</div>
                             {
