@@ -2,6 +2,7 @@ import Axios from "axios";
 
 window.userMap = {};
 window.userIconMap = {};
+window.langIconMap = {};
 
 export default class ApiService {
     url = process.env.REACT_APP_API_URL;
@@ -274,6 +275,27 @@ export default class ApiService {
         const typeId = dataStr.indexOf(",");
         const val = dataStr.substring(typeId + 1);
         return "data:image/jpeg;base64," + val;
+    }
+
+    getLangIcon(uid) {
+        return new Promise((resolve, reject) => {
+            if (uid in window.langIconMap)
+                resolve(window.langIconMap[uid]);
+            else {
+                Axios.get(this.url + "/symbol/lang/" + uid + "/icon", {
+                    headers: {
+                        'Authorization': this.apiKey
+                    }
+                }).then(response => {
+                    window.langIconMap[uid] = this.hackMUIMotherShit(response.data);
+                    resolve(window.langIconMap[uid]);
+                }).catch(err => {
+                    if (err.response.status === 404)
+                        return;
+                    reject(err)
+                });
+            }
+        });
     }
 
     getUserIcon(uid) {

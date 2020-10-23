@@ -148,6 +148,18 @@ export default class AdminService {
         }));
     }
 
+    setIconLang(uid, data) {
+        window.langIconMap = {};
+        const f = new FormData();
+        f.append("File", data);
+        return Axios.put(this.url + "/symbol/lang/" + uid + "/icon", f, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken'),
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    }
+
     getExampleRequests(pageNum) {
         return (Axios.get(this.url + "/example/request?PageOptions.Page=" + pageNum + "&PageOptions.Count=100", {
             headers: {

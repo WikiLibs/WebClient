@@ -9,11 +9,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 import {Col, Row} from "react-bootstrap";
 
 import pp from "../../../Components/Header/pp.png"
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 
 export default class ManageSymbolLangs extends Component {
 
     state = {
         editing: null,
+        loading: false,
         langPictures: {}
     };
 
@@ -33,6 +36,11 @@ export default class ManageSymbolLangs extends Component {
     }
 
     openObjectModal = (obj) => {
+        this.api.getLangIcon(obj.id).then(response => {
+            const pics = this.state.langPictures;
+            pics[obj.id] = response;
+            this.setState({langPictures: pics});
+        });
         if (obj) {
             this.setState({ editing: obj });
         } else {
@@ -45,6 +53,13 @@ export default class ManageSymbolLangs extends Component {
         }
     }
 
+    updateIcon(ev, id) {
+        const pics = this.state.langPictures;
+        pics[id] = URL.createObjectURL(ev.target.files[0]);
+        this.setState({ loading: true, langPictures: pics });
+        this.admin.setIconLang(id, ev.target.files[0]).then(() => this.setState({ loading: false }));
+    }
+
     renderObjectModal = (obj) => {
         return (
             <>
@@ -52,7 +67,7 @@ export default class ManageSymbolLangs extends Component {
                     <Col>
                         <Card style={{marginBottom: "32px"}} className="update-profile-profile-card">
                             <div>
-                                <input type="file" id="file" name="file" className="update-profile-inputfile" onChange={this.profileImgUpdate} />
+                                <input type="file" id="file" name="file" className="update-profile-inputfile" onChange={(ev) => this.updateIcon(ev, obj.id)} />
                                 <label htmlFor="file"><CreateIcon/></label>
                             </div>
                             <CardMedia
@@ -101,6 +116,16 @@ export default class ManageSymbolLangs extends Component {
         );
     }
 
+    renderLoadingDialog() {
+        return (
+            <Dialog open={this.state.loading}>
+                <DialogContent>
+                    Uploading new image...
+                </DialogContent>
+            </Dialog>
+        );
+    }
+
     render() {
         return (
             <>
@@ -124,6 +149,7 @@ export default class ManageSymbolLangs extends Component {
                     //Global
                     managerName="Manage Programming Languages"
                 />
+                {this.renderLoadingDialog()}
             </>
         );
     }
