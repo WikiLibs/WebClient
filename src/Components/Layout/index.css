@@ -1,0 +1,37 @@
+.layout-state-container {
+    width: fit-content;
+    margin: 100px auto;
+}
+
+.layout-state-icon {
+    color: #4C3DA8!important;
+    width: 100px!important;
+    height: 100px!important;
+    margin: auto!important;
+    display: block!important;
+    margin-bottom: 64px!important;
+}
+
+.layout-state-title {
+    font-size: 26px;
+    font-family: 'Open Sans';
+    color: #4C3DA8;
+    font-weight: 600;
+    text-align: center;
+}
+
+.layout-state-secondary > span {
+    text-align: center;
+    display: block;
+    color: #9E9E9E;
+    font-style: italic;
+}
+
+.layout-state-choice > a {
+    display: block;
+    font-size: 15px;
+    font-family: 'Open Sans';
+    color: #7B68EE;
+    font-style: italic;
+    padding-left: 8px;
+}
