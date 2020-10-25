@@ -302,7 +302,6 @@ export default class SymbolPage extends Component {
                         <div key={index}>
                             {parameter.prototype === 'return'
                                 ? <div>
-                                    {console.log(parameter)}
                                     <div className='symbol-page-parameter-name'>
                                     {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name">{parameter.prototype}</Link> : <div className='symbol-page-parameter-name'>{parameter.prototype}</div>}
                                     </div>
@@ -379,9 +378,8 @@ export default class SymbolPage extends Component {
         var dict = this.getSymbolArray(symbols);
         for (const elem in dict) {
             if (dict.hasOwnProperty(elem)) {
+                let innerHtml = [];
                 const symbolsCluster = dict[elem];
-                console.log(symbolsCluster)
-                var innerHtml = []
                 innerHtml.push(
                     <div key={elem} className='symbol-page-title'>{elem.charAt(0).toUpperCase() + elem.slice(1)}</div>
                 );
@@ -442,7 +440,6 @@ export default class SymbolPage extends Component {
         let list = [];
         let comments = [];
         this.state.mapComments[id].data.forEach(elem => {
-            console.log(this.state.mapIdPseudo[elem.userId]);
             if (elem.data !== "" && this.state.mapIdPseudo[elem.userId] !== undefined) {
                 comments.push(
                     <div key={elem.id} id={"comment-" + elem.id}>
