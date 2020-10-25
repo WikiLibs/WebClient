@@ -6,6 +6,11 @@ import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import SideBar from '../../Components/SideBar';
 import jwt_decode from 'jwt-decode';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
+import { Link } from 'react-router-dom';
+
+import './index.css'
 
 class PageBody extends Component {
     api = new ApiService();
@@ -90,13 +95,27 @@ class PageBody extends Component {
                 if (this.state.error) {
                     return (
                         <div id="page-content-wrapper">
-                            <h1>You need to be connected in order to see this page!</h1>
+                            <div className="layout-state-container">
+                                <ReportProblemOutlinedIcon className="layout-state-icon" />
+                                <div className="layout-state-title">You should login to access this page</div>
+                                <div className="layout-state-choice">
+                                    <Link to="/userconnection">You want to login ?</Link>
+                                    <Link to="/usercreation">You want to create an account ?</Link>
+                                </div>
+                            </div>
                         </div>
                     )
                 }
                 return (
                     <div id="page-content-wrapper">
-                        <h1>Loading...</h1>
+                        <div className="layout-state-container">
+                            <CircularProgress className="layout-state-icon" />
+                            <div className="layout-state-title">Loading</div>
+                            <div className="layout-state-secondary">
+                                <span>This loading window will be removed after a few seconds</span>
+                                <span>Please wait</span>
+                            </div>
+                        </div>
                     </div>
                 );
             } else {
