@@ -353,6 +353,60 @@ export default class SymbolPage extends Component {
         )
     }
 
+    getSymbolArray(symbols) {
+        var dict = {};
+        symbols.forEach(e => {
+            if (dict[e.type] === undefined)
+                dict[e.type] = [];
+            dict[e.type].push(e);
+        });
+        return dict;
+    }
+
+    getMembersName(fullName) {
+        var arr = fullName.split('/');
+        if (arr.length <= 0)
+            return (null);
+        return (arr[arr.length - 1]);
+    }
+
+    renderMember = (symbols) => {
+        if (symbols.length === 0)
+            return null
+        var html = [];
+        var dict = this.getSymbolArray(symbols);
+        for (const elem in dict) {
+            if (dict.hasOwnProperty(elem)) {
+                const symbolsCluster = dict[elem];
+                console.log(symbolsCluster)
+                var innerHtml = []
+                innerHtml.push(
+                    <div key={elem} className='symbol-page-title'>{elem.charAt(0).toUpperCase() + elem.slice(1)}</div>
+                );
+                symbolsCluster.forEach(e => {
+                    innerHtml.push(
+                        <div key={e.id} className="symbol-page-parameters-container">
+                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name">{this.getMembersName(e.path)}</Link>
+                            {/* <div className="symbol-page-code-container">
+                                <div dangerouslySetInnerHTML={{ __html: protoToHtml(e.firstPrototype) }} />
+                            </div> */}
+                        </div>
+                    )
+                });
+                html.push(
+                    <div key={dict[elem]} className="symbol-page-section-container">
+                        {innerHtml}
+                    </div>
+                );
+            }
+        }
+        return (
+            <div>
+                {html}
+            </div>
+        )
+    }
+
     handleDelete = (event) => {
         event.preventDefault();
         this.api.destroyComment(this.state.commentId).then(response => { 
@@ -392,7 +446,7 @@ export default class SymbolPage extends Component {
             if (elem.data !== "" && this.state.mapIdPseudo[elem.userId] !== undefined) {
                 comments.push(
                     <div key={elem.id} id={"comment-" + elem.id}>
-                        <hr className="symbol-page-spe-comment"></hr>
+                        <hr className="symbol-page-spe-comment" />
                         <div className="symbol-page-comment-warp">
                             <div className="symbol-page-comment-data">
                                 <span>
@@ -414,7 +468,7 @@ export default class SymbolPage extends Component {
         return (
             <div className="symbol-page-comment-holder">
                 {list}
-                <hr className="symbol-page-spe-comment"></hr>
+                <hr className="symbol-page-spe-comment" />
                 <form onSubmit={this.handleSubmitComment}>
                     {this.props.user ? 
                         <div className="symbol-page-new-comment">
@@ -500,7 +554,7 @@ export default class SymbolPage extends Component {
                             <span className="symbol-page-comment-title">Comments</span>
                             {this.renderComment(elem.id)}
                         </div>
-                        {(i !== this.state.listExample.length - 1) ? (<hr></hr>) : ('')}
+                        {(i !== this.state.listExample.length - 1) ? (<hr />) : ('')}
                     </div>
                 );
                 // active = "";
@@ -636,12 +690,13 @@ export default class SymbolPage extends Component {
                                 {this.renderExceptions(prototype)}
                                 {
                                     (index !== (this.state.prototypes.length - 1))
-                                    ? <hr></hr>
+                                    ? <hr />
                                     : null
                                 }
                             </div>
                         )
                     }
+                    {this.renderMember(this.state.symbols)}
                 </div>
                 <div>
                     {this.renderUploadExample()}
