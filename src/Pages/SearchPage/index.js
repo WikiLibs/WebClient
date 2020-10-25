@@ -124,7 +124,7 @@ export default class SearchPage extends Component {
 
     getDisplayPath(sym) {
         let upPath = sym.path.substr(sym.path.indexOf('/') + 1);
-        return (sym.langName + '/' + upPath);
+        return (sym.lang.displayName + '/' + upPath);
     }
 
     renderSymbolList = () => {

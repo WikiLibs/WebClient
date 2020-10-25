@@ -31,13 +31,23 @@ export default class AccountButton extends Component {
     isAdmin() {
         for (const v of AdminTestPerms) {
             if (this.props.user.hasPermission(v))
-                return (true);
+                return true;
         }
-        return (false);
+        return false;
+    }
+
+    loadIcon() {
+        this.api.getUserIcon(this.props.user.id).then(response => this.setState({profileImg: response}))
+    }
+
+    openMenu = () => {
+        if (!this.state.showMenu)
+            this.loadIcon();
+        this.setState({ showMenu: !this.state.showMenu });
     }
 
     componentDidMount() {
-        this.api.getUserIcon(this.props.user.id).then(response => this.setState({profileImg: response}))
+        this.loadIcon();
     }
 
     render() {
@@ -48,10 +58,10 @@ export default class AccountButton extends Component {
                     aria-haspopup="true"
                     variant="contained"
                     color="primary"
-                    onClick={() => this.setState({ showMenu: !this.state.showMenu })}
+                    onClick={this.openMenu}
                     className="header-profile-btn"
                 >
-                    <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
+                    <img alt="" src={this.state.profileImg} className="header-img-profile" />
                 </Button>
                 <Menu
                     className="account-btn-menu"
@@ -68,11 +78,10 @@ export default class AccountButton extends Component {
                 >
                     <div className="account-btn-title-container">
                         <div className="account-btn-title">My account</div>
-                        {/* <span onClick={this.closeMenu}><CloseIcon /></span> */}
                     </div>
                     <div className="account-btn-infos">
                         <div className="account-btn-profile-picture">
-                            <img alt="" src={this.state.profileImg} className="header-img-profile"></img>
+                            <img alt="" src={this.state.profileImg} className="header-img-profile" />
                         </div>
                         <div className="account-btn-profile-useful">
                             <div className="account-btn-pseudo">{this.props.user.pseudo}</div>

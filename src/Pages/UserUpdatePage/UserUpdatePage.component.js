@@ -9,11 +9,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { checkForm } from '../../util';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CreateIcon from '@material-ui/icons/Create';
 
 import './index.css';
 
 import pp from '../../Components/Header/pp.png'
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 
 
 export default class UserUpdatePage extends Component {
@@ -43,7 +46,8 @@ export default class UserUpdatePage extends Component {
                 newPassword: ""
             },
             apiError: null,
-            success: null
+            success: null,
+            loading: false
         };
     }
 
@@ -112,8 +116,19 @@ export default class UserUpdatePage extends Component {
     }
 
     profileImgUpdate = event => {
-        this.setState({ profileImg: URL.createObjectURL(event.target.files[0])});
-        this.api.setIconMe(event.target.files[0]);
+        this.setState({ loading: true, profileImg: URL.createObjectURL(event.target.files[0])});
+        this.api.setIconMe(event.target.files[0]).then(() => this.setState({loading: false}));
+    }
+
+    renderLoadingDialog() {
+        return (
+            <Dialog open={this.state.loading}>
+                <DialogContent className="dialog-upload-img">
+                    <CircularProgress />
+                    <span>Uploading new image</span>
+                </DialogContent>
+            </Dialog>
+        );
     }
 
     render() {
@@ -208,7 +223,7 @@ export default class UserUpdatePage extends Component {
                         
                     </div>
                 </div>
-                
+                {this.renderLoadingDialog()}
             </div>
         );
     }
