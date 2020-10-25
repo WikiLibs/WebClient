@@ -259,7 +259,7 @@ export default class SymbolPage extends Component {
     }
 
     renderParameters = (prototype) => {
-        if ((!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0) || prototype.parameters[0].prototype === 'return')
+        if ((!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0) || (prototype.parameters[0].prototype === 'return' && prototype.parameters.length === 1))
             return null
         return (
             <div className='symbol-page-section-container'>
@@ -273,7 +273,7 @@ export default class SymbolPage extends Component {
                                 {parameter.prototype !== 'return'
                                     ? <div>
                                         <div className='symbol-page-parameter-name'>
-                                            {parameter.prototype}
+                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name">{parameter.prototype}</Link> : <div className='symbol-page-parameter-name'>{parameter.prototype}</div>}
                                         </div>
                                         <div className='symbol-page-parameter-description'>
                                             {parameter.description}
@@ -302,8 +302,9 @@ export default class SymbolPage extends Component {
                         <div key={index}>
                             {parameter.prototype === 'return'
                                 ? <div>
+                                    {console.log(parameter)}
                                     <div className='symbol-page-parameter-name'>
-                                        {parameter.prototype}
+                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name">{parameter.prototype}</Link> : <div className='symbol-page-parameter-name'>{parameter.prototype}</div>}
                                     </div>
                                     <div className='symbol-page-parameter-description'>
                                         {parameter.description}
@@ -331,8 +332,9 @@ export default class SymbolPage extends Component {
                         <div key={index * 2} className="symbol-page-inner-tooltip">
                             <div>
                                 <Link to={'/symbol?id=' + exception.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + exception.ref.id)} className='symbol-page-parameter-name'>
-                                    {exception.ref.path}
+                                    {this.getPathDisplayName(exception.ref.path)}
                                 </Link>
+                                {/* exception.ref.firstPrototype for preview */}
                                 <div className='symbol-page-parameter-description'>
                                     {exception.description}
                                 </div>
@@ -363,7 +365,7 @@ export default class SymbolPage extends Component {
         return dict;
     }
 
-    getMembersName(fullName) {
+    getPathDisplayName(fullName) {
         var arr = fullName.split('/');
         if (arr.length <= 0)
             return (null);
@@ -386,10 +388,8 @@ export default class SymbolPage extends Component {
                 symbolsCluster.forEach(e => {
                     innerHtml.push(
                         <div key={e.id} className="symbol-page-parameters-container">
-                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name">{this.getMembersName(e.path)}</Link>
-                            {/* <div className="symbol-page-code-container">
-                                <div dangerouslySetInnerHTML={{ __html: protoToHtml(e.firstPrototype) }} />
-                            </div> */}
+                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name">{this.getPathDisplayName(e.path)}</Link>
+                            {/* e.firstPrototype for preview */}
                         </div>
                     )
                 });
