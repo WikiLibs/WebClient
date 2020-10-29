@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { useQuery } from '../../util';
 import Dropdown from 'react-dropdown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
+import { Link } from 'react-router-dom';
 
 import './style.css'
 
@@ -127,6 +128,25 @@ export default class SearchPage extends Component {
         return (sym.lang.displayName + '/' + upPath);
     }
 
+    getName = (sym) => {
+        var str = sym.path;
+        if (!str)
+            return (null);
+        var arr = str.split('/');
+        if (arr.length <= 0)
+            return (null);
+        return (arr[arr.length - 1]);
+    }
+
+    getLibName = (sym) => {
+        if (!sym)
+            return (null);
+        var arr = sym.split('/');
+        if (arr.length <= 0)
+            return (null);
+        return (arr[arr.length - 1]);
+    }
+
     renderSymbolList = () => {
         return (
             <div>
@@ -141,10 +161,11 @@ export default class SearchPage extends Component {
                                 this.state.symbols[key].map((symbol) =>
                                     <div className='search-page-result-container override-a' key={symbol.id}>
                                         <a href={'/symbol?id=' + symbol.id} className='search-page-result-title'>
-                                            {this.getDisplayPath(symbol)}
+                                            {this.getName(symbol)}
                                         </a>
+                                        <Link className='search-page-result-linked-lib' to={"/libraries?name=" + symbol.lib.name + "&lib=" + symbol.lib.id}>{this.getLibName(symbol.lib.name)}</Link>
                                         <div className='search-page-result-description'>
-                                            Description unavailable yet.
+                                            {this.getDisplayPath(symbol)}
                                         </div>
                                         <div className='search-page-separator' />
                                         <div className='search-page-result-bottom-container'>
