@@ -273,7 +273,7 @@ export default class SymbolPage extends Component {
                                 {parameter.prototype !== 'return'
                                     ? <div>
                                         <div className='symbol-page-parameter-name'>
-                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name">{parameter.prototype}</Link> : <div className='symbol-page-parameter-name'>{parameter.prototype}</div>}
+                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></Link> : <div className='symbol-page-parameter-name'><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></div>}
                                         </div>
                                         <div className='symbol-page-parameter-description'>
                                             {parameter.description}
@@ -303,7 +303,7 @@ export default class SymbolPage extends Component {
                             {parameter.prototype === 'return'
                                 ? <div>
                                     <div className='symbol-page-parameter-name'>
-                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name">{parameter.prototype}</Link> : <div className='symbol-page-parameter-name'>{parameter.prototype}</div>}
+                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></Link> : <div className='symbol-page-parameter-name'><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></div>}
                                     </div>
                                     <div className='symbol-page-parameter-description'>
                                         {parameter.description}
@@ -386,8 +386,7 @@ export default class SymbolPage extends Component {
                 symbolsCluster.forEach(e => {
                     innerHtml.push(
                         <div key={e.id} className="symbol-page-parameters-container">
-                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name">{this.getPathDisplayName(e.path)}</Link>
-                            {/* e.firstPrototype for preview */}
+                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(e.firstPrototype) }} /></Link>
                         </div>
                     )
                 });
