@@ -259,7 +259,7 @@ export default class SymbolPage extends Component {
     }
 
     renderParameters = (prototype) => {
-        if ((!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0) || prototype.parameters[0].prototype === 'return')
+        if ((!this.searchStringInParameters('return', prototype) && prototype.parameters.length === 0) || (prototype.parameters[0].prototype === 'return' && prototype.parameters.length === 1))
             return null
         return (
             <div className='symbol-page-section-container'>
@@ -273,7 +273,7 @@ export default class SymbolPage extends Component {
                                 {parameter.prototype !== 'return'
                                     ? <div>
                                         <div className='symbol-page-parameter-name'>
-                                            {parameter.prototype}
+                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></Link> : <div className='symbol-page-parameter-name'><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></div>}
                                         </div>
                                         <div className='symbol-page-parameter-description'>
                                             {parameter.description}
@@ -303,7 +303,7 @@ export default class SymbolPage extends Component {
                             {parameter.prototype === 'return'
                                 ? <div>
                                     <div className='symbol-page-parameter-name'>
-                                        {parameter.prototype}
+                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></Link> : <div className='symbol-page-parameter-name'><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></div>}
                                     </div>
                                     <div className='symbol-page-parameter-description'>
                                         {parameter.description}
@@ -331,8 +331,9 @@ export default class SymbolPage extends Component {
                         <div key={index * 2} className="symbol-page-inner-tooltip">
                             <div>
                                 <Link to={'/symbol?id=' + exception.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + exception.ref.id)} className='symbol-page-parameter-name'>
-                                    {exception.ref.path}
+                                    {this.getPathDisplayName(exception.ref.path)}
                                 </Link>
+                                {/* exception.ref.firstPrototype for preview */}
                                 <div className='symbol-page-parameter-description'>
                                     {exception.description}
                                 </div>
@@ -349,6 +350,56 @@ export default class SymbolPage extends Component {
                         </div>
                     )}
                 </div>
+            </div>
+        )
+    }
+
+    getSymbolArray(symbols) {
+        var dict = {};
+        symbols.forEach(e => {
+            if (dict[e.type] === undefined)
+                dict[e.type] = [];
+            dict[e.type].push(e);
+        });
+        return dict;
+    }
+
+    getPathDisplayName(fullName) {
+        var arr = fullName.split('/');
+        if (arr.length <= 0)
+            return (null);
+        return (arr[arr.length - 1]);
+    }
+
+    renderMember = (symbols) => {
+        if (symbols.length === 0)
+            return null
+        var html = [];
+        var dict = this.getSymbolArray(symbols);
+        for (const elem in dict) {
+            if (dict.hasOwnProperty(elem)) {
+                let innerHtml = [];
+                const symbolsCluster = dict[elem];
+                innerHtml.push(
+                    <div key={elem} className='symbol-page-title'>{elem.charAt(0).toUpperCase() + elem.slice(1)}</div>
+                );
+                symbolsCluster.forEach(e => {
+                    innerHtml.push(
+                        <div key={e.id} className="symbol-page-parameters-container">
+                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(e.firstPrototype) }} /></Link>
+                        </div>
+                    )
+                });
+                html.push(
+                    <div key={dict[elem]} className="symbol-page-section-container">
+                        {innerHtml}
+                    </div>
+                );
+            }
+        }
+        return (
+            <div>
+                {html}
             </div>
         )
     }
@@ -388,11 +439,10 @@ export default class SymbolPage extends Component {
         let list = [];
         let comments = [];
         this.state.mapComments[id].data.forEach(elem => {
-            console.log(this.state.mapIdPseudo[elem.userId]);
             if (elem.data !== "" && this.state.mapIdPseudo[elem.userId] !== undefined) {
                 comments.push(
                     <div key={elem.id} id={"comment-" + elem.id}>
-                        <hr className="symbol-page-spe-comment"></hr>
+                        <hr className="symbol-page-spe-comment" />
                         <div className="symbol-page-comment-warp">
                             <div className="symbol-page-comment-data">
                                 <span>
@@ -414,7 +464,7 @@ export default class SymbolPage extends Component {
         return (
             <div className="symbol-page-comment-holder">
                 {list}
-                <hr className="symbol-page-spe-comment"></hr>
+                <hr className="symbol-page-spe-comment" />
                 <form onSubmit={this.handleSubmitComment}>
                     {this.props.user ? 
                         <div className="symbol-page-new-comment">
@@ -500,7 +550,7 @@ export default class SymbolPage extends Component {
                             <span className="symbol-page-comment-title">Comments</span>
                             {this.renderComment(elem.id)}
                         </div>
-                        {(i !== this.state.listExample.length - 1) ? (<hr></hr>) : ('')}
+                        {(i !== this.state.listExample.length - 1) ? (<hr />) : ('')}
                     </div>
                 );
                 // active = "";
@@ -636,12 +686,13 @@ export default class SymbolPage extends Component {
                                 {this.renderExceptions(prototype)}
                                 {
                                     (index !== (this.state.prototypes.length - 1))
-                                    ? <hr></hr>
+                                    ? <hr />
                                     : null
                                 }
                             </div>
                         )
                     }
+                    {this.renderMember(this.state.symbols)}
                 </div>
                 <div>
                     {this.renderUploadExample()}
