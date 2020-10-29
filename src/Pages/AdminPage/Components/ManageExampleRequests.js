@@ -15,9 +15,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import UserInfoPopup from '../../../Components/UserInfoPopup';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import {getSyntaxHighlighterLanguage} from "../../../util";
+import SyntaxHighlighter from "../../../Components/SyntaxHighlighter";
 
 export default class ManageExampleRequests extends Component {
     state = {
@@ -90,13 +88,6 @@ export default class ManageExampleRequests extends Component {
     }
 
     renderDataModal() {
-        let code = ""
-        this.state.current.data.code.forEach(elem => {
-            code += elem.data + (elem.comment ? " // " + elem.comment : "");
-        });
-        let lang = "javascript";
-        if (this.state.current.data.symbolId in this.state.symbolLangs)
-            lang = getSyntaxHighlighterLanguage(this.state.symbolLangs[this.state.current.data.symbolId].name);
         return (
             <Dialog className="admin-page-example-dialog" open={this.state.viewData} onClose={() => this.setState({ current: null, viewData: false })}>
                 <div className="admin-page-example-title-container">
@@ -107,12 +98,10 @@ export default class ManageExampleRequests extends Component {
                 <div className="admin-page-example-content">
                     <div className="admin-page-example-description">{this.state.current.data.description}</div>
                     <SyntaxHighlighter
-                        className="admin-code-block"
-                        language={lang}
-                        style={docco}
-                    >
-                        {code}
-                    </SyntaxHighlighter>
+                        code={this.state.current.data.code}
+                        lang={(this.state.current.data.symbolId in this.state.symbolLangs)
+                            ? this.state.symbolLangs[this.state.current.data.symbolId] : null}
+                    />
                     <div className="admin-page-example-edit">Last modification: <b><UserInfoPopup userId={this.state.current.data.userId} /></b> - <b>{new Date(this.state.current.data.creationDate).toLocaleDateString()}</b></div>
                 </div>
                 <div className="admin-page-example-useful">
