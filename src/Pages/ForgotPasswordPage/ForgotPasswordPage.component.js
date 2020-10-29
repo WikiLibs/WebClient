@@ -30,7 +30,7 @@ export default class UserConnectionPage extends Component {
         e.preventDefault();
 
         if (checkForm(this.state)) {
-            //this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
+            this.api.resetPassword(this.state.email).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
             this.setState({formErrors: { email: "" }});
         } else {
             console.error("FORM INVALID");

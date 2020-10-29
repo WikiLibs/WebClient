@@ -234,6 +234,20 @@ export default class ApiService {
             }));
     }
 
+    resetPassword(email) {
+        return (Axios.post(this.url + "/auth/internal/reset", {
+            email: email,
+        },
+            {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            })
+            .then((Response) => {
+                console.log("redirect forgot password");
+            }));
+    }
+
     refresh() {
         return (Axios.patch(this.url + "/auth/refresh", null,
             {
@@ -359,4 +373,7 @@ export default class ApiService {
                 }));
         }
     }
+
+
+
 }
