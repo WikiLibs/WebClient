@@ -391,7 +391,7 @@ export default class SymbolPage extends Component {
                     )
                 });
                 html.push(
-                    <div key={dict[elem]} className="symbol-page-section-container">
+                    <div key={elem + dict[elem]} className="symbol-page-section-container">
                         {innerHtml}
                     </div>
                 );
