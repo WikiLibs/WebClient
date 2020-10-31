@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import { useQuery } from '../../util';
-import { protoToHtml } from '../../protoParser';
 import Editor from 'react-simple-code-editor';
 import Button from 'react-bootstrap/Button';
 import queryString from 'query-string'
@@ -10,7 +9,6 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
-import Prism from 'prismjs';
 import './style.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SendIcon from '@material-ui/icons/Send';
@@ -18,9 +16,6 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
 import SyntaxHighlighter from "../../Components/SyntaxHighlighter";
-
-import createDOMPurify from 'dompurify'
-import { JSDOM } from 'jsdom'
 
 function cleanArray(arrayToClean) {
     var clean = [];
@@ -499,14 +494,11 @@ export default class SymbolPage extends Component {
         var examples = [];
         var description = [];
         var i = 0;
-        const window = (new JSDOM('')).window
-        const DOMPurify = createDOMPurify(window)
 
         if (this.state.listExample.length !== 0) {
             this.state.listExample.forEach(elem => {
                 
                 elem.code.forEach(elem2 => {
-                    const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
                         <span key={elem2.data + elem2.id}>
                             { <span className="symbol-page-code-lines" title={elem2.comment}><SyntaxHighlighter  code={elem2.data} lang={this.state.lang.name}/></span>}
