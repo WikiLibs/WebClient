@@ -54,7 +54,7 @@ export default class SymbolPreview extends Component {
                         <span className="symbol-preview-popup-small-title">preview page:</span>
                         <div className='symbol-page-title'>{this.props.displayName}</div>
                         {this.props.type ? <div className='symbol-page-type-symbol-title'>{this.props.type}</div> : ""}
-                        <SyntaxHighlighter code={this.props.prototype} lang={this.props.lang}/>
+                        {this.props.prototype ? <SyntaxHighlighter code={this.props.prototype} lang={this.props.lang}/> : ""}
                     </div>
                     <i></i>
                 </div>
