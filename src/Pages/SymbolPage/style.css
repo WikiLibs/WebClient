@@ -49,6 +49,17 @@
     position: relative
 }
 
+.symbol-page-parameter-name > pre {
+    background: transparent!important;
+    margin: 0px!important;
+    padding: 0px!important;
+}
+
+.symbol-page-code-lines > pre{
+    margin: 0px!important;
+    padding: 0px!important;
+}
+
 .symbol-page-parameter-description {
     margin: 16px 32px 0 32px;
 }

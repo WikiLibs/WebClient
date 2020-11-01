@@ -271,10 +271,10 @@ export default class ApiService {
         });
     }
 
-    hackMUIMotherShit(dataStr) { //MUI is a fucking framework unable to respect the HTTP standard, guess what let's hack it
+    hackMUIMotherShit(dataStr, dataType) { //MUI is a fucking framework unable to respect the HTTP standard, guess what let's hack it
         const typeId = dataStr.indexOf(",");
         const val = dataStr.substring(typeId + 1);
-        return "data:image/jpeg;base64," + val;
+        return "data:" + dataType + ";base64," + val;
     }
 
     getLangIcon(uid) {
@@ -287,7 +287,7 @@ export default class ApiService {
                         'Authorization': this.apiKey
                     }
                 }).then(response => {
-                    window.langIconMap[uid] = this.hackMUIMotherShit(response.data);
+                    window.langIconMap[uid] = this.hackMUIMotherShit(response.data, "image/png");
                     resolve(window.langIconMap[uid]);
                 }).catch(err => {
                     if (err.response.status === 404)
@@ -308,7 +308,7 @@ export default class ApiService {
                         'Authorization': this.apiKey
                     }
                 }).then(response => {
-                    window.userIconMap[uid] = this.hackMUIMotherShit(response.data);
+                    window.userIconMap[uid] = this.hackMUIMotherShit(response.data, "image/jpeg");
                     resolve(window.userIconMap[uid]);
                 }).catch(err => {
                     if (err.response.status === 404)

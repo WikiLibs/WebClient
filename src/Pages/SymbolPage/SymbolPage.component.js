@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import { useQuery } from '../../util';
-import { protoToHtml } from '../../protoParser';
 import Editor from 'react-simple-code-editor';
 import Button from 'react-bootstrap/Button';
 import queryString from 'query-string'
@@ -10,16 +9,13 @@ import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
-import Prism from 'prismjs';
 import './style.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
-
-import createDOMPurify from 'dompurify'
-import { JSDOM } from 'jsdom'
+import SyntaxHighlighter from "../../Components/SyntaxHighlighter";
 
 function cleanArray(arrayToClean) {
     var clean = [];
@@ -236,9 +232,7 @@ export default class SymbolPage extends Component {
                 <div className='symbol-page-title'>
                     Prototype
                 </div>
-                <div className='symbol-page-code-container'>
-                    <div dangerouslySetInnerHTML={{ __html: protoToHtml(prototype.prototype) }} />
-                </div>
+                <SyntaxHighlighter  code={prototype.prototype} lang={this.state.lang.name}/>
             </div>
         )
     }
@@ -273,11 +267,9 @@ export default class SymbolPage extends Component {
                                 {parameter.prototype !== 'return'
                                     ? <div>
                                         <div className='symbol-page-parameter-name'>
-                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></Link> : <div className='symbol-page-parameter-name'><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></div>}
+                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></Link> : <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></div>}
                                         </div>
-                                        <div className='symbol-page-parameter-description'>
-                                            {parameter.description}
-                                        </div>
+                                        {parameter.description !== "" ? <div className='symbol-page-parameter-description'>{parameter.description}</div> : ""}
                                     </div>
                                     : null
                                 }
@@ -303,11 +295,9 @@ export default class SymbolPage extends Component {
                             {parameter.prototype === 'return'
                                 ? <div>
                                     <div className='symbol-page-parameter-name'>
-                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></Link> : <div className='symbol-page-parameter-name'><div dangerouslySetInnerHTML={{ __html: protoToHtml(parameter.prototype) }} /></div>}
+                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></Link> : <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></div>}
                                     </div>
-                                    <div className='symbol-page-parameter-description'>
-                                        {parameter.description}
-                                    </div>
+                                    {parameter.description !== "" ? <div className='symbol-page-parameter-description'>{parameter.description}</div> : ""}
                                 </div>
                                 : null
                             }
@@ -333,7 +323,6 @@ export default class SymbolPage extends Component {
                                 <Link to={'/symbol?id=' + exception.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + exception.ref.id)} className='symbol-page-parameter-name'>
                                     {this.getPathDisplayName(exception.ref.path)}
                                 </Link>
-                                {/* exception.ref.firstPrototype for preview */}
                                 <div className='symbol-page-parameter-description'>
                                     {exception.description}
                                 </div>
@@ -341,9 +330,7 @@ export default class SymbolPage extends Component {
                             <div className="symbol-page-tooltip">
                                 <div className="symbol-page-tooltip-text-content">
                                     <div className="symbol-page-tooltip-title">Preview</div>
-                                    <div className="symbol-page-tooltip-code-preview">
-                                        <div dangerouslySetInnerHTML={{ __html: protoToHtml(exception.ref.firstPrototype) }} />
-                                    </div>
+                                    <SyntaxHighlighter  code={exception.ref.firstPrototype} lang={this.state.lang.name}/>
                                 </div>
                                 <i></i>
                             </div>
@@ -386,12 +373,12 @@ export default class SymbolPage extends Component {
                 symbolsCluster.forEach(e => {
                     innerHtml.push(
                         <div key={e.id} className="symbol-page-parameters-container">
-                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><div dangerouslySetInnerHTML={{ __html: protoToHtml(e.firstPrototype) }} /></Link>
+                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={e.firstPrototype} lang={this.state.lang.name}/></Link>
                         </div>
                     )
                 });
                 html.push(
-                    <div key={dict[elem]} className="symbol-page-section-container">
+                    <div key={elem + dict[elem]} className="symbol-page-section-container">
                         {innerHtml}
                     </div>
                 );
@@ -507,20 +494,17 @@ export default class SymbolPage extends Component {
         var examples = [];
         var description = [];
         var i = 0;
-        const window = (new JSDOM('')).window
-        const DOMPurify = createDOMPurify(window)
 
         if (this.state.listExample.length !== 0) {
             this.state.listExample.forEach(elem => {
                 
                 elem.code.forEach(elem2 => {
-                    const html = Prism.highlight(elem2.data, Prism.languages.javascript, 'javascript');
                     lines.push(
                         <span key={elem2.data + elem2.id}>
-                            { <span title={elem2.comment} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} /> }
+                            { <span className="symbol-page-code-lines" title={elem2.comment}><SyntaxHighlighter  code={elem2.data} lang={this.state.lang.name}/></span>}
                         </span>
                     );
-                    lines.push(<br key={elem.id + elem2.data + elem.id} />);
+                    // lines.push(<br key={elem.id + elem2.data + elem.id} />);
                 });
                 description.push(
                     <div key={elem.id+elem}>
