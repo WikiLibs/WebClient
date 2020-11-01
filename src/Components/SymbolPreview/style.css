@@ -11,9 +11,14 @@
     text-overflow: ellipsis;
 }
 
-.symbol-preview-popup-menu-container > a > pre{
+.symbol-preview-popup-menu-container > a > pre {
     margin: 0px!important;
     padding: 0px!important;
+}
+
+.symbol-preview-popup-content > pre {
+    margin: 0px!important;
+    padding: 16px!important;
 }
 
 .symbol-preview-popup-menu {
