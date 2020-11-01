@@ -53,6 +53,8 @@
     background: transparent!important;
     margin: 0px!important;
     padding: 0px!important;
+    overflow-x: hidden!important;
+    text-overflow: ellipsis;
 }
 
 .symbol-page-code-lines > pre{

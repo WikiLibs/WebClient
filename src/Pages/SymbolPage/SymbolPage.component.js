@@ -16,6 +16,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
 import SyntaxHighlighter from "../../Components/SyntaxHighlighter";
+import SymbolPreview from '../../Components/SymbolPreview';
 
 function cleanArray(arrayToClean) {
     var clean = [];
@@ -267,7 +268,13 @@ export default class SymbolPage extends Component {
                                 {parameter.prototype !== 'return'
                                     ? <div>
                                         <div className='symbol-page-parameter-name'>
-                                            {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></Link> : <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></div>}
+                                            <SymbolPreview className='symbol-page-parameter-name'
+                                                displayName={parameter.prototype}
+                                                to={parameter.ref ? parameter.ref.id : false}
+                                                lang={this.state.lang.name}
+                                                prototype={parameter.ref && parameter.ref.firstPrototype ? parameter.ref.firstPrototype : ""}
+                                                type={parameter.ref ? parameter.ref.type : false}
+                                            />
                                         </div>
                                         {parameter.description !== "" ? <div className='symbol-page-parameter-description'>{parameter.description}</div> : ""}
                                     </div>
@@ -294,9 +301,7 @@ export default class SymbolPage extends Component {
                         <div key={index}>
                             {parameter.prototype === 'return'
                                 ? <div>
-                                    <div className='symbol-page-parameter-name'>
-                                    {(parameter.ref !== undefined) ? <Link to={"/symbol?id=" + parameter.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + parameter.ref.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></Link> : <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></div>}
-                                    </div>
+                                    <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></div>
                                     {parameter.description !== "" ? <div className='symbol-page-parameter-description'>{parameter.description}</div> : ""}
                                 </div>
                                 : null
@@ -320,19 +325,16 @@ export default class SymbolPage extends Component {
                     {prototype.exceptions.map((exception, index) =>
                         <div key={index * 2} className="symbol-page-inner-tooltip">
                             <div>
-                                <Link to={'/symbol?id=' + exception.ref.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + exception.ref.id)} className='symbol-page-parameter-name'>
-                                    {this.getPathDisplayName(exception.ref.path)}
-                                </Link>
+                                <SymbolPreview className='symbol-page-parameter-name'
+                                    displayName={this.getPathDisplayName(exception.ref.path)}
+                                    to={exception.ref ? exception.ref.id : false}
+                                    lang={this.state.lang.name}
+                                    prototype={exception.ref && exception.ref.firstPrototype ? exception.ref.firstPrototype : ""}
+                                    type={exception.ref ? exception.ref.type : false}
+                                />
                                 <div className='symbol-page-parameter-description'>
                                     {exception.description}
                                 </div>
-                            </div>
-                            <div className="symbol-page-tooltip">
-                                <div className="symbol-page-tooltip-text-content">
-                                    <div className="symbol-page-tooltip-title">Preview</div>
-                                    <SyntaxHighlighter  code={exception.ref.firstPrototype} lang={this.state.lang.name}/>
-                                </div>
-                                <i></i>
                             </div>
                         </div>
                     )}
@@ -373,7 +375,14 @@ export default class SymbolPage extends Component {
                 symbolsCluster.forEach(e => {
                     innerHtml.push(
                         <div key={e.id} className="symbol-page-parameters-container">
-                            <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={e.firstPrototype} lang={this.state.lang.name}/></Link>
+                            {/* <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={e.firstPrototype} lang={this.state.lang.name}/></Link> */}
+                            <SymbolPreview className='symbol-page-parameter-name'
+                                displayName={this.getPathDisplayName(e.path)}
+                                to={e.id}
+                                lang={this.state.lang.name}
+                                prototype={e.firstPrototype}
+                                type={e.type}
+                            />
                         </div>
                     )
                 });
