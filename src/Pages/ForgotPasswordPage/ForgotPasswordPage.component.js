@@ -5,6 +5,10 @@ import Button from '@material-ui/core/Button';
 import { ApiService } from '../../ApiService';
 import { checkForm } from '../../util';
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import './index.css';
 
 const emailRegex = RegExp(
@@ -22,7 +26,9 @@ export default class UserConnectionPage extends Component {
             formErrors: {
                 email: "",
             },
-            apiError: null
+            apiError: null,
+            loading: false,
+            loadingMessage: ""
         };
     }
 
@@ -30,8 +36,10 @@ export default class UserConnectionPage extends Component {
         e.preventDefault();
 
         if (checkForm(this.state)) {
-            //this.api.connectUser(this.state).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) }));
-            this.setState({formErrors: { email: "" }});
+            this.api.resetPassword(this.state.email).catch(err => this.setState({ apiError: this.api.translateErrorMessage(err) })).then(() => this.setState({loadingMessage: "Please check your emails, you should have received a new temporary password"}), setTimeout(() => {
+                window.location.assign(window.location.origin + '/userconnection');
+            }, 7000));
+            this.setState({formErrors: { email: "" }, loading: true});
         } else {
             console.error("FORM INVALID");
         }
@@ -52,6 +60,17 @@ export default class UserConnectionPage extends Component {
 
         this.setState({ formErrors, [name]: value });
     };
+
+    renderLoadingDialog() {
+        return (
+            <Dialog open={this.state.loading}>
+                <DialogContent className="dialog-upload-img">
+                    {this.state.loadingMessage === "" ? <><CircularProgress /><span>Loading</span></> : ""}
+                    <span>{this.state.loadingMessage}</span>
+                </DialogContent>
+            </Dialog>
+        );
+    }
 
     render() {
         return (
@@ -86,6 +105,7 @@ export default class UserConnectionPage extends Component {
                         </div>
                     </div>
                 </div>
+                {this.renderLoadingDialog()}
             </div>
         );
     }
