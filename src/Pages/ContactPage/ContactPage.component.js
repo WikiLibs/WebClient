@@ -56,7 +56,7 @@ const renderContactOther = () => {
                 </div>
                 <div className="contact-secondary-title-component">
                     <span className="contact-secondary-title">News and requests</span>
-                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" href='' >Twitter</a></p>
+                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" href='https://twitter.com/LibsWiki' >Twitter</a></p>
                 </div>
             </div>
         </div>
