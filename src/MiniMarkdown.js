@@ -159,4 +159,27 @@ function parseMarkdown(text) {
     return statementList;
 }
 
-export {parseMarkdown, Statement, Token};
+/**
+ * Reconstructs a table of contents from a list of statements parsed by parseMarkdown
+ * @param statements the list of statements from parseMarkdown
+ * @return a list of title objects. Each title object is expected to contain a "subTitles" list of strings and "title" string
+ */
+function reconstructTableOfContents(statements) {
+    const titles = [];
+    let curTitle = null;
+
+    for (const stmt of statements) {
+        if (stmt.type === Statement.Title) {
+            if (curTitle)
+                titles.push(curTitle);
+            curTitle = {
+                title: stmt.data,
+                subTitles: []
+            };
+        } else if (stmt.type === Statement.SubTitle)
+            curTitle.subTitles.push(stmt.data)
+    }
+    return titles;
+}
+
+export {parseMarkdown, reconstructTableOfContents, Statement, Token};
