@@ -47,16 +47,16 @@ const renderContactOther = () => {
             </div>
             <div className="contact-content">
                 <div className="contact-secondary-title-component">
-                    <span className="contact-secondary-title">Jobs and more about</span>
-                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" href='https://www.linkedin.com/in/wikilibs-eip-48a5851b9/' >Linkedin</a></p>
+                    <span className="contact-secondary-title">Jobs and more about WikiLibs</span>
+                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" rel="noopener noreferrer" href='https://www.linkedin.com/in/wikilibs-eip-48a5851b9/' >Linkedin</a></p>
                 </div>
                 <div className="contact-secondary-title-component">
                     <span className="contact-secondary-title">Community area</span>
-                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" href='https://discord.gg/3PG9tpNPzq' >Discord</a></p>
+                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" rel="noopener noreferrer" href='https://discord.gg/3PG9tpNPzq' >Discord</a></p>
                 </div>
                 <div className="contact-secondary-title-component">
                     <span className="contact-secondary-title">News and requests</span>
-                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" href='https://twitter.com/LibsWiki' >Twitter</a></p>
+                    <p className="contact-secondary-title-description contact-colored-text"><a className="contact-colored-text" target="_blank" rel="noopener noreferrer" href='https://twitter.com/WikiLibs_/' >Twitter</a></p>
                 </div>
             </div>
         </div>
