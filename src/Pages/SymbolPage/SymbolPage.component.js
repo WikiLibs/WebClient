@@ -104,13 +104,13 @@ export default class SymbolPage extends Component {
         if (this.props.user) {
             if (this.props.user.hasPermission("example.create")) {
                 this.api.pushNewExample(example).catch(err => {
-                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
                 }).then(response => { 
                     //alert("Your example was sent, it's actually online");
                 });
             } else {
                 this.api.pushNewRequestExample(request).catch(err => {
-                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
                 }).then(response => {
                     //alert('Your example was sent, it will be check by an administrator');
                 });
@@ -147,7 +147,7 @@ export default class SymbolPage extends Component {
         const values = queryString.parse(this.props.location.search)
         let apiError = "";
         var listExample = await this.api.getExamples(values.id).catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
             apiError = this.api.translateErrorMessage(err);
         });
 
@@ -161,7 +161,7 @@ export default class SymbolPage extends Component {
             listExample.data.forEach(elem => {
                 this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
                 this.api.getComments(elem.id, 1).catch(err => {
-                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
                 }).then(response => {mapComments[elem.id] = response.data});
                 comments[elem.id] = "";
             })
@@ -172,7 +172,7 @@ export default class SymbolPage extends Component {
             this.setState({comment: comments});
 
             this.api.getSymbolById(q.id).catch(err => {
-                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
             }).then(response => { this.setState(response.data); });
         }
     }
@@ -410,7 +410,7 @@ export default class SymbolPage extends Component {
     handleDelete = (event) => {
         event.preventDefault();
         this.api.destroyComment(this.state.commentId).catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
         }).then(response => { 
             //alert("Your comment is destroyed");
         });
@@ -420,7 +420,7 @@ export default class SymbolPage extends Component {
     handleSubmitComment = (event) => {
         event.preventDefault();
         this.api.postComment(this.state.exampleId, this.state.comment[this.state.exampleId]).catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
         }).then(response => { 
             //alert("Your comment is sent, it's actually online");
         });

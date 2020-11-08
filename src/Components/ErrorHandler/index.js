@@ -21,6 +21,7 @@ class ErrorPage extends Component {
         switch (code) {
             case 400:
                 this.setState({
+                    errorTitle: "Bad Request!",
                     errorDescription: "Woops. Looks like something went wrong."
                 });
                 break;
@@ -33,7 +34,7 @@ class ErrorPage extends Component {
             case 403:
                 this.setState({
                     errorTitle: "Forbidden!",
-                    errorDescription: "Woops. You have no permissions to acces this page with this account."
+                    errorDescription: "Woops. You have no   permissions to acces this page with this account."
                 });
                 break;
             case 404:
@@ -110,6 +111,7 @@ const ErrorHandler = ({ children }) => {
         return <Layout component={ErrorPage}/>;
     case 500:
         console.log("send error report to api");
+        //location.state 'search' || 'request' => more information for api
         return <Layout component={ErrorPage}/>;
     default:
       return children
