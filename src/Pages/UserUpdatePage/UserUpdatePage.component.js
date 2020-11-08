@@ -79,6 +79,8 @@ export default class UserUpdatePage extends Component {
                     })
                     .catch(error => {
                         this.setState({ apiError: this.api.translateErrorMessage(error) });
+                        if (error !== null && error !== undefined && error.response !== null && error.response !== undefined && error.response.status === 500)
+                            this.props.history.replace(this.props.history.pathname,{statusCode: error.response.status, request: this.state});
                     });
             }
         } else {

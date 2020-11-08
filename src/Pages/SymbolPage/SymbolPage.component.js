@@ -103,11 +103,15 @@ export default class SymbolPage extends Component {
 
         if (this.props.user) {
             if (this.props.user.hasPermission("example.create")) {
-                this.api.pushNewExample(example).then(response => { 
+                this.api.pushNewExample(example).catch(err => {
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                }).then(response => { 
                     //alert("Your example was sent, it's actually online");
                 });
             } else {
-                this.api.pushNewRequestExample(request).then(response => {
+                this.api.pushNewRequestExample(request).catch(err => {
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                }).then(response => {
                     //alert('Your example was sent, it will be check by an administrator');
                 });
             }
@@ -141,24 +145,36 @@ export default class SymbolPage extends Component {
     componentDidMount = async () => {
         var q = useQuery();
         const values = queryString.parse(this.props.location.search)
-        var listExample = await this.api.getExamples(values.id)
-        this.setState({symbolId: values.id});
+        let apiError = "";
+        var listExample = await this.api.getExamples(values.id).catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+            apiError = this.api.translateErrorMessage(err);
+        });
 
-        let mapIdPseudo = {};
-        let mapComments = {};
-        let comments = {};
-        listExample.data.forEach(elem => {
-            this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
-            this.api.getComments(elem.id, 1).then(response => {mapComments[elem.id] = response.data});
-            comments[elem.id] = "";
-        })
+        if (apiError === 0) {
 
-        this.setState({mapIdPseudo: mapIdPseudo});
-        this.setState({listExample: listExample.data});
-        this.setState({mapComments: mapComments});
-        this.setState({comment: comments});
+            this.setState({symbolId: values.id});
 
-        this.api.getSymbolById(q.id).then(response => { this.setState(response.data); });
+            let mapIdPseudo = {};
+            let mapComments = {};
+            let comments = {};
+            listExample.data.forEach(elem => {
+                this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
+                this.api.getComments(elem.id, 1).catch(err => {
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+                }).then(response => {mapComments[elem.id] = response.data});
+                comments[elem.id] = "";
+            })
+
+            this.setState({mapIdPseudo: mapIdPseudo});
+            this.setState({listExample: listExample.data});
+            this.setState({mapComments: mapComments});
+            this.setState({comment: comments});
+
+            this.api.getSymbolById(q.id).catch(err => {
+                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+            }).then(response => { this.setState(response.data); });
+        }
     }
 
     getName = () => {
@@ -393,7 +409,9 @@ export default class SymbolPage extends Component {
 
     handleDelete = (event) => {
         event.preventDefault();
-        this.api.destroyComment(this.state.commentId).then(response => { 
+        this.api.destroyComment(this.state.commentId).catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+        }).then(response => { 
             //alert("Your comment is destroyed");
         });
         document.getElementById("comment-" + this.state.commentId).style.display = "none";
@@ -401,7 +419,9 @@ export default class SymbolPage extends Component {
 
     handleSubmitComment = (event) => {
         event.preventDefault();
-        this.api.postComment(this.state.exampleId, this.state.comment[this.state.exampleId]).then(response => { 
+        this.api.postComment(this.state.exampleId, this.state.comment[this.state.exampleId]).catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+        }).then(response => { 
             //alert("Your comment is sent, it's actually online");
         });
         let tmp = this.state.comment;

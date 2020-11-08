@@ -175,7 +175,9 @@ class Header extends Component {
             path: this.state.search
         };
 
-        var result = await this.api.searchSymbols(query);
+        var result = await this.api.searchSymbols(query).catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+        });
         for (var id in result.data.data) {
             if (suggestions.length === 5) { 
                 suggestions = []; 
@@ -290,7 +292,9 @@ class Header extends Component {
         )
     }
     componentDidMount() {
-        this.api.getLangLibTable().then(langs => {
+        this.api.getLangLibTable().catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+        }).then(langs => {
             let map = {};
             map[-1] = [];
             langs.forEach(elem => {
@@ -298,7 +302,9 @@ class Header extends Component {
             });
             this.setState({ langs: langs, libMap: map });
         });
-        this.api.getSymTypes().then(types => this.setState({ types: types }));
+        this.api.getSymTypes().catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+        }).then(types => this.setState({ types: types }));
     }
 }
 

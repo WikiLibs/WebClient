@@ -123,7 +123,10 @@ export default class LibPage extends Component {
     componentDidMount = async () => {
         var q = useQuery();
         let apiError = "";
-        let rep = await this.api.getInfoTree(parseInt(q.lib)).catch(err => apiError = this.api.translateErrorMessage(err));
+        let rep = await this.api.getInfoTree(parseInt(q.lib)).catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.history.search});
+            apiError = this.api.translateErrorMessage(err)
+        });
         let listData = {};
         let listType = [];
 
