@@ -151,7 +151,7 @@ export default class SymbolPage extends Component {
             apiError = this.api.translateErrorMessage(err);
         });
 
-        if (apiError === 0) {
+        if (apiError === "") {
 
             this.setState({symbolId: values.id});
 
