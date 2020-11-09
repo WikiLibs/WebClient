@@ -6,6 +6,9 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Layout from "../Layout";
 import NotFoundPage from '../../Pages/NotFoundPage';
 
+import logo from '../../Pages/WelcomePage/imgs/WikiLibs_Logo.png';
+import "./style.css";
+
 class ErrorPage extends Component {
 
     constructor(props) {
@@ -88,11 +91,35 @@ class ErrorPage extends Component {
                         <li className='page-error-handler-todo-node' onClick={() => window.location.assign('/')}>Visit our home page</li>
                         <li className='page-error-handler-todo-node' onClick={() => window.history.back()}>Return to the previous page</li>
                         <li className='page-error-handler-todo-node' onClick={() => window.location.assign('/contact')}>Contact our support team</li>
+                        <li className='page-error-handler-todo-node' onClick={() => window.location.href = "https://twitter.com/WikiLibs_/"}>Follow us on Twitter for updates</li>
                     </ul>
                 </div>
             </div>
         );
     }
+}
+
+const MaintenancePage = () => {
+    return (
+        <div className="page-maintenance">
+            <div className="page-maintenance-logo">
+                <img className="page-maintenance-logo-img" src={logo} alt=""/>
+            </div>
+            <div className="page-maintenance-sub-title">
+                <div>Sorry, this page is down for maintenance</div>
+                <p>The page will be back up soon.</p>
+            </div>
+            <div className='page-error-handler-todo'>
+                <div className='page-error-handler-todo-title'>You can either:</div>
+                <ul>
+                    <li className='page-error-handler-todo-node' onClick={() => window.location.assign('/')}>Visit our home page</li>
+                    <li className='page-error-handler-todo-node' onClick={() => window.history.back()}>Return to the previous page</li>
+                    <li className='page-error-handler-todo-node' onClick={() => window.location.assign('/contact')}>Contact our support team</li>
+                    <li className='page-error-handler-todo-node' onClick={() => window.location.href = "https://twitter.com/WikiLibs_/"}>Follow us on Twitter for updates</li>
+                </ul>
+            </div>
+        </div>       
+    )
 }
 
 const ErrorHandler = ({ children }) => {
@@ -113,8 +140,10 @@ const ErrorHandler = ({ children }) => {
         console.log("send error report to api");
         //location.state 'search' || 'request' => more information for api
         return <Layout component={ErrorPage}/>;
+    case "maintenance":
+        return <Layout component={MaintenancePage}/>;
     default:
-      return children
+      return children;
   }
 };
 
