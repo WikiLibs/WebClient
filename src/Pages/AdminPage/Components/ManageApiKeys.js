@@ -33,6 +33,10 @@ const FLAGS = [
     {
         Value: 0x100,
         Name: "SelfDestruct"
+    },
+    {
+        Value: 0x1,
+        Name: "ErrorReport"
     }
 ];
 
@@ -41,7 +45,8 @@ const FLAGS_MAP = {
     Authentication: 0x20,
     Standard: 0x40,
     AuthApp: 0x80,
-    SelfDestruct: 0x100
+    SelfDestruct: 0x100,
+    ErrorReport: 0x1
 };
 
 function apiKeyBitFieldToList(flags) {
@@ -128,7 +133,7 @@ export default class ManageApiKeys extends Component {
     }
 
     handleSwitchDateInfinite = (ev) => {
-        let dateStr = ""
+        let dateStr;
         if (ev.target.checked) {
             dateStr = "9999-12-31T23:59:59.9999999";
         } else {

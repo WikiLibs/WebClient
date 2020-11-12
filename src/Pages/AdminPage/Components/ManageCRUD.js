@@ -165,9 +165,12 @@ export default class ManageCRUD extends Component {
             <>
                 <h2>
                     {this.props.managerName}&nbsp;&nbsp;
-                    <IconButton onClick={this.openNewModal} aria-label="add">
-                        <AddIcon />
-                    </IconButton>
+                    {
+                        this.props.post &&
+                            <IconButton onClick={this.openNewModal} aria-label="add">
+                                <AddIcon />
+                            </IconButton>
+                    }
                 </h2>
                 {
                     this.state.objects.map(obj =>
@@ -176,8 +179,14 @@ export default class ManageCRUD extends Component {
                                 {this.props.renderObject(obj)}
                             </CardContent>
                             <CardActions style={{ justifyContent: "flex-end" }}>
-                                <Button onClick={() => this.openEditModal(obj)} size="small"><EditIcon /> Edit</Button>
-                                <Button onClick={() => this.setState({ showConfirmModal: this.props.getObjectName(obj), deleteId: obj.id })} size="small"><DeleteIcon /> Delete</Button>
+                                {
+                                    this.props.patch &&
+                                        <Button onClick={() => this.openEditModal(obj)} size="small"><EditIcon /> Edit</Button>
+                                }
+                                {
+                                    this.props.delete &&
+                                        <Button onClick={() => this.setState({ showConfirmModal: this.props.getObjectName(obj), deleteId: obj.id })} size="small"><DeleteIcon /> Delete</Button>
+                                }
                             </CardActions>
                         </Card>
                     )

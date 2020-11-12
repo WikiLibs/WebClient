@@ -45,6 +45,8 @@ export default class AdminService {
     }
 
     patchApiKey(id, apiKey) {
+        if (apiKey.origin === "")
+            apiKey.origin = null;
         return (Axios.patch(this.url + "/admin/apikey/" + id, apiKey, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -53,6 +55,8 @@ export default class AdminService {
     }
 
     postApiKey(apiKey) {
+        if (apiKey.origin === "")
+            apiKey.origin = null;
         return (Axios.post(this.url + "/admin/apikey", apiKey, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -110,6 +114,30 @@ export default class AdminService {
 
     patchSymbolType(id, type) {
         return (Axios.patch(this.url + "/symbol/type/" + id, type, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    deleteError(id) {
+        return (Axios.delete(this.url + "/error/" + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    getErrors() {
+        return (Axios.get(this.url + "/error", {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }));
+    }
+
+    deleteErrors() {
+        return (Axios.delete(this.url + "/error", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }

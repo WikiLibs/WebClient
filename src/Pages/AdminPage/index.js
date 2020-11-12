@@ -17,6 +17,7 @@ import ManageApps from './Components/ManageApps';
 import ManageSymbolLangs from './Components/ManageSymbolLangs';
 import ManageSymbolTypes from './Components/ManageSymbolTypes';
 import ManageExampleRequests from './Components/ManageExampleRequests';
+import ManageErrors from "./Components/ManageErrors";
 
 const ComponentMap = {
     "Groups": ManageGroups,
@@ -24,7 +25,8 @@ const ComponentMap = {
     "Bots": ManageApps,
     "SymbolTypes": ManageSymbolTypes,
     "SymbolLangs": ManageSymbolLangs,
-    "ExampleRequests": ManageExampleRequests
+    "ExampleRequests": ManageExampleRequests,
+    "Errors": ManageErrors
 };
 
 export default class AdminPage extends Component {
@@ -81,6 +83,12 @@ export default class AdminPage extends Component {
                             this.props.user.hasPermission("example.requests.list") &&
                             <ToggleButton value="ExampleRequests">
                                 <FunctionsIcon />&nbsp;&nbsp;Manage Example Requests
+                            </ToggleButton>
+                        }
+                        {
+                            this.props.user.hasPermission("errors") &&
+                            <ToggleButton value="Errors">
+                                <FunctionsIcon />&nbsp;&nbsp;Manage Errors
                             </ToggleButton>
                         }
                     </ToggleButtonGroup>
