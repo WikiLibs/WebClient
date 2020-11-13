@@ -61,7 +61,7 @@ function processTextBodyInTokens(textBody) {
                 title: title,
                 link: link
             });
-        } else {
+        } else if (blk.trim() !== "") {
             tokens.push({
                 type: Token.Text,
                 data: he.decode(blk)
@@ -106,13 +106,13 @@ function parseMarkdown(text) {
                 type: Statement.Title,
                 data: title
             });
-        } else if (p.match(TERMINAL)) {
+        } else if (p.trim().startsWith("`") && p.match(TERMINAL)) {
             const tcommand = he.decode(p.replace(TERMINAL, "$1"));
             statementList.push({
                 type: Statement.Terminal,
                 data: tcommand
             });
-        } else if (p.match(BUTTON_WITH_DESC)) {
+        } else if (p.trim().startsWith("[") && p.match(BUTTON_WITH_DESC)) {
             const match = BUTTON_WITH_DESC.exec(p);
             const title = he.decode(match[1].trim());
             const link = he.decode(match[2].trim());
@@ -123,7 +123,7 @@ function parseMarkdown(text) {
                 link: link,
                 description: desc
             });
-        } else if (p.match(BUTTON_WITHOUT_DESC)) {
+        } else if (p.trim().startsWith("[") && p.match(BUTTON_WITHOUT_DESC)) {
             const match = BUTTON_WITHOUT_DESC.exec(p);
             const title = he.decode(match[1].trim());
             const link = he.decode(match[2].trim());
@@ -132,7 +132,7 @@ function parseMarkdown(text) {
                 title: title,
                 link: link
             });
-        } else if (p.startsWith("<note>") && p.endsWith("</note>")) {
+        } else if (p.trimStart().startsWith("<note>") && p.trimEnd().endsWith("</note>")) {
             const body = p.substring(7).trim();
             statementList.push({
                 type: Statement.SmallNote,
