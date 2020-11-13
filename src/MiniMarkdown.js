@@ -179,6 +179,8 @@ function reconstructTableOfContents(statements) {
         } else if (stmt.type === Statement.SubTitle)
             curTitle.subTitles.push(stmt.data)
     }
+    if (curTitle != null)
+        titles.push(curTitle);
     return titles;
 }
 
