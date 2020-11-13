@@ -39,7 +39,7 @@ export default class UserConnectionPage extends Component {
             this.api.resetPassword(this.state.email).catch(err => {
                 this.setState({ apiError: this.api.translateErrorMessage(err) })
                 if (err !== null && err !== undefined && err.response !== null && err.response !== undefined && err.response.status === 500)
-                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, request: this.state});
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             }).then(() => this.setState({loadingMessage: "Please check your emails, you should have received a new temporary password"}), setTimeout(() => {
                 window.location.assign(window.location.origin + '/userconnection');
             }, 7000));

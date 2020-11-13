@@ -36,7 +36,7 @@ export default class UserConnectionPage extends Component {
             this.api.connectUser(this.state).catch(err => {
                 this.setState({ apiError: this.api.translateErrorMessage(err), formErrors: {email: "", password: ""} })
                 if (err !== null && err !== undefined && err.response !== null && err.response !== undefined && err.response.status === 500)
-                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, request: this.state});
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             });
         } else {
             console.error("FORM INVALID");

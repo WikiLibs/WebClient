@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ApiService } from '../../ApiService';
 import { useLocation } from 'react-router-dom';
 import { get } from 'lodash';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
@@ -11,6 +12,7 @@ import "./style.css";
 
 class ErrorPage extends Component {
 
+    api = new ApiService();
     constructor(props) {
         super(props);
         this.state = {
@@ -57,6 +59,8 @@ class ErrorPage extends Component {
                     errorTitle: "Internal Server Error!",
                     errorDescription: "Woops. Looks like something went wrong in our server.Please report bug if this occurs."
                 });
+                let tmp = window.history.state.state.errorObj;
+                this.api.sendError(tmp.message, tmp.resource);
                 break;
             default:
                 this.setState({
@@ -127,19 +131,13 @@ const ErrorHandler = ({ children }) => {
 
   switch (get(location.state, 'statusCode')) {
     case 400:
-        return <Layout component={ErrorPage}/>;
     case 401:
-        return <Layout component={ErrorPage}/>;
     case 403:
+    case 409:
+    case 500:
         return <Layout component={ErrorPage}/>;
     case 404:
-      return <Layout component={NotFoundPage} />;
-    case 409:
-        return <Layout component={ErrorPage}/>;
-    case 500:
-        console.log("send error report to api");
-        //location.state 'search' || 'request' => more information for api
-        return <Layout component={ErrorPage}/>;
+        return <Layout component={NotFoundPage}/>;
     case "maintenance":
         return <Layout component={MaintenancePage}/>;
     default:

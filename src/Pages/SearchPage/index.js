@@ -67,7 +67,7 @@ export default class SearchPage extends Component {
             query.path = q.path;
         }
         this.api.searchSymbols(query).catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
         }).then(response => {
             this.sortResultsIntoList(response.data);
         });
@@ -210,7 +210,7 @@ export default class SearchPage extends Component {
             this.setState({ langs: langs, libMap: map, langsNames: tab });
         });
         await this.api.getSymTypes().catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
         }).then(types =>this.setState({ types: types }));
         this.refrehData();
     }

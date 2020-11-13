@@ -54,7 +54,7 @@ export default class SideBar extends Component {
         var tbl = {};
         for (var v in langs.data) {
             var libs = await this.api.getLibs(langs.data[v].id).catch(err => {
-                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, search: this.props.location.search});
+                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             });
             tbl[langs.data[v].name] = { displayName: langs.data[v].displayName, data: libs.data.data };
         }
