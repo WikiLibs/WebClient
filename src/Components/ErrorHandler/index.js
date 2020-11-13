@@ -60,7 +60,7 @@ class ErrorPage extends Component {
                     errorDescription: "Woops. Looks like something went wrong in our server.Please report bug if this occurs."
                 });
                 let tmp = window.history.state.state.errorObj;
-                this.api.sendError(tmp.message, tmp.resource);
+                this.api.sendError(tmp.route, tmp.message + "\n" + tmp.resource);
                 break;
             default:
                 this.setState({
