@@ -66,7 +66,9 @@ export default class SearchPage extends Component {
             this.setState({ search: q.path, pageName: q.path });
             query.path = q.path;
         }
-        this.api.searchSymbols(query).then(response => {
+        this.api.searchSymbols(query).catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
+        }).then(response => {
             this.sortResultsIntoList(response.data);
         });
     }
@@ -207,7 +209,9 @@ export default class SearchPage extends Component {
             });
             this.setState({ langs: langs, libMap: map, langsNames: tab });
         });
-        await this.api.getSymTypes().then(types => this.setState({ types: types }));
+        await this.api.getSymTypes().catch(err => {
+            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
+        }).then(types =>this.setState({ types: types }));
         this.refrehData();
     }
 }

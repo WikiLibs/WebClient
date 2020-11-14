@@ -7,9 +7,14 @@ window.langIconMap = {};
 export default class ApiService {
     url = process.env.REACT_APP_API_URL;
     apiKey = process.env.REACT_APP_API_KEY;
+    erroReportKey = process.env.REACT_APP_ERROR_REPORT_KEY;
 
     getDebug() {
         return (Axios.get(this.url + "/debug"));
+    }
+
+    getErrorDebug() {
+        return (Axios.get(this.url + "/debug/error/"));
     }
 
     getSymLangs() {
@@ -408,7 +413,17 @@ export default class ApiService {
                 }));
         }
     }
-
-
+    
+    sendError(message, data) {
+        return (Axios.post(this.url + "/error" , {
+            "errorMessage": message,
+            "errorData": data
+        },
+        {
+            'headers': {
+                'Authorization': this.erroReportKey
+            }
+        }));
+    }
 
 }
