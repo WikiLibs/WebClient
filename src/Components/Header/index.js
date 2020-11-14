@@ -175,7 +175,7 @@ class Header extends Component {
             path: this.state.search
         };
 
-        var result = await this.api.searchSymbols(query);
+        var result = await this.api.searchSymbols(query)
         for (var id in result.data.data) {
             if (suggestions.length === 5) { 
                 suggestions = []; 
