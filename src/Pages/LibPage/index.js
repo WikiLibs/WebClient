@@ -142,6 +142,22 @@ export default class LibPage extends Component {
                 libId: parseInt(q.lib), 
                 libName: q.name
             });
+
+            ///////////////////////////// NICO J /////////////////////////////////////////////
+            /*
+            const ID = -1;
+            const QUERRY = {
+                displayName: "string",
+                description: "string",
+                copyright: "string"
+            }
+
+            this.api.getInfoLib(ID)
+            this.api.getIconLib(ID)
+            this.api.patchLib(ID, QUERRY)
+            */
+            //////////////////////////////////////////////////////////////////////////////////
+
         } else {
             this.setState({apiError: apiError});
         }

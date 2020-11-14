@@ -150,6 +150,41 @@ export default class ApiService {
     }
     /////////////////////////////////////////////////////////
 
+    getInfoLib(libId) {
+        return (Axios.get(this.url + "/symbol/lib/" + libId,
+            {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            })
+        );
+    }
+
+    getIconLib(libId) {
+        return (Axios.get(this.url + "/symbol/lib/" + libId + "icon",
+            {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            })
+        );
+    }
+
+    patchLib(libId, query) {
+        return (Axios.patch(this.url + "/symbol/lib/" + libId, {
+            displayName: query.displayName,
+            description: query.description,
+            copyright: query.copyright
+        },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
+    /////////////////////////////////////////////////////////
+
     getInfoTree(libId) {
         return (Axios.get(this.url + "/symbol/lib/" + libId + "/tree/root",
             {

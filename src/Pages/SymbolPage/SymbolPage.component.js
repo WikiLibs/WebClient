@@ -150,7 +150,12 @@ export default class SymbolPage extends Component {
         let comments = {};
         listExample.data.forEach(elem => {
             this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
-            this.api.getComments(elem.id, 1).then(response => {mapComments[elem.id] = response.data});
+            this.api.getComments(elem.id, 1).then(response => {
+                mapComments[elem.id] = response.data
+                response.data.data.forEach(comment => {
+                    this.api.getUser(comment.userId).then(resp => {mapComments[resp.id] = resp.data.pseudo})
+                })
+            });
             comments[elem.id] = "";
         })
 
