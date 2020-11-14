@@ -163,7 +163,12 @@ export default class SymbolPage extends Component {
                 this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
                 this.api.getComments(elem.id, 1).catch(err => {
                     this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
-                }).then(response => {mapComments[elem.id] = response.data});
+                }).then(response => {
+                    mapComments[elem.id] = response.data
+                    response.data.data.forEach(comment => {
+                        this.api.getUser(comment.userId).then(resp => {mapComments[resp.id] = resp.data.pseudo})
+                    })
+                });
                 comments[elem.id] = "";
             })
 
