@@ -133,7 +133,7 @@ function parseMarkdown(text) {
                 link: link
             });
         } else if (p.trimStart().startsWith("<note>") && p.trimEnd().endsWith("</note>")) {
-            const body = p.substring(7).trim();
+            const body = p.substring(7, p.length - 8).trim();
             statementList.push({
                 type: Statement.SmallNote,
                 tokens: processTextBodyInTokens(body)
