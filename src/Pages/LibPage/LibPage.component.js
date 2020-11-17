@@ -7,7 +7,13 @@ import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import EditIcon from '@material-ui/icons/Edit';
 import PublishIcon from '@material-ui/icons/Publish';
 import CancelIcon from '@material-ui/icons/Cancel';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 import TextField from '@material-ui/core/TextField';
 
 import TreeView from '../TreeView'
@@ -61,7 +67,7 @@ export default class LibPage extends Component {
             id : null,
             name : null,
             displayName : null,
-            lang : null,
+            langName : null,
             description : null,
             copyright : null,
             userId : null,
@@ -70,7 +76,7 @@ export default class LibPage extends Component {
             expandedTreeView : false,
             expandedDescription : true,
             isEdit : false,
-            
+            loading: false
         }
     }
 
@@ -97,23 +103,23 @@ export default class LibPage extends Component {
                 name : q.name,
                 displayName : undefined,
                 langName : "C++",
-                description : undefined,
+                description : data,
                 copyright : "mylibcopyright",
                 userId : "a5070f52-1b13-41b9-bba2-2227f77aec72",
                 NewDisplayName : "My lib",
-                NewDescription : undefined,
+                NewDescription : data,
                 NewCopyright : "mylibcopyright"
             }
 
             this.setState(tmpData);
             if (tmpData.description === undefined || tmpData.description === "") {
-                this.setState({description : "", expandedTreeView : true});
+                this.setState({description : "", NewDescription : "", expandedTreeView : true, expandedDescription : false});
             }
-            if (tmpData.description === undefined) {
-                this.setState({description : ""});
+            if (tmpData.copyright === undefined) {
+                this.setState({copyright : "", NewCopyright : ""});
             }
             if (tmpData.displayName === undefined) {
-                this.setState({displayName : tmpData.name});
+                this.setState({displayName : tmpData.name, NewDisplayName : tmpData.name});
             }
         }
     }
@@ -137,6 +143,17 @@ export default class LibPage extends Component {
     }
 
     renderMiniMarkDown = () => {
+        if (this.state.description === null || this.state.description === "") {
+            return (
+                <div className="lib-page-no-info">
+                    <span>No information given for this page yet</span>
+                    <div className='lib-page-edit-btn' onClick={() => this.handleEdit()}>
+                        <span>add information</span>
+                        <EditIcon/>
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className="GS-Content">
                 {/* TODO: get minimarkdown display format => diplay it correctly */}
@@ -213,25 +230,39 @@ export default class LibPage extends Component {
                 <div className="lib-page-form">
                     <div className="lib-page-form-title">Edition mode:</div>
                     <div className="lib-page-form-upper">
-                        <TextField
-                            name="NewDisplayName"
-                            label="Library name"
-                            className="lib-page-form-input"
-                            value={this.state.NewDisplayName}
-                            margin="normal"
-                            variant="outlined"
-                            onChange={() => this.handleChange}
-                        />
-                        <TextField
-                            name="NewCopyright"
-                            label="Copyright"
-                            className="lib-page-form-input"
-                            value={this.state.NewCopyright}
-                            margin="normal"
-                            variant="outlined"
-                            onChange={() => this.handleChange}
-                        />
-                        {/* TODO: add icon upload */}
+                        <div>
+                            <TextField
+                                name="NewDisplayName"
+                                label="Library name"
+                                className="lib-page-form-input"
+                                value={this.state.NewDisplayName}
+                                margin="normal"
+                                variant="outlined"
+                                onChange={this.handleChange}
+                            />
+                            <TextField
+                                name="NewCopyright"
+                                label="Library copyright"
+                                className="lib-page-form-input"
+                                value={this.state.NewCopyright}
+                                margin="normal"
+                                variant="outlined"
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="lib-page-form-upper-right">
+                            <span>Library icon</span>
+                            <Card className="lib-page-icon-card" label='icon'>
+                                <input type="file" id="file" name="file" className="lib-page-icon-input" onChange={this.profileImgUpdate} />
+                                <label htmlFor="file">
+                                    <CardMedia
+                                        className="lib-page-icon-card-img"
+                                        image={this.state.icon}
+                                        title=""
+                                    />
+                                </label>
+                            </Card>
+                        </div>
                     </div>
                     
                     <div className="lib-page-form-lower">
@@ -240,15 +271,39 @@ export default class LibPage extends Component {
                             name="NewDescription"
                             label="Description"
                             value={this.state.NewDescription}
-                            onChange={() => this.handleChange}
+                            onChange={this.handleChange}
                             rows={15}
-                            cols={113}
                         />
                         {/* Doc mini markdown btn */}
                     </div>
                 </div>
             </>
         )
+    }
+
+    profileImgUpdate = event => {
+        this.setState({ loading: true, icon: URL.createObjectURL(event.target.files[0])});
+        this.api.setIconLib(this.state.id, event.target.files[0])
+        .then(() => this.setState({loading: false}))
+        .catch(err => {
+            this.setState({loading: false, icon : pp})
+            console.log("error uploading image");
+            //error popup
+            if (err.response.status === 500) {
+                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
+            }
+        });
+    }
+
+    renderLoadingDialog() {
+        return (
+            <Dialog open={this.state.loading}>
+                <DialogContent className="dialog-upload-img">
+                    <CircularProgress />
+                    <span>Uploading new image</span>
+                </DialogContent>
+            </Dialog>
+        );
     }
 
     handleEdit = () => {
@@ -258,7 +313,7 @@ export default class LibPage extends Component {
 
     handleSave = () => {
         console.log("switching to viewer mode and saving data");
-        this.setState({isEdit: false});
+        this.setState({isEdit: false, expandedDescription : true});
         if (this.state.NewCopyright !== null && this.state.NewCopyright !== undefined && this.state.NewDescription !== null && this.state.NewDescription !== undefined && this.state.NewDisplayName !== null && this.state.NewDisplayName !== undefined) {
             this.api.patchLib(this.state.id, {
                 displayName: this.state.NewDisplayName,
@@ -271,12 +326,15 @@ export default class LibPage extends Component {
                     description : this.state.NewDescription,
                     copyright : this.state.NewCopyright});
                 /* TODO reload Markdown */
-        }).catch(err => {
-            console.log("failed to save data");
-            this.handelCancel();
-        });
+            }).catch(err => {
+                console.log("failed to save data");
+                if (err.response.status === 500) {
+                    this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
+                }
+                this.handelCancel();
+            });
         } else {
-            console.log("failed to save data");
+            console.log("Error in data sent");
         }
     }
 
@@ -303,10 +361,10 @@ export default class LibPage extends Component {
                             </div>
                         </>
                         :
-                            <div className="lib-page-edit-btn" onClick={() => this.handleEdit()}>
-                                <span>edit this page</span>
-                                <EditIcon/>
-                            </div>
+                        <div className="lib-page-edit-btn" onClick={() => this.handleEdit()}>
+                            <span>edit this page</span>
+                            <EditIcon/>
+                        </div>
 
                     }
                 </>
@@ -335,7 +393,6 @@ export default class LibPage extends Component {
                         {this.renderTitle()}
                         <div className="lib-page-accordion" id="accordion">
                         {((this.state.description !== null && this.state.description !== undefined && this.state.description !== "") || (this.props.user !== null && this.props.user !== undefined && this.props.user.id !== undefined && this.props.user.id === this.state.userId)) ?
-                            // going there anyway
                             <div className="card">
                                 <div className="card-header" id="headingOne">
                                     <h5 className="mb-0 lib-page-btn-collapse">
@@ -374,6 +431,7 @@ export default class LibPage extends Component {
                         {console.log(this.state)}
                     </div>
                 </div>
+                {this.renderLoadingDialog()}
             </div>
         );
     }
