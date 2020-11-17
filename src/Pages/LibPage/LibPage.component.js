@@ -97,17 +97,20 @@ export default class LibPage extends Component {
                 name : q.name,
                 displayName : undefined,
                 langName : "C++",
-                description : data,
+                description : undefined,
                 copyright : "mylibcopyright",
                 userId : "a5070f52-1b13-41b9-bba2-2227f77aec72",
                 NewDisplayName : "My lib",
-                NewDescription : data,
+                NewDescription : undefined,
                 NewCopyright : "mylibcopyright"
             }
 
             this.setState(tmpData);
-            if (tmpData.description === null || tmpData.description === undefined ) {
-                this.setState({expandedTreeView : true});
+            if (tmpData.description === undefined || tmpData.description === "") {
+                this.setState({description : "", expandedTreeView : true});
+            }
+            if (tmpData.description === undefined) {
+                this.setState({description : ""});
             }
             if (tmpData.displayName === undefined) {
                 this.setState({displayName : tmpData.name});
@@ -217,7 +220,7 @@ export default class LibPage extends Component {
                             value={this.state.NewDisplayName}
                             margin="normal"
                             variant="outlined"
-                            onChange={this.handleChange}
+                            onChange={() => this.handleChange}
                         />
                         <TextField
                             name="NewCopyright"
@@ -226,7 +229,7 @@ export default class LibPage extends Component {
                             value={this.state.NewCopyright}
                             margin="normal"
                             variant="outlined"
-                            onChange={this.handleChange}
+                            onChange={() => this.handleChange}
                         />
                         {/* TODO: add icon upload */}
                     </div>
@@ -237,11 +240,11 @@ export default class LibPage extends Component {
                             name="NewDescription"
                             label="Description"
                             value={this.state.NewDescription}
-                            onChange={this.handleChange}
+                            onChange={() => this.handleChange}
                             rows={15}
                             cols={113}
                         />
-                        {/* Doc Button */}
+                        {/* Doc mini markdown btn */}
                     </div>
                 </div>
             </>
@@ -331,7 +334,8 @@ export default class LibPage extends Component {
                     <div className="GS-content-page">
                         {this.renderTitle()}
                         <div className="lib-page-accordion" id="accordion">
-                        {this.state.description !== null && this.state.description !== undefined ?
+                        {((this.state.description !== null && this.state.description !== undefined && this.state.description !== "") || (this.props.user !== null && this.props.user !== undefined && this.props.user.id !== undefined && this.props.user.id === this.state.userId)) ?
+                            // going there anyway
                             <div className="card">
                                 <div className="card-header" id="headingOne">
                                     <h5 className="mb-0 lib-page-btn-collapse">
