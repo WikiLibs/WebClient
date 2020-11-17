@@ -3,6 +3,7 @@ import Axios from "axios";
 window.userMap = {};
 window.userIconMap = {};
 window.langIconMap = {};
+window.libIconMap = {};
 
 export default class ApiService {
     url = process.env.REACT_APP_API_URL;
@@ -166,13 +167,36 @@ export default class ApiService {
     }
 
     getIconLib(libId) {
-        return (Axios.get(this.url + "/symbol/lib/" + libId + "/icon",
-            {
-                headers: {
-                    'Authorization': this.apiKey
-                }
-            })
-        );
+        return new Promise((resolve, reject) => {
+            if (libId in window.libIconMap)
+                resolve(window.libIconMap[libId]);
+            else {
+                Axios.get(this.url + "/symbol/lib/" + libId + "/icon", {
+                    headers: {
+                        'Authorization': this.apiKey
+                    }
+                }).then(response => {
+                    window.libIconMap[libId] = this.hackMUIMotherShit(response.data, "image/png");
+                    resolve(window.libIconMap[libId]);
+                }).catch(err => {
+                    if (err.response.status === 404)
+                        return;
+                    reject(err)
+                });
+            }
+        });
+    }
+
+    setIconLib(libId, data) {
+        window.libIconMap = {};
+        const f = new FormData();
+        f.append("File", data);
+        return Axios.put(this.url + "/symbol/lib/" + libId + "/icon", f, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken'),
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
     patchLib(libId, query) {
