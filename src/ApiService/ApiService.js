@@ -166,7 +166,7 @@ export default class ApiService {
     }
 
     getIconLib(libId) {
-        return (Axios.get(this.url + "/symbol/lib/" + libId + "icon",
+        return (Axios.get(this.url + "/symbol/lib/" + libId + "/icon",
             {
                 headers: {
                     'Authorization': this.apiKey
