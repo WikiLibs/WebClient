@@ -17,6 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import TextField from '@material-ui/core/TextField';
 
 import TreeView from '../TreeView'
+import {parseMarkdown, Statement, Token} from '../../MiniMarkdown'
 
 import './style.css';
 
@@ -76,7 +77,8 @@ export default class LibPage extends Component {
             expandedTreeView : false,
             expandedDescription : true,
             isEdit : false,
-            loading: false
+            loading: false,
+            markdown : []
         }
     }
 
@@ -111,6 +113,9 @@ export default class LibPage extends Component {
                 NewCopyright : "mylibcopyright"
             }
 
+            if (tmpData.description !== undefined && tmpData.description !== null && tmpData.description !== "")
+                this.setState({markdown : parseMarkdown(tmpData.description)});
+
             this.setState(tmpData);
             if (tmpData.description === undefined || tmpData.description === "") {
                 this.setState({description : "", NewDescription : "", expandedTreeView : true, expandedDescription : false});
@@ -142,8 +147,128 @@ export default class LibPage extends Component {
         )
     }
 
+    renderMdSubTitle = (data, id) => {
+        return(
+            <div key={data + id}>
+                <div className="GS-second-heading">{data}</div>
+            </div>
+        );
+    }
+
+    renderMdTitle = (data, id) => {
+        return(
+            <div key={data + id}>
+                <div className="GS-first-heading">{data}</div>
+            </div>
+        );
+    }
+
+    renderMdTerminal = (data, id) => {
+        return(
+            <div key={data + id}>
+                <div className="GS-code-section">{data}</div>
+            </div>
+        );
+    }
+
+    renderMdButton = (data, id) => {
+        return(
+            <div key={data + id}>
+                <div className="GS-button-container">
+                    <Link to={""} onClick={() => window.location.href = data.link} className="GS-button">
+                        <div className="GS-button-title">{data.title}</div>
+                        <div className="GS-button-description">{data.description}</div>
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    renderMdButtonNoDesc = (data, id) => {
+        return(
+            <div key={data + id}>
+                <div className="GS-button-container">
+                    <Link to={""} onClick={() => window.location.href = data.link} className="GS-button">
+                        <div className="GS-button-title">{data.title}</div>
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    renderMdSmallNote = (data, id) => {
+        let spanText = [];
+        let newid = 0;
+        data.forEach(elem => {
+            if (elem.type === Token.Text) {
+                spanText.push(elem.data);
+            } else if (elem.type === Token.Url) {
+                spanText.push(this.renderMdLink(elem, newid));
+            } else {
+                console.log('Statement not handled yet', elem);
+            }
+            newid++;
+        });
+        return(
+            <div key={data + id}>
+                <div className="GS-highlight-section">
+                    <span>{spanText}</span>
+                </div>
+            </div>
+        );
+    }
+
+    renderMdNote = (data, title, id) => {
+        let spanText = [];
+        let newid = 0;
+        data.forEach(elem => {
+            if (elem.type === Token.Text) {
+                spanText.push(elem.data);
+            } else if (elem.type === Token.Url) {
+                spanText.push(this.renderMdLink(elem, newid));
+            } else {
+                console.log('Statement not handled yet', elem);
+            }
+            newid++;
+        });
+        return(
+            <div key={data + id}>
+                <div className="GS-note-section">
+                    <span className="GS-note-title">{title}</span>
+                    <span>{spanText}</span>
+                </div>
+            </div>
+        );
+    }
+
+    renderMdTextBody = (data, id) => {
+        let spanText = [];
+        let newid = 0;
+        data.forEach(elem => {
+            if (elem.type === Token.Text) {
+                spanText.push(elem.data);
+            } else if (elem.type === Token.Url) {
+                spanText.push(this.renderMdLink(elem, newid));
+            } else {
+                console.log('Statement not handled yet', elem);
+            }
+            newid++;
+        });
+        return(
+            <div key={data + id}>
+                <span>{spanText}</span>
+            </div>
+        );
+    }
+
+    renderMdLink = (data, id) => {
+        return (
+            <Link key={id * 2 + data} to={""} onClick={() => window.location.href = data.link}>{data.title}</Link>
+        )
+    }
+
     renderMiniMarkDown = () => {
-        if (this.state.description === null || this.state.description === "") {
+        if (this.state.markdown.length === 0) {
             return (
                 <div className="lib-page-no-info">
                     <span>No information given for this page yet</span>
@@ -154,65 +279,44 @@ export default class LibPage extends Component {
                 </div>
             );
         }
+        let Markdown = [];
+        let id = 0
+        console.log(this.state.markdown)
+        this.state.markdown.forEach(elem => {
+            switch (elem.type) {
+                case Statement.SubTitle:
+                    Markdown.push(this.renderMdSubTitle(elem.data, id));
+                    break;
+                case Statement.Title:
+                    Markdown.push(this.renderMdTitle(elem.data, id));
+                    break;
+                case Statement.Terminal:
+                    Markdown.push(this.renderMdTerminal(elem.data, id));
+                    break;
+                case Statement.ButtonWithDesc:
+                    Markdown.push(this.renderMdButton(elem, id));
+                    break;
+                case Statement.ButtonWithoutDesc:
+                    Markdown.push(this.renderMdButtonNoDesc(elem, id));
+                    break;
+                case Statement.SmallNote:
+                    Markdown.push(this.renderMdSmallNote(elem.tokens, id));
+                    break;
+                case Statement.Note:
+                    Markdown.push(this.renderMdNote(elem.tokens, elem.title, id));
+                    break;
+                case Statement.TextBody:
+                    Markdown.push(this.renderMdTextBody(elem.tokens, id));
+                    break;
+                default:
+                    console.log('Statement not handled yet', elem);
+                    break;
+            }
+            id++;
+        });
         return (
             <div className="GS-Content">
-                {/* TODO: get minimarkdown display format => diplay it correctly */}
-                <div className="GS-section">
-                    <div className="GS-first-heading" id="section1">1. Get Boost</div>
-                    <span>The most reliable way to get a copy of Boost is to download a distribution from <Link to="https://www.boost.org/users/history/version_1_73_0.html">SourceForge</Link>:</span>
-                    <div className="GS-inner-section">
-                        <div className="GS-second-heading" id="section1_1">1.a. Download:</div>
-                        <div className="GS-button-container">
-                            <Link to="https://www.boost.org/users/history/version_1_73_0.html" className="GS-button">
-                                <div className="GS-button-title">Boost download</div>
-                                <div className="GS-button-description">Unix Boost 1.73.0</div>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="GS-inner-section">
-                        <div className="GS-second-heading" id="section1_2">1.b. Install:</div>
-                        <span>In the directory where you want to put the Boost installation, execute:</span>
-                        <div className="GS-code-section">tar --bzip2 -xf /path/to/boost_1_73_0.tar.bz2</div>
-                    </div>
-                    <div className="GS-note-section">
-                        <span className="GS-note-title">Note</span>
-                        <span>Other Packages:</span>
-                        <span>RedHat, Debian, and other distribution packagers supply Boost library packages, however you may need to adapt these instructions if you use third-party packages, because their creators usually choose to break Boost up into several packages, reorganize the directory structure of the Boost distribution, and/or rename the library binaries.1 If you have any trouble, we suggest using an official Boost distribution from SourceForge.</span>
-                    </div>  
-                </div>
-                <hr />
-                <div className="GS-section">
-                    <div className="GS-first-heading" id="section2">2. The Boost Distribution</div>
-                    <span>This is a sketch of the resulting directory structure:</span>
-                    <div className="GS-code-section">
-                        boost_1_73_0/ .................The “boost root directory”<br/>
-                        index.htm .........A copy of www.boost.org starts here<br/>
-                        boost/ .........................All Boost Header files<br/>
-                        <br/>
-                        libs/ ............Tests, .cpps, docs, etc., by library<br/>
-                            index.html ........Library documentation starts here<br/>
-                            algorithm/<br/>
-                            any/<br/>
-                            array/<br/>
-                                            …more libraries…<br/>
-                        status/ .........................Boost-wide test suite<br/>
-                        tools/ ...........Utilities, e.g. Boost.Build, quickbook, bcp<br/>
-                        more/ ..........................Policy documents, etc.<br/>
-                        doc/ ...............A subset of all Boost library docs<br/>
-                    </div>
-                    <div className="GS-important-section">
-                        <span>It's important to note the following:</span>
-                        <ul>
-                            <li><span>The path to the <b>boost root directory</b> <u>(often /usr/local/boost_1_73_0)</u> is sometimes referred to as <div className="GS-inline-code">$BOOST_ROOT</div> in documentation and mailing lists .</span></li>
-                            <li><span>To compile anything in Boost, you need a directory containing the boost/ subdirectory in your #include path.</span></li>
-                            <li><span>Since all of Boost's header files have the .hpp extension, and live in the boost/ subdirectory of the boost root, your Boost #include directives will look like</span></li>
-                            <li><span>Don't be distracted by the doc/ subdirectory; it only contains a subset of the Boost documentation. Start with libs/index.html if you're looking for the whole enchilada.</span></li>
-                        </ul>
-                    </div>
-                    <div className="GS-highlight-section">
-                        <span>See the Linux and macOS platform docs for a troubleshooting guide and more information about building your projects for Unix-like systems.</span>
-                    </div>
-                </div>
+                {Markdown}
             </div>
         )
     }
@@ -324,8 +428,10 @@ export default class LibPage extends Component {
                 this.setState({isEdit: false,
                     displayName : this.state.NewDisplayName,
                     description : this.state.NewDescription,
-                    copyright : this.state.NewCopyright});
-                /* TODO reload Markdown */
+                    copyright : this.state.NewCopyright
+                });
+                if (this.state.NewDescription !== undefined && this.state.NewDescription !== null && this.state.NewDescription !== "")
+                    this.setState({markdown : parseMarkdown(this.state.NewDescription)});
             }).catch(err => {
                 console.log("failed to save data");
                 if (err.response.status === 500) {
@@ -365,7 +471,6 @@ export default class LibPage extends Component {
                             <span>edit this page</span>
                             <EditIcon/>
                         </div>
-
                     }
                 </>
             )
@@ -397,7 +502,7 @@ export default class LibPage extends Component {
                                 <div className="card-header" id="headingOne">
                                     <h5 className="mb-0 lib-page-btn-collapse">
                                         <button className="symbol-page-title btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded={this.state.expandedDescription ? "true" : "false"} aria-controls="collapseOne">
-                                            Library information
+                                            {this.state.displayName} informations
                                         </button>
                                         {this.renderButtonSwitch()}
                                         
