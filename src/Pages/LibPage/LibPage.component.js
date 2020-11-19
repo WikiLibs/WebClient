@@ -23,42 +23,6 @@ import './style.css';
 
 import pp from '../../Components/Header/pp.png'
 
-const data = `
-Boost provides free peer-reviewed portable C++ source libraries.
-
-We emphasize libraries that work well with the C++ Standard Library. Boost libraries are intended to be widely useful, and usable across a broad spectrum of applications. The [Boost license](https://whatever) encourages the use of Boost libraries for all users with minimal restrictions.
-
-We aim to establish "existing practice" and provide reference implementations so that Boost libraries are suitable for eventual standardization. Beginning with the ten Boost Libraries included in the Library Technical Report (TR1) and continuing with every release of the ISO standard for C++ since 2011, the C++ Standards Committee has continued to rely on Boost as a valuable source for additions to the Standard C++ Library.
-
-text [my link](link)
-
-# Get Boost
-
-## Download
-
-[my button](link)
-
-[my button](link "Unix Boost 1.0")
-
-## Install
-
-\`my terminal command\`
-
-# The boost distribution
-
-<note>
-Note title
-
-Other Packages:RedHat, Debian, and other distribution packagers supply Boost library packages, however you may need to adapt these instructions if you use third-party packages, because their creators usually choose to break Boost up into several packages, reorganize the directory structure of the Boost distribution, and/or rename the library binaries.1 If you have any trouble, we suggest using an official Boost distribution from SourceForge.
-</note>
-
-<note>
-See the Linux and macOS platform [docs](link_to_docs) for a troubleshooting guide and more information about building your projects for Unix-like systems.
-Test
-1234567
-</note>
-`
-
 export default class LibPage extends Component {
     api = new ApiService();
 
