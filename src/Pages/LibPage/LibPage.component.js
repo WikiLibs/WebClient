@@ -51,27 +51,29 @@ export default class LibPage extends Component {
         this.api.getInfoLib(q.lib).catch(err => {
             this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
         }).then(response => {
-            this.setState();
-            let tmpData = response.data 
-            this.setState({name : q.name, NewDisplayName : tmpData.displayName, NewDescription : tmpData.description, NewCopyright : tmpData.copyright});
+            if (response !== undefined && response !== null) {
+                let tmpData = response.data 
+                this.setState({name : q.name, NewDisplayName : tmpData.displayName, NewDescription : tmpData.description, NewCopyright : tmpData.copyright});
 
-            this.setState(tmpData);
-            if (tmpData.description !== undefined && tmpData.description !== null && tmpData.description !== "")
-                this.setState({markdown : parseMarkdown(tmpData.description)});
+                this.setState(tmpData);
+                if (tmpData.description !== undefined && tmpData.description !== null && tmpData.description !== "")
+                    this.setState({markdown : parseMarkdown(tmpData.description)});
 
-            if (tmpData.description === undefined || tmpData.description === "") {
-                this.setState({description : "", NewDescription : "", expandedTreeView : true, expandedDescription : false});
-            }
-            if (tmpData.copyright === undefined) {
-                this.setState({copyright : "", NewCopyright : ""});
-            }
-            if (tmpData.displayName === undefined) {
-                this.setState({displayName : tmpData.name, NewDisplayName : tmpData.name});
+                if (tmpData.description === undefined || tmpData.description === "") {
+                    this.setState({description : "", NewDescription : "", expandedTreeView : true, expandedDescription : false});
+                }
+                if (tmpData.copyright === undefined) {
+                    this.setState({copyright : "", NewCopyright : ""});
+                }
+                if (tmpData.displayName === undefined) {
+                    this.setState({displayName : tmpData.name, NewDisplayName : tmpData.name});
+                }
             }
         });
 
         this.api.getIconLib(q.lib).then(response => {
-            this.setState({icon: response});
+            if (response !== undefined && response !== null)
+                this.setState({icon: response});
         }).catch(err => {
             if (err.response.status === 500)
                 this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
