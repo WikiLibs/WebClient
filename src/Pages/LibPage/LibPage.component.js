@@ -84,39 +84,17 @@ export default class LibPage extends Component {
 
     componentDidMount = async () => {
         var q = useQuery();
-        let apiError = false;
-        /*this.api.getInfoLib(q.lib).catch(err => {
+        this.api.getInfoLib(q.lib).catch(err => {
             this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
-            apiError = true;
         }).then(response => {
-            this.setState(response.data);
-        });*/
+            this.setState();
+            let tmpData = response.data 
+            this.setState({name : q.name, NewDisplayName : tmpData.displayName, NewDescription : tmpData.description, NewCopyright : tmpData.copyright});
 
-        this.api.getIconLib(q.lib).then(response => {
-            this.setState({icon: response});
-        }).catch(err => {
-            /*this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
-            apiError = true;*/
-        });
-
-        if (!apiError) {
-            let tmpData = {
-                id :  q.lib,
-                name : q.name,
-                displayName : undefined,
-                langName : "C++",
-                description : data,
-                copyright : "mylibcopyright",
-                userId : "a5070f52-1b13-41b9-bba2-2227f77aec72",
-                NewDisplayName : "My lib",
-                NewDescription : data,
-                NewCopyright : "mylibcopyright"
-            }
-
+            this.setState(tmpData);
             if (tmpData.description !== undefined && tmpData.description !== null && tmpData.description !== "")
                 this.setState({markdown : parseMarkdown(tmpData.description)});
 
-            this.setState(tmpData);
             if (tmpData.description === undefined || tmpData.description === "") {
                 this.setState({description : "", NewDescription : "", expandedTreeView : true, expandedDescription : false});
             }
@@ -126,7 +104,14 @@ export default class LibPage extends Component {
             if (tmpData.displayName === undefined) {
                 this.setState({displayName : tmpData.name, NewDisplayName : tmpData.name});
             }
-        }
+        });
+
+        this.api.getIconLib(q.lib).then(response => {
+            this.setState({icon: response});
+        }).catch(err => {
+            if (err.response.status === 500)
+                this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
+        });
     }
 
     renderTitle = () => {
