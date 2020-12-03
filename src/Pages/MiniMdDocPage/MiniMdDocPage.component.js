@@ -38,7 +38,7 @@ const renderHeadings = () => {
             <hr />
             <div className="GS-section">
                 <div className="GS-first-heading">Headings</div>
-                <span>To create a heading, add number signs (#) in front of a word or phrase. The number of number signs you use should correspond to the heading level. For example, to create a heading level three , use three number signs (e.g., ### My Header).</span>
+                <span>To create a heading, add number signs (#) in front of a word or phrase. The number of number signs you use should correspond to the heading level. For example, to create a heading level two , use three number signs (e.g., ## My Header).</span>
                 <table className='minimd-table-bordered minimd-table'>
                     <thread className="minimd-thead-light">
                         <tr>
