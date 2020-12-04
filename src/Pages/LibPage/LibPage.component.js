@@ -331,6 +331,8 @@ export default class LibPage extends Component {
                         />
                         {/* Doc mini markdown btn */}
                     </div>
+                    <div className="lib-page-form-title">Need help ?</div>
+                    <span><Link to={"/mini-markdown-cheat-sheet"} target="_blank">Visit our MiniMarkdown guide</Link></span>
                 </div>
             </>
         )
