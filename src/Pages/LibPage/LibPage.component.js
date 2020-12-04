@@ -454,7 +454,7 @@ export default class LibPage extends Component {
                                 <div className="card-header" id="headingOne">
                                     <h5 className="mb-0 lib-page-btn-collapse">
                                         <button className="symbol-page-title btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded={this.state.expandedDescription ? "true" : "false"} aria-controls="collapseOne">
-                                            {this.state.displayName} informations
+                                            {this.state.displayName}'s' information
                                         </button>
                                         {this.renderButtonSwitch()}
                                         
