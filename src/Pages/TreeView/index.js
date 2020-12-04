@@ -1,168 +1,104 @@
 import React, { Component } from 'react';
 import { useQuery } from '../../util';
 import { ApiService } from '../../ApiService';
+import TreeViewRoot from '../../Components/TreeViewRoot'
 
-import Tree2 from 'react-tree-graph';
-
-import Tree from 'react-animated-tree'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import "./style.css";
-
-const treeStyles = {
-    top: 40,
-    left: 40,
-    color: '#242424',
-    fill: '#242424',
-    width: '100%',
-  }
 
 export default class TreeView extends Component {
     api = new ApiService();
 
     state = {
-        data: {},
-        listType: [],
-        libId: -1,
-        libName: "",
-        apiError: "",
-        display: 0
-      };
-    
-    onClick = (event, node) => {
-        window.location = "/symbol?id=" + node.split("/%:/")[1];
-    }
-
-    setTree = () => {
-        let final = [];
-        let tmp = [];
-
-        this.state.listType.forEach(elem => {
-            this.state.data[elem].forEach(elem2 => {
-                tmp.push({
-                    name: elem2.firstPrototype + "/%:/" + elem2.id,
-                    id: elem2.id
-                });
-            });
-            final.push({name: elem, children: tmp})
-            tmp = []
-        });
-        return(
-            {
-                name: this.state.libName,
-                children: final
-            }
-        );
-    }
-
-    setFolder = () => {
-        let final = [];
-        let tmp = [];
-
-        this.state.listType.forEach(elem => {
-            this.state.data[elem].forEach(elem2 => {
-                tmp.push(
-                    <Tree key={elem2.id} content={<button type="button" className="btn btn-link" onClick={() => {window.location = "/symbol?id=" + elem2.id}} >{elem2.firstPrototype}</button>} style={{ color: '#63b1de' }} />
-                );
-            });
-            final.push(
-                <Tree key={elem} content={elem}> {tmp} </Tree>
-            );
-            tmp = []
-        });
-        return(
-                <Tree content={this.state.libName} type="ITEM"  open style={treeStyles}>
-                    {final}
-                </Tree>
-        );
-    }
-
-    renderTree = () => {
-        if (this.state.display === 0) {  
-            return(
-                <div className="custom-container">
-                    {this.setFolder()}
-                </div>
-            );
-        } else {
-            let graphTree = this.setTree();
-            return (
-                <Tree2
-	                    data={graphTree}
-    	                height={2000}
-	                    width={1700}
-                        animated
-                        duration={1200}
-                        svgProps={{
-                            className: 'custom'
-                        }}
-                        gProps={{
-                            className: "node",
-                            onClick: this.onClick,
-                        }}
-	                />
-            );
-        }
-    }
-
-    render = () => {
-        if (this.state.apiError.length === 0) {
-              return (
-                <div className="custom-container">
-                    <div className="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" className="btn btn-secondary" onClick={() => {this.setState({display: 0})}}>Folder</button>
-                        <button type="button" className="btn btn-secondary" onClick={() => {this.setState({display: 1})}}>Graph</button>
-                    </div>
-                    {this.renderTree()}
-                </div>
-              )
-        } else {
-            return (<div>{this.state.apiError}</div>)
-        }
+        libId: 0,
+        libName: '',
+        data: [],
+        isLoading: false
     }
 
     componentDidMount = async () => {
         var q = useQuery();
-        let apiError = "";
-        let rep = await this.api.getInfoTree(parseInt(q.lib)).catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
-            apiError = this.api.translateErrorMessage(err)
-        });
-        let listData = {};
-        let listType = [];
+        let libId = parseInt(q.lib)
+        let libName = q.name
+        this.setState({
+            libId: libId,
+            libName: libName,
+            isLoading: true
+        })
 
-        if (apiError.length === 0) {
-            rep.data.forEach(elem => {
-                if (!listData[elem.type]) {
-                    listData[elem.type] = [];
-                    listType.push(elem.type);
-                }
-                listData[elem.type].push(elem);
-            });
-
+        await this.api.getInfoTree(libId).then(result => {
             this.setState({
-                data: listData, 
-                listType: listType, 
-                libId: parseInt(q.lib), 
-                libName: q.name
-            });
+                data: this.getFormattedResponseWithTypes(result.data),
+                isLoading: false
+            })
+        })
+    }
 
-            ///////////////////////////// NICO J /////////////////////////////////////////////
-            /*
-            const ID = -1;
-            const QUERRY = {
-                displayName: "string",
-                description: "string",
-                copyright: "string"
+    getFormattedResponseWithTypes = (response) => {
+        let baseLibContents = []
+        let tmpTypes = []
+
+        response.forEach(elem => {
+            tmpTypes.push(elem.type)
+        })
+        tmpTypes = [...new Set(tmpTypes)].sort()
+        tmpTypes.forEach(type => {
+            baseLibContents.push({
+                id: type,
+                name: type,
+                subContent: []
+            })
+        })
+        
+        response.forEach(elem => {
+            baseLibContents.forEach(typeContents => {
+                if (typeContents.name === elem.type)
+                    typeContents.subContent.push({
+                        id: elem.id,
+                        name: elem.firstPrototype,
+                        subContent: null
+                    })
+            })
+        })
+
+        return baseLibContents
+    }
+
+    getElemToModify = (data, keyToGet, level) => {
+        for (let i = 0 ; i < data.length ; i++) {
+            if (data[i].name == keyToGet[level]) {
+                if (level === keyToGet.length - 1)
+                    return (data[i])
+                return (this.getElemToModify(data[i].subContent, keyToGet, level + 1))
             }
-
-            this.api.getInfoLib(ID)
-            this.api.getIconLib(ID)
-            this.api.patchLib(ID, QUERRY)
-            */
-            //////////////////////////////////////////////////////////////////////////////////
-
-        } else {
-            this.setState({apiError: apiError});
         }
-    };
+        return (null)
+    }
+
+    getSubContent = async (symId, nestedKey) => {
+        let keyToGet = nestedKey.split('.')
+        let elem = this.getElemToModify(this.state.data, keyToGet, 0)
+        await this.api.getSymElements(this.state.libId, symId).then(result => {
+            let subContent = this.getFormattedResponseWithTypes(result.data)
+            elem.subContent = subContent
+        })
+    }
+
+    render () {
+        return (
+            <div>
+                <div >
+                    <div>{this.state.libName.split("/").pop()} - Tree view</div>
+                </div>
+                <div >
+                    {this.state.isLoading
+                        ? <CircularProgress color="#7B68EE" />
+                        : null
+                    }
+                    <TreeViewRoot data={this.state.data} getSubContent={this.getSubContent} {...this.props}/>
+                </div>
+            </div>
+        )
+    }
 }

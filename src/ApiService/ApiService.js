@@ -222,7 +222,14 @@ export default class ApiService {
                 }
             }));
     }
-
+    
+    getSymElements(libId, symId) {
+        return (Axios.get(this.url + '/symbol/lib/' + libId + '/tree/' + symId, {
+            'headers': {
+                'Authorization': this.apiKey
+            }
+        }))
+    }
     /////////////////////////////////////////////////////////
 
     translateErrorMessage(err) {
