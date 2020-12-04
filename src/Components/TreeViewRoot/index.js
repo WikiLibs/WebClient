@@ -1,4 +1,5 @@
 import * as React from 'react'
+import SyntaxHighlighter from "../../Components/SyntaxHighlighter";
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -22,6 +23,7 @@ export default class TreeViewRoot extends React.Component {
                         level={0}
                         navigation={this.props.navigation}
                         currentPath={this.state.currentPath}
+                        langName={this.props.langName}
                     />
                     : <div>Could not found data</div>
                 }
@@ -37,7 +39,8 @@ const TreeList = ({
     selectedOptions,
     level,
     navigation,
-    currentPath
+    currentPath,
+    langName
 }) => {
     const couldBeNested = (path) => {
         let pathArray = path.split('.')
@@ -61,7 +64,7 @@ const TreeList = ({
 
         if (level >= 1 && !option.subContent && canBeNested) {
             await getSubContent(option.id, currentTmpPath)
-        } else if (level >= 1 && level % 2 == 1 && ((option.subContent && !option.subContent.length) || !canBeNested)) {
+        } else if (level >= 1 && level % 2 === 1 && ((option.subContent && !option.subContent.length) || !canBeNested)) {
             window.location.assign(window.location.origin + '/symbol?id=' + option.id);
         } if (selectedOptions[option.id]){ // Is currently selected
             delete selectedOptions[option.id]; // Remove selected key from options list
@@ -82,22 +85,23 @@ const TreeList = ({
         let hasNext = option.subContent && option.subContent.length > 0
         
         if (isSelected && hasNext)
-            return <KeyboardArrowDownIcon/>
+            return <KeyboardArrowDownIcon className="tree-view-page-icons"/>
         else if (hasNext)
-            return <KeyboardArrowRightIcon/>
+            return <KeyboardArrowRightIcon className="tree-view-page-icons"/>
         else
-            return <FiberManualRecordIcon/>
-        return (<></>)
+            return <FiberManualRecordIcon className="tree-view-page-icons-small"/>
     }
     
     return (
         <div>
             {options.map(option => (
-                <div>
-                    <div onClick={() => handleElementClicked(option, level)}>
+                <div key={option.id}>
+                    <div className="tree-view-page-clickable" onClick={() => handleElementClicked(option, level)}>
                         <div style={{height: 'auto', display: 'flex', flexDirection: 'row', marginLeft: level * 32, marginBottom: 8, alignItems: 'center'}}>
                             {getIndicator(option, selectedOptions)}
-                            <div>{option.name}</div>
+                            <div className="symbol-page-parameter-name tree-view-page-code">
+                                <SyntaxHighlighter code={option.name} lang={langName}/>
+                            </div>
                         </div>
                     </div>
                     {(option.subContent && option.subContent.length > 0 && selectedOptions[option.id]) &&
@@ -108,6 +112,7 @@ const TreeList = ({
                             selectedOptions={selectedOptions[option.id]} 
                             level={level + 1}
                             currentPath={currentPath.length === 0 ? option.name : currentPath + '.' + option.name}
+                            langName={langName}
                         />
                     }
                 </div>

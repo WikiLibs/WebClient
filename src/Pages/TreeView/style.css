@@ -1,36 +1,21 @@
-div.custom-container {
-	background-color: white;
+.tree-view-page-icons {
+    color :#7B68EE;
 }
 
-svg.custom .node circle {
-	fill: #F3F3FF;
-	stroke: #2593B8;
-	stroke-width: 1.5px;
+.tree-view-page-clickable{
+    cursor: pointer;
 }
 
-svg.custom .node text {
-	font-size: 11px;
-	background-color: #444;
-	fill: #242424;
-	text-shadow: 0 1px 4px black;
+.tree-view-page-clickable :hover{
+    text-decoration: underline;
 }
 
-svg.custom .node {
-	cursor: pointer;
+.tree-view-page-icons-small {
+    color :#7B68EE;
+    height: 10px !important;
 }
 
-svg.custom path.link {
-	fill: none;
-	stroke: #2593B8;
-	stroke-width: 1.5px;
-}
-
-.treeview > .toggle {
-	pointer-events: all;
-	cursor: pointer;
-}
-
-.treeview > .toggle:hover {
-	color: #63b1de;
-	fill: #63b1de;
+.tree-view-page-code span{
+    margin-bottom: 0px!important;
+    display: inherit!important;
 }

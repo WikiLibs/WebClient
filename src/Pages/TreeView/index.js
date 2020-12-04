@@ -13,6 +13,7 @@ export default class TreeView extends Component {
     state = {
         libId: 0,
         libName: '',
+        langName: '',
         data: [],
         isLoading: false
     }
@@ -21,9 +22,11 @@ export default class TreeView extends Component {
         var q = useQuery();
         let libId = parseInt(q.lib)
         let libName = q.name
+        let langName = q.name.split("/")[0];
         this.setState({
             libId: libId,
             libName: libName,
+            langName: langName,
             isLoading: true
         })
 
@@ -67,7 +70,7 @@ export default class TreeView extends Component {
 
     getElemToModify = (data, keyToGet, level) => {
         for (let i = 0 ; i < data.length ; i++) {
-            if (data[i].name == keyToGet[level]) {
+            if (data[i].name === keyToGet[level]) {
                 if (level === keyToGet.length - 1)
                     return (data[i])
                 return (this.getElemToModify(data[i].subContent, keyToGet, level + 1))
@@ -89,14 +92,14 @@ export default class TreeView extends Component {
         return (
             <div>
                 <div >
-                    <div>{this.state.libName.split("/").pop()} - Tree view</div>
+                    <div className='lib-page-form-title'>{this.state.libName.split("/").pop()}:</div>
                 </div>
                 <div >
                     {this.state.isLoading
-                        ? <CircularProgress color="#7B68EE" />
+                        ? <CircularProgress className="tree-view-page-icons"/>
                         : null
                     }
-                    <TreeViewRoot data={this.state.data} getSubContent={this.getSubContent} {...this.props}/>
+                    <TreeViewRoot data={this.state.data} langName={this.state.langName} getSubContent={this.getSubContent} {...this.props}/>
                 </div>
             </div>
         )

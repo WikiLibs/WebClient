@@ -329,7 +329,6 @@ export default class LibPage extends Component {
                             onChange={this.handleChange}
                             rows={15}
                         />
-                        {/* Doc mini markdown btn */}
                     </div>
                     <div className="lib-page-form-title">Need help ?</div>
                     <span><Link to={"/mini-markdown-cheat-sheet"} target="_blank">Visit our MiniMarkdown guide</Link></span>
