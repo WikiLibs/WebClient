@@ -652,7 +652,7 @@ export default class SymbolPage extends Component {
 
     renderUploadExample = () => {
         if (this.state.type) {
-            if (this.state.type.name === "function") {
+            //if (this.state.type.name === "function") {
                 return(
                     <div id="accordion">
                         <div className="card">
@@ -685,7 +685,7 @@ export default class SymbolPage extends Component {
                         </div>
                     </div>
                 )
-            }
+            //}
         }
     }
 
