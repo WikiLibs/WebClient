@@ -30,6 +30,7 @@ export default class LibPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lang: null,
             id : null,
             name : null,
             displayName : null,
@@ -53,7 +54,7 @@ export default class LibPage extends Component {
             this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
         }).then(response => {
             if (response !== undefined && response !== null) {
-                let tmpData = response.data 
+                let tmpData = response.data
                 this.setState({name : q.name, NewDisplayName : tmpData.displayName, NewDescription : tmpData.description, NewCopyright : tmpData.copyright});
 
                 this.setState(tmpData);
@@ -474,7 +475,7 @@ export default class LibPage extends Component {
                                 </div>
                                 <div id="collapseTwo" className={this.state.expandedTreeView ? "collapse show" : "collapse"} aria-labelledby="headingTwo" data-parent="#accordion">
                                     <div className="symbol-card-body">
-                                        <TreeView />
+                                        <TreeView langName={this.state.lang}/>
                                     </div>
                                 </div>
                             </div>

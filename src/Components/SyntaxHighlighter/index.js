@@ -5,8 +5,11 @@ import './style.css'
 import {docco} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 const LNG_TBL = {
-    "PYTHON3": "python",
-    "PYTHON2": "python"
+    "PYTHON3": "js",
+    "PYTHON2": "js",
+    "CPP": "clike",
+    "JAVA": "clike",
+    "C": "clike"
 };
 
 //Give it the name NEVER ever the displayName
