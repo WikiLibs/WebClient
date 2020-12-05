@@ -101,7 +101,6 @@ const TreeList = ({
                         <div style={{height: 'auto', display: 'flex', flexDirection: 'row', marginLeft: level * 32, marginBottom: 8, alignItems: 'center'}}>
                             {getIndicator(option, selectedOptions)}
                             <div className="symbol-page-parameter-name tree-view-page-code">
-                                {/* <SyntaxHighlighter code={option.name} lang={langName}/> */}
                                 {
                                     option.type !== null ?
                                     <SymbolPreview className='symbol-page-parameter-name'

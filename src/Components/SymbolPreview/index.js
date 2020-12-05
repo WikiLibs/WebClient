@@ -50,7 +50,7 @@ export default class SymbolPreview extends Component {
                     <Link ref={this._ref} className={this.props.className}onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + this.props.to)} to={'/symbol?id=' + this.props.to} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
                             {
                                 this.props.mode ? 
-                                <div>{this.props.displayName}{console.log("here")}</div>                                    
+                                <div>{this.props.displayName}</div>                                    
                                     :
                                 <SyntaxHighlighter code={this.props.displayName} lang={this.props.lang}/>
 
