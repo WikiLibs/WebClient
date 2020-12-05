@@ -26,8 +26,6 @@ import HowToUseParser from './Pages/HowToUseParser'
 import LibPage from './Pages/LibPage'
 import MiniMdDocPage from './Pages/MiniMdDocPage'
 
-// Templates
-import GettingStarted from './Pages/Template/GettingStartedPage'
 /* END */
 
 import ErrorHandler from './Components/ErrorHandler'

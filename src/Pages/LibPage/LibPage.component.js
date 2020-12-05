@@ -20,6 +20,7 @@ import TreeView from '../TreeView'
 import {parseMarkdown, Statement, Token} from '../../MiniMarkdown'
 
 import './style.css';
+import '../Template/GettingStartedPage/style.css';
 
 import pp from '../../Components/Header/pp.png'
 

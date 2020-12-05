@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 
 import './style.css';
+import '../Template/GettingStartedPage/style.css';
 import icon from '../WelcomePage/imgs/WikiLibs_Logo.png';
 
 const renderTitle = () => {
