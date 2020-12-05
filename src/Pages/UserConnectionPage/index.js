@@ -71,7 +71,7 @@ export default class UserConnectionPage extends Component {
             <div>
                 <div id="Body">
                     <div className="user-page-content-account">
-                        <span>Sign in</span>
+                        <span>Login</span>
                         <div className="user-page-margin-form">
                             <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="user-page-form-register" noValidate autoComplete="off">
                                 <TextField
