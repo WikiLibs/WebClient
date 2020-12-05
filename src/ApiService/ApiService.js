@@ -301,7 +301,7 @@ export default class ApiService {
             })
             .then((Response) => {
                 localStorage.setItem('userToken', Response.data);
-                window.history.back();
+                window.location.assign(window.location.origin + '/profile');
             }));
     }
 
@@ -313,9 +313,6 @@ export default class ApiService {
                 headers: {
                     'Authorization': this.apiKey
                 }
-            })
-            .then((Response) => {
-                console.log("redirect forgot password");
             }));
     }
 
