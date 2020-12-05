@@ -111,7 +111,7 @@ export default class UserCreationPage extends Component {
                 break;
             case "password":
                 formErrors.password =
-                    value.length < 6 ? "Minimum 6 characters required" : "";
+                    value.length < 8 ? "Minimum 8 characters required" : "";
                 break;
             default:
                 break;
@@ -136,7 +136,7 @@ export default class UserCreationPage extends Component {
             <div>
                 <div id="Body">
                     <div className="user-page-content-account">
-                        <span>Create Account</span>
+                        <span>Register</span>
                         <div className="user-page-margin-form">
                             <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="user-page-form-register" noValidate autoComplete="off">
                                 <TextField

@@ -57,7 +57,7 @@ export default class UserConnectionPage extends Component {
                 formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
             case "password":
-                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.password = value.length < 8 ? "Minimum 8 characters required" : "";
                 break;
             default:
                 break;
