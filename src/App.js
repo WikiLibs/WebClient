@@ -45,21 +45,20 @@ export default function App()
                         <Layout exact path='/' component={WelcomePage} />
                         <Layout exact path='/symbol' component={SymbolPage} />
                         <Layout exact path='/search' component={SearchPage} />
-                        <Layout exact path='/usercreation' component={UserCreationPage} />
-                        <Layout exact path='/userconnection' component={UserConnectionPage} />
+                        <Layout exact path='/register' component={UserCreationPage} />
+                        <Layout exact path='/login' component={UserConnectionPage} />
                         <Layout exact path='/admin' component={AdminPage} />
                         <Layout exact path='/download' component={DownloadPage} />
-                        <Layout exact path='/forgotpassword' component={ForgotPasswordPage} />
+                        <Layout exact path='/forgot-password' component={ForgotPasswordPage} />
                         <Layout exact path='/profile' component={ProfilePage} />
-                        <Layout exact path='/updateprofile' component={UserUpdatePage} />
+                        <Layout exact path='/update-profile' component={UserUpdatePage} />
                         <Layout exact path='/contact' component={ContactPage} />
-                        <Layout exact path='/faq' component={FAQPage} />
-                        <Layout exact path='/privacypolicy' component={PrivacyPolicy} />
-                        <Layout exact path='/tou' component={TermsOfUse} />
-                        <Layout exact path='/coderecommendations' component={CodeRecommendations} />
-                        <Layout exact path='/howtouseparser' component={HowToUseParser} />
+                        <Layout exact path='/FAQ' component={FAQPage} />
+                        <Layout exact path='/privacy-policy' component={PrivacyPolicy} />
+                        <Layout exact path='/terms-of-use' component={TermsOfUse} />
+                        <Layout exact path='/codere-commendations-guide' component={CodeRecommendations} />
+                        <Layout exact path='/how-to-use-parser' component={HowToUseParser} />
                         <Layout exact path='/libraries' component={LibPage}/>
-                        <Layout exact path='/gettingstarted' component={GettingStarted}/>
                         <Layout exact path='/mini-markdown-cheat-sheet' component={MiniMdDocPage}/>
                         <Layout component={NotFoundPage} />
                     </Switch>

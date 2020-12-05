@@ -110,8 +110,8 @@ export default class UserConnectionPage extends Component {
                             {this.state.formErrors.email && <Alert className="user-warning" severity="warning">{this.state.formErrors.email}</Alert>}
                             {this.state.formErrors.password && <Alert className="user-warning" severity="warning">{this.state.formErrors.password}</Alert>}
                             <div className="connection-no-account">
-                                <span>Don't have an account yet ? You can <a href="/usercreation">register</a> !</span>
-                                <span className="connection-span-float-right"><a href="/forgotpassword">Forgot password ?</a></span>
+                                <span>Don't have an account yet ? You can <a href="/register">register</a> !</span>
+                                <span className="connection-span-float-right"><a href="/forgot-password">Forgot password ?</a></span>
                             </div>
                         </div>
                     </div>

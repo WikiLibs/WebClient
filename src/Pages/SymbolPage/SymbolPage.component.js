@@ -496,7 +496,7 @@ export default class SymbolPage extends Component {
                             }
                         </div>:
                         <div className="symbol-page-connect">
-                            <Link to='/userconnection'>You should login to post comments</Link>
+                            <Link to='/login'>You should login to post comments</Link>
                         </div>
                     }
                 </form>
@@ -642,7 +642,7 @@ export default class SymbolPage extends Component {
                     {this.props.user ? 
                         <Button className="symbol-page-send-example" variant="outline-success" type="submit">Send</Button>: 
                         <div className="symbol-page-connect">
-                            <Link to='/userconnection'>You should login to post examples</Link>
+                            <Link to='/login'>You should login to post examples</Link>
                         </div>
                     }
                 </form>

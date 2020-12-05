@@ -222,8 +222,8 @@ class Header extends Component {
                         <AccountButton user={this.props.user} />
                     :
                         <div className="header-right">
-                            <Link to='/userconnection'>LOGIN</Link>
-                            <Link to="/faq">FAQ</Link>
+                            <Link to='/login'>LOGIN</Link>
+                            <Link to="/FAQ">FAQ</Link>
                             <Link to="/contact">CONTACT</Link>
                         </div>
                 }

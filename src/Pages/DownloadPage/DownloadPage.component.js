@@ -47,11 +47,11 @@ export default class DownloadPage extends Component {
                         Download the WikiLibs program to upload your code on the website. 
                     </div>
                     <div className='download-page-text'>
-                        Please check the <Link to="/howtouseparser">how to</Link> page to know how to operate the program.
+                        Please check the <Link to="/how-to-use-parser">how to</Link> page to know how to operate the program.
                     </div>
                     <br />
                     <div className='download-page-text'>
-                        Before doing it, you might want to check our <Link to="/coderecommendations">code recommandations</Link> to be sure the result is as expected !
+                        Before doing it, you might want to check our <Link to="/codere-commendations-guide">code recommandations</Link> to be sure the result is as expected !
                     </div>
                     <div className='download-page-button-container'>
                         <Button 

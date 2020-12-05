@@ -101,8 +101,8 @@ class PageBody extends Component {
                                 <ReportProblemOutlinedIcon className="layout-state-icon" />
                                 <div className="layout-state-title">You should login to access this page</div>
                                 <div className="layout-state-choice">
-                                    <Link to="/userconnection">You want to login ?</Link>
-                                    <Link to="/usercreation">You want to create an account ?</Link>
+                                    <Link to="/login">You want to login ?</Link>
+                                    <Link to="/register">You want to create an account ?</Link>
                                 </div>
                             </div>
                         </div>

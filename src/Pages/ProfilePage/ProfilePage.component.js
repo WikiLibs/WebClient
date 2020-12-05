@@ -91,7 +91,7 @@ export default class ProfilePage extends Component {
                                     <div className="profile-value-form">{this.state.profileMsg}</div>
                                 </div>
                                 <hr />
-                                <Link to="/updateprofile">
+                                <Link to="/update-profile">
                                     <Button
                                         variant="contained"
                                         className="profile-submit-btn"

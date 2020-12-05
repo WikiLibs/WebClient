@@ -41,7 +41,7 @@ export default class UserConnectionPage extends Component {
                 if (err !== null && err !== undefined && err.response !== null && err.response !== undefined && err.response.status === 500)
                     this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             }).then(() => this.setState({loadingMessage: "Please check your emails, you should have received a new temporary password"}), setTimeout(() => {
-                window.location.assign(window.location.origin + '/userconnection');
+                window.location.assign(window.location.origin + '/login');
             }, 7000));
             this.setState({formErrors: { email: "" }, loading: true});
         } else {
