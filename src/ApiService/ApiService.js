@@ -76,11 +76,20 @@ export default class ApiService {
     }
     /////////////////////////////////////////////////////////
 
-    getExamples(id) {
+    vote(id, vote) {
+        return (Axios.post(this.url + "/example/" + id + "/" + vote, {example: id},
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                }
+            }));
+    }
+
+    getExamples(id, isConnect) {
         let symbolId = "?SymbolId=" + id;
         return (Axios.get(this.url + "/example" + symbolId, {
             'headers': {
-                'Authorization': this.apiKey
+                'Authorization': isConnect ? 'Bearer ' + localStorage.getItem('userToken') : this.apiKey
             }
         }));
     }
