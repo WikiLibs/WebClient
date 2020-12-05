@@ -150,6 +150,13 @@ export default class SearchPage extends Component {
     }
 
     renderSymbolList = () => {
+        if (Object.keys(this.state.symbols).length === 0) {
+            return (
+                <div>
+                    <div className="search-page-no-result">No result found for '{useQuery().lib ? useQuery().name : useQuery().path}'</div>
+                </div>
+            )
+        }
         return (
             <div>
                 {
