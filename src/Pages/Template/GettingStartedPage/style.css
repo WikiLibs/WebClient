@@ -1,3 +1,4 @@
+
 .GS-content-page {
     margin-left: 443px;
     margin-right: 442px;
@@ -46,10 +47,10 @@
     font-weight: bold;
     font-size: 2rem;
 }
-
+/* 
 .GS-title-lib-name:hover {
     color:#4C3DA8;
-}
+} */
 
 .GS-title-lib-language {
     margin-top: auto;
@@ -152,22 +153,25 @@
 .GS-first-heading {
     font-size: 38px;
     font-family: 'Open Sans';
-    color: #4C3DA8;
+    color: #7B68EE;
     margin-top: 16px;
+    font-weight: 600;
 }
 
 .GS-second-heading {
     font-size: 26px;
     font-family: 'Open Sans';
-    color: #4C3DA8;
+    color: #7B68EE;
     margin-bottom: 16px;
+    font-weight: 600;
 }
 
 .GS-third-heading {
     font-size: 20px;
     font-family: 'Open Sans';
-    color: #4C3DA8;
+    color: #7B68EE;
     margin-bottom: 16px;
+    font-weight: 600;
 }
 
 .GS-code-section {
@@ -175,9 +179,11 @@
     padding: 32px;
     border-radius: 4px;
     margin-bottom: 16px;
+    white-space: pre;
 }
 
 .GS-button-container {
+    margin-top: 8px;
     display: flex;
 }
 
@@ -222,7 +228,7 @@
     font-size: 18px!important;
 }
 
-.GS-note-section > span::first-letter {
+.GS-note-section > span::first-letter, .GS-highlight-section > span::first-letter {
     margin-left: 0px!important;    
 }
 

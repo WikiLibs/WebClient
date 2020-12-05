@@ -1,0 +1,21 @@
+.tree-view-page-icons {
+    color :#7B68EE;
+}
+
+.tree-view-page-clickable{
+    cursor: pointer;
+}
+
+.tree-view-page-clickable :hover{
+    text-decoration: underline;
+}
+
+.tree-view-page-icons-small {
+    color :#7B68EE;
+    height: 10px !important;
+}
+
+.tree-view-page-code span{
+    margin-bottom: 0px!important;
+    display: inherit!important;
+}

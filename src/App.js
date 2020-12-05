@@ -24,6 +24,7 @@ import TermsOfUse from './Pages/TermsOfUse'
 import CodeRecommendations from './Pages/CodeRecommendations'
 import HowToUseParser from './Pages/HowToUseParser'
 import LibPage from './Pages/LibPage'
+import MiniMdDocPage from './Pages/MiniMdDocPage'
 
 // Templates
 import GettingStarted from './Pages/Template/GettingStartedPage'
@@ -59,6 +60,7 @@ export default function App()
                         <Layout exact path='/howtouseparser' component={HowToUseParser} />
                         <Layout exact path='/libraries' component={LibPage}/>
                         <Layout exact path='/gettingstarted' component={GettingStarted}/>
+                        <Layout exact path='/mini-markdown-cheat-sheet' component={MiniMdDocPage}/>
                         <Layout component={NotFoundPage} />
                     </Switch>
                 </ErrorHandler>
