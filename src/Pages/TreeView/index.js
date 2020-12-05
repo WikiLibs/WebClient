@@ -50,18 +50,25 @@ export default class TreeView extends Component {
             baseLibContents.push({
                 id: type,
                 name: type,
-                subContent: []
+                subContent: [],
+                path: null,
+                type: null
             })
         })
         
         response.forEach(elem => {
             baseLibContents.forEach(typeContents => {
-                if (typeContents.name === elem.type)
+                if (typeContents.name === elem.type) {
+                    let path = elem.path.split("/");
+                    path = path[path.length - 1];
                     typeContents.subContent.push({
                         id: elem.id,
                         name: elem.firstPrototype,
-                        subContent: null
+                        subContent: null,
+                        path: path,
+                        type: elem.type
                     })
+                }
             })
         })
 

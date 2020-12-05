@@ -47,8 +47,18 @@ export default class SymbolPreview extends Component {
         return (
             <div className="symbol-preview-popup-menu-container">
                 {this.state.sytaxHighlighter ?
-                    <Link ref={this._ref} className={this.props.className}onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + this.props.to)} to={'/symbol?id=' + this.props.to} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}><SyntaxHighlighter code={this.props.displayName} lang={this.props.lang}/></Link>
-                    : <div className={this.props.className}><SyntaxHighlighter code={this.props.displayName} lang={this.props.lang}/></div>}
+                    <Link ref={this._ref} className={this.props.className}onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + this.props.to)} to={'/symbol?id=' + this.props.to} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
+                            {
+                                this.props.mode ? 
+                                <div>{this.props.displayName}{console.log("here")}</div>                                    
+                                    :
+                                <SyntaxHighlighter code={this.props.displayName} lang={this.props.lang}/>
+
+                            }
+                        </Link>
+                    : <div className={this.props.className}>
+                        <SyntaxHighlighter code={this.props.displayName} lang={this.props.lang}/>
+                    </div>}
                 <div className="symbol-preview-popup-menu" style={this.state.showMenu ? {display:"block"} : {display:"none"}}>
                     <div className="symbol-preview-popup-content">
                         <span className="symbol-preview-popup-small-title">preview page:</span>
