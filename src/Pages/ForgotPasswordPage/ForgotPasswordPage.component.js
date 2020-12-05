@@ -35,7 +35,7 @@ export default class UserConnectionPage extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        if (checkForm(this.state)) {
+        if (checkForm(this.state) && this.state.formErrors.email === "" && this.state.email.length !== 0 && emailRegex.test(this.state.email)) {
             this.api.resetPassword(this.state.email).catch(err => {
                 this.setState({ apiError: this.api.translateErrorMessage(err) })
                 if (err !== null && err !== undefined && err.response !== null && err.response !== undefined && err.response.status === 500)
