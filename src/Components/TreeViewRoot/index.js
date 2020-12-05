@@ -103,16 +103,16 @@ const TreeList = ({
                             <div className="symbol-page-parameter-name tree-view-page-code">
                                 {
                                     option.type !== null ?
-                                    <SymbolPreview className='symbol-page-parameter-name'
-                                        displayName={option.path}
-                                        to={option.id}
-                                        lang={langName}
-                                        prototype={option.name}
-                                        type={option.type}
-                                        mode={true}
-                                    />
+                                        <SymbolPreview className='symbol-page-parameter-name'
+                                            displayName={option.path}
+                                            to={option.id}
+                                            lang={langName}
+                                            prototype={option.name}
+                                            type={option.type}
+                                            mode={true}
+                                        />
                                     :
-                                    <SyntaxHighlighter code={option.name} lang={langName}/>
+                                        <SyntaxHighlighter code={option.name} lang={langName}/>
                                 }
                                 
                             </div>

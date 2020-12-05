@@ -59,15 +59,21 @@ export default class SymbolPreview extends Component {
                     : <div className={this.props.className}>
                         <SyntaxHighlighter code={this.props.displayName} lang={this.props.lang}/>
                     </div>}
-                <div className="symbol-preview-popup-menu" style={this.state.showMenu ? {display:"block"} : {display:"none"}}>
-                    <div className="symbol-preview-popup-content">
-                        <span className="symbol-preview-popup-small-title">preview page:</span>
-                        <div className='symbol-page-title'>{this.props.displayName}</div>
-                        {this.props.type ? <div className='symbol-page-type-symbol-title'>{this.props.type}</div> : ""}
-                        {this.props.prototype ? <SyntaxHighlighter code={this.props.prototype} lang={this.props.lang}/> : ""}
-                    </div>
-                    <i></i>
-                </div>
+                    {
+                        this.state.showMenu ?
+                        <div className="symbol-preview-popup-menu">
+                            <div className="symbol-preview-popup-content">
+                                <span className="symbol-preview-popup-small-title">preview page:</span>
+                                <div className='symbol-page-title'>{this.props.displayName}</div>
+                                {this.props.type ? <div className='symbol-page-type-symbol-title'>{this.props.type}</div> : ""}
+                                {this.props.prototype ? <SyntaxHighlighter code={this.props.prototype} lang={this.props.lang}/> : ""}
+                            </div>
+                            <i></i>
+                        </div>
+                        :
+                        null
+                    }
+                
             </div>
         )
     }
