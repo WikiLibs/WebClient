@@ -9,7 +9,7 @@ const renderContactDescription = () => {
             <h2 className="contact-title">Contact</h2>
             <div className="contact-content">
                 <p className="contact-description">
-                    Do you have any question that you can’t find answer in the <a className="contact-colored-text" href='/faq'>FAQ</a> ?<br/>
+                    Do you have any question that you can’t find answer in the <a className="contact-colored-text" href='/FAQ'>FAQ</a> ?<br/>
                     Want to give some feedback on the website or suggest anything ?<br/>
                 </p>
                 <p>You are at the right place !</p>

@@ -57,7 +57,7 @@ export default class UserConnectionPage extends Component {
                 formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
             case "password":
-                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.password = value.length < 8 ? "Minimum 8 characters required" : "";
                 break;
             default:
                 break;
@@ -71,7 +71,7 @@ export default class UserConnectionPage extends Component {
             <div>
                 <div id="Body">
                     <div className="user-page-content-account">
-                        <span>Sign in</span>
+                        <span>Login</span>
                         <div className="user-page-margin-form">
                             <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="user-page-form-register" noValidate autoComplete="off">
                                 <TextField
@@ -110,8 +110,8 @@ export default class UserConnectionPage extends Component {
                             {this.state.formErrors.email && <Alert className="user-warning" severity="warning">{this.state.formErrors.email}</Alert>}
                             {this.state.formErrors.password && <Alert className="user-warning" severity="warning">{this.state.formErrors.password}</Alert>}
                             <div className="connection-no-account">
-                                <span>Don't have an account yet ? You can <a href="/usercreation">register</a> !</span>
-                                <span className="connection-span-float-right"><a href="/forgotpassword">Forgot password ?</a></span>
+                                <span>Don't have an account yet ? You can <a href="/register">register</a> !</span>
+                                <span className="connection-span-float-right"><a href="/forgot-password">Forgot password ?</a></span>
                             </div>
                         </div>
                     </div>

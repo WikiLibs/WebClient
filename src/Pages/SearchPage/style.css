@@ -118,3 +118,9 @@
     color: #7B68EE;
     display: block;
 }
+
+.search-page-no-result{
+    margin-top: 64px;
+    text-align: center;
+    font-size: 20px;
+}

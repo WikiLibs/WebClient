@@ -7,6 +7,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { ApiService } from '../../ApiService';
 import { checkForm } from '../../util';
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import './index.css';
 
 const emailRegex = RegExp(
@@ -20,6 +24,7 @@ export default class UserCreationPage extends Component {
         super(props);
 
         this.state = {
+            loading: false,
             firstName: '',
             lastName: '',
             email: '',
@@ -37,7 +42,7 @@ export default class UserCreationPage extends Component {
                 password: "",
             },
             apiError: null,
-            success: null
+            loadingMessage: null
         };
     }
 
@@ -56,14 +61,19 @@ export default class UserCreationPage extends Component {
                 Password: ${this.state.password}
             `);
             this.api.createUser(this.state)
-                .then((Response) => {
-                    this.setState({ success: "Successfully created account, please check your email." });
-                })
-                .catch((error) => {
-                    this.setState({ apiError: this.api.translateErrorMessage(error), formErrors: { firstName: "", lastName: "", email: "", private: "", profilMsg: "", pseudo: "", password: "",} });
-                    if (error !== null && error !== undefined && error.response !== null && error.response !== undefined && error.response.status === 500)
-                        this.props.history.replace(this.props.history.pathname,{statusCode: error.response.status, errorObj: error.response.data});
-                })
+            .then((data) => {
+                this.setState({loadingMessage: "Successfully created account, please check your email"});
+                setTimeout(() => {
+                    window.location.assign(window.location.origin + '/login');
+                }, 7000)
+                this.setState({loading: true});
+            })
+            .catch((error) => {
+                this.setState({ apiError: this.api.translateErrorMessage(error), formErrors: { firstName: "", lastName: "", email: "", private: "", profilMsg: "", pseudo: "", password: "",} });
+                if (error !== null && error !== undefined && error.response !== null && error.response !== undefined && error.response.status === 500)
+                    this.props.history.replace(this.props.history.pathname,{statusCode: error.response.status, errorObj: error.response.data});
+            })
+            this.setState({formErrors: { firstName: "",lastName: "",email: "",private: "",profilMsg: "",pseudo: "",password: ""}});
         } else {
             console.error("FORM INVALID");
         }
@@ -80,6 +90,7 @@ export default class UserCreationPage extends Component {
             formErrors.email = "";
             formErrors.pseudo = "";
             formErrors.password = "";
+            this.setState({apiError : null});
         }
 
         switch (name) {
@@ -100,7 +111,7 @@ export default class UserCreationPage extends Component {
                 break;
             case "password":
                 formErrors.password =
-                    value.length < 6 ? "Minimum 6 characters required" : "";
+                    value.length < 8 ? "Minimum 8 characters required" : "";
                 break;
             default:
                 break;
@@ -109,12 +120,23 @@ export default class UserCreationPage extends Component {
         this.setState({ formErrors, [name]: value });
     };
 
+    renderLoadingDialog() {
+        return (
+            <Dialog open={this.state.loading}>
+                <DialogContent className="dialog-upload-img">
+                    {this.state.loadingMessage === "" ? <><CircularProgress /><span>Loading</span></> : ""}
+                    <span>{this.state.loadingMessage}</span>
+                </DialogContent>
+            </Dialog>
+        );
+    }
+
     render() {
         return (
             <div>
                 <div id="Body">
                     <div className="user-page-content-account">
-                        <span>Create Account</span>
+                        <span>Register</span>
                         <div className="user-page-margin-form">
                             <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="user-page-form-register" noValidate autoComplete="off">
                                 <TextField
@@ -211,6 +233,7 @@ export default class UserCreationPage extends Component {
                         </div>
                     </div>
                 </div>
+                {this.renderLoadingDialog()}
             </div>
         );
     }

@@ -51,10 +51,11 @@ export default class Footer extends Component {
                         <Button variant="contained" color="primary" onClick={this.onChange}>
                             An opinion ?
                         </Button>
+                        <a href="/download-app">GET THE APP</a>
                         <a href="/contact">CONTACT</a>
-                        <a href="/faq">HELP AND FAQ</a>
-                        <a href="/tou">TERMS OF USE</a>
-                        <a href="/privacypolicy">PRIVACY POLICY</a>
+                        <a href="/FAQ">HELP AND FAQ</a>
+                        <a href="/terms-of-use">TERMS OF USE</a>
+                        <a href="/privacy-policy">PRIVACY POLICY</a>
                     </div>
                 </div>
             </div>

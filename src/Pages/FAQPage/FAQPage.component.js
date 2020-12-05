@@ -84,7 +84,7 @@ const renderList = () => {
             </div>
             <div className="collapse" id="faq6">
                 <div className="faq-answer-content">
-                    <p className="faq-description">You can change your password by following this <a className='faq-colored-text' href='/forgotpassword'>link</a></p>
+                    <p className="faq-description">You can change your password by following this <a className='faq-colored-text' href='/forgot-password'>link</a></p>
                 </div>
             </div>
             <div href="#faq7" data-toggle="collapse" className="faq-select-question">
