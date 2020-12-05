@@ -127,10 +127,10 @@ export default class LibPage extends Component {
         return(
             <div key={data + id}>
                 <div className="GS-button-container">
-                    <Link to={""} onClick={() => window.location.href = data.link} className="GS-button">
+                    <div onClick={() => window.open(data.link, "_blank")} className="GS-button">
                         <div className="GS-button-title">{data.title}</div>
                         <div className="GS-button-description">{data.description}</div>
-                    </Link>
+                    </div>
                 </div>
             </div>
         );
@@ -140,9 +140,9 @@ export default class LibPage extends Component {
         return(
             <div key={data + id}>
                 <div className="GS-button-container">
-                    <Link to={""} onClick={() => window.location.href = data.link} className="GS-button">
+                    <div onClick={() => window.open(data.link, "_blank") } className="GS-button">
                         <div className="GS-button-title">{data.title}</div>
-                    </Link>
+                    </div>
                 </div>
             </div>
         );
@@ -225,7 +225,7 @@ export default class LibPage extends Component {
                 <div className="lib-page-no-info">
                     <span>No information given for this page yet</span>
                     <div className='lib-page-edit-btn' onClick={() => this.handleEdit()}>
-                        <span>add information</span>
+                        <span>Add information</span>
                         <EditIcon/>
                     </div>
                 </div>
@@ -405,17 +405,17 @@ export default class LibPage extends Component {
                     {this.state.isEdit ? 
                         <>
                             <div className="lib-page-edit-btn lib-page-save-btn" onClick={() => this.handleSave()}>
-                                <span>save modification</span>
+                                <span>Save modification</span>
                                 <PublishIcon/>
                             </div>
                             <div className="lib-page-edit-btn lib-page-cancel-btn" onClick={() => this.handelCancel()}>
-                                <span>cancel</span>
+                                <span>Cancel</span>
                                 <CancelIcon/>
                             </div>
                         </>
                         :
                         <div className="lib-page-edit-btn" onClick={() => this.handleEdit()}>
-                            <span>edit this page</span>
+                            <span>Edit this page</span>
                             <EditIcon/>
                         </div>
                     }
@@ -449,7 +449,7 @@ export default class LibPage extends Component {
                                 <div className="card-header" id="headingOne">
                                     <h5 className="mb-0 lib-page-btn-collapse">
                                         <button className="symbol-page-title btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded={this.state.expandedDescription ? "true" : "false"} aria-controls="collapseOne">
-                                            {this.state.displayName}'s' information
+                                            {this.state.displayName}'s information
                                         </button>
                                         {this.renderButtonSwitch()}
                                         
