@@ -69,6 +69,7 @@
     font-family: 'Open Sans';
     font-size: 15px;
     color: #202020;
+    max-width: 800px;
 }
 
 .symbol-preview-popup-content > .symbol-page-title {
@@ -88,4 +89,9 @@
     font-size: 12px;
     font-style: italic;
     font-weight: 600;
+}
+
+.symbol-preview-popup-content > .code-block {
+    overflow-x: hidden!important;
+    text-overflow: ellipsis;
 }
