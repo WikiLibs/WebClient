@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import footer from './imgs/WikiLibs_Logo_Footer.png';
-import Popover from '@material-ui/core/Popover';
-import Button from '@material-ui/core/Button';
-import fullLogo from './imgs/WikiLibs_Logo.png'
 
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 
