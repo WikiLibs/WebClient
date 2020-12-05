@@ -1,36 +1,182 @@
-div.custom-container {
-	background-color: white;
+.lib-page-accordion {
+    margin-top: 16px;
 }
 
-svg.custom .node circle {
-	fill: #F3F3FF;
-	stroke: #2593B8;
-	stroke-width: 1.5px;
+.lib-page-btn-collapse {
+    display: flow-root;
 }
 
-svg.custom .node text {
-	font-size: 11px;
-	background-color: #444;
-	fill: #242424;
-	text-shadow: 0 1px 4px black;
+.lib-page-btn-collapse > button {
+    background-color: transparent;
+    font-weight: 600;
+    outline: none!important;
+    box-shadow: none!important;
 }
 
-svg.custom .node {
-	cursor: pointer;
+.lib-page-edit-btn {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    float: right;
+    background-color: #7B68EE;
+    height: 47px;
+    border-radius: 4px;
+    text-align: center;
+    padding-right: 8px !important;
+    margin: 3px 0px;
 }
 
-svg.custom path.link {
-	fill: none;
-	stroke: #2593B8;
-	stroke-width: 1.5px;
+.lib-page-edit-btn > span {
+    margin: auto 8px !important;
+    float: none;
+    color: white !important;
+    font-weight: 600;
+    display: flex !important;
 }
 
-.treeview > .toggle {
-	pointer-events: all;
-	cursor: pointer;
+.lib-page-edit-btn > svg {
+    color: white;
+    display: flex;
+    width: 28px;
+    height: 100%;
+    margin: auto;
 }
 
-.treeview > .toggle:hover {
-	color: #63b1de;
-	fill: #63b1de;
+.lib-page-cancel-btn {
+    margin-right: 8px;
+    background-color: #dc3545;
+}
+
+.lib-page-save-btn {
+    background-color : #28a745;
+}
+
+.lib-page-copyright {
+    font-family: 'Open Sans';
+    color: #3E3E3E;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.lib-page-form-title{
+    font-family: 'Open Sans';
+    color: #7B68EE;
+    font-weight: 600;
+    font-size: 26px;
+    margin-bottom: 16px;
+}
+
+.lib-page-form-input{
+    display: block!important;
+    margin-bottom: 16px!important;
+}
+
+.lib-page-form-upper{
+    display: flex;
+}
+
+.lib-page-form-lower{
+    color: #212529;
+    margin-top: -6px;
+}
+
+.lib-page-form-lower > span {
+    position: absolute;
+    margin-bottom: 8px!important;
+    color: rgba(0, 0, 0, 0.54)!important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+    font-weight: 400;
+    line-height: 1;
+    font-size: 12px!important;
+    background-color: white;
+    width: fit-content;
+    margin-left: 12px;
+    padding-left: 4px;
+    padding-right: 20px;
+}
+
+.lib-page-form-lower > span::first-letter {
+    margin-left: 0px!important;
+}
+
+.lib-page-form-lower > textarea {
+    margin-top: 6px;
+    border-color: #c4c4c4;
+    border-radius: 4px;
+    padding: 8px 16px;
+    width:100%;
+}
+
+.lib-page-form-lower > textarea:focus {
+    border: solid 2px #3f51b5;
+    outline: none;
+}
+
+.lib-page-form-lower > textarea:hover {
+    border: solid 1px #3E3E3E;
+    outline: none;
+}
+
+.lib-page-no-info > span::first-letter {
+    margin-left: 0px!important;
+}
+
+.lib-page-no-info > div{
+    float: none;
+    width: fit-content;
+}
+
+.lib-page-icon-card {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 128px;
+    height: 128px;
+    box-shadow: -1px 5px 5px #b1aeae;
+    border: 1px solid #B7B7B7;
+}
+
+.lib-page-icon-input {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.lib-page-icon-input + label {
+    width: 96px;
+    height: 96px;
+    cursor: pointer;
+    margin: 16px;
+}
+
+.lib-page-icon-card-img {
+    height: 96px;
+}
+
+.lib-page-form-upper-right {
+    margin-left: 64px;
+}
+
+.lib-page-form-upper-right > span {
+    position: absolute;
+    margin-bottom: 8px!important;
+    color: rgba(0, 0, 0, 0.54)!important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+    font-weight: 400;
+    line-height: 1;
+    font-size: 12px!important;
+    background-color: white;
+    width: fit-content;
+    margin-left: 12px;
+    padding-left: 4px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.lib-page-form-upper-right > span::first-letter {
+    margin-left: 0px!important;
 }
