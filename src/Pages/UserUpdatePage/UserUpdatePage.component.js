@@ -61,14 +61,6 @@ export default class UserUpdatePage extends Component {
         e.preventDefault();
 
         if (checkForm(this.state)) {
-            console.log(`
-                --SUBMITTING--
-                Private: ${this.state.private}
-                profilMsg: ${this.state.profileMsg}
-                Pseudo: ${this.state.pseudo}
-                Password: ${this.state.password}
-                newPassword: ${this.state.newPassword}
-            `)
             if (this.state.password) {
                 this.api.patchMe(this.state)
                     .then(_ => {

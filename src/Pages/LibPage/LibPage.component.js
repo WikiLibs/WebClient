@@ -233,7 +233,6 @@ export default class LibPage extends Component {
         }
         let Markdown = [];
         let id = 0
-        console.log(this.state.markdown)
         this.state.markdown.forEach(elem => {
             switch (elem.type) {
                 case Statement.SubTitle:
@@ -276,7 +275,6 @@ export default class LibPage extends Component {
     handleChange = e => {
         e.preventDefault();
         const { name, value } = e.target;
-        console.log(name)
         this.setState({[name]: value });
     }
 
@@ -345,7 +343,6 @@ export default class LibPage extends Component {
         .catch(err => {
             this.setState({loading: false, icon : pp})
             console.log("error uploading image");
-            //error popup
             if (err.response.status === 500) {
                 this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             }
@@ -364,12 +361,10 @@ export default class LibPage extends Component {
     }
 
     handleEdit = () => {
-        console.log("switching to edit mode");
         this.setState({isEdit: true});
     }
 
     handleSave = () => {
-        console.log("switching to viewer mode and saving data");
         this.setState({isEdit: false, expandedDescription : true});
         if (this.state.NewCopyright !== null && this.state.NewCopyright !== undefined && this.state.NewDescription !== null && this.state.NewDescription !== undefined && this.state.NewDisplayName !== null && this.state.NewDisplayName !== undefined) {
             this.api.patchLib(this.state.id, {
@@ -377,7 +372,6 @@ export default class LibPage extends Component {
                 description: this.state.NewDescription,
                 copyright: this.state.NewCopyright
             }).then(_=> {
-                console.log("success"); 
                 this.setState({isEdit: false,
                     displayName : this.state.NewDisplayName,
                     description : this.state.NewDescription,
@@ -486,7 +480,6 @@ export default class LibPage extends Component {
                             </div>
                         </div>
                         {this.renderCopyright()}
-                        {console.log(this.state)}
                     </div>
                 </div>
                 {this.renderLoadingDialog()}

@@ -22,7 +22,6 @@ export default class ProfilePage extends Component {
         super(props);
 
         var tmp = this.props.user.clone();
-        console.log(tmp);
         this.state = {
             firstName: tmp.firstName,
             lastName: tmp.lastName,
