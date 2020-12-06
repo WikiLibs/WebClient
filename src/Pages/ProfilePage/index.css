@@ -26,7 +26,7 @@
 
 .profile-left-info {
     display: grid;
-    /* width: 50%; when user point usefull*/
+    width: 50%;
 }
 
 .profile-left-info > span {
@@ -37,7 +37,7 @@
 }
 
 .profile-info-down {
-    /* margin-top: 16px; uncomment when user point usefull*/
+    margin-top: 16px;
 }
 
 .profile-info-right {
