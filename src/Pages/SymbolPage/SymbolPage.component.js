@@ -534,9 +534,7 @@ export default class SymbolPage extends Component {
 
                 elem.code.forEach((elem2, i) => {
                     lines.push(
-                        <span key={i}>
-                            { <span className="symbol-page-code-lines" title={elem2.comment}><SyntaxHighlighter  code={elem2.data} lang={this.state.lang}/></span>}
-                        </span>
+                        <span key={i} className="symbol-page-code-lines" title={elem2.comment}><SyntaxHighlighter  code={elem2.data} lang={this.state.lang}/></span>
                     );
                 });
                 examples.push(
