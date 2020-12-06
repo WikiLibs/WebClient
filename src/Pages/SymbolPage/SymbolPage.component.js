@@ -15,23 +15,20 @@ import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
-import SyntaxHighlighter from "../../Components/SyntaxHighlighter";
 import SymbolPreview from '../../Components/SymbolPreview';
+import SyntaxHighlighter from '../../Components/SyntaxHighlighter';
 
-function cleanArray(arrayToClean) {
-    var clean = [];
-    arrayToClean.forEach(function (elem,index) {
-        elem = elem.trim()
-        if (elem[0] === '/') {
-            clean.push(index)
-        }
-    })
-    var i = 0
-    clean.forEach(elem => {
-        arrayToClean.splice(elem - i, 1);
-        i += 1
-    })
-    return arrayToClean;
+const EDITOR_LNG_TBL = {
+    "CPP": languages.clike,
+    "JAVA": languages.clike,
+    "C": languages.clike
+};
+
+//Give it the name NEVER ever the displayName
+function getSyntaxHighlighterLanguage(langName) {
+    if (langName in EDITOR_LNG_TBL)
+        return EDITOR_LNG_TBL[langName];
+    return languages.js;
 }
 
 export default class SymbolPage extends Component {
@@ -77,30 +74,36 @@ export default class SymbolPage extends Component {
             "data": {},
             "applyTo": null
         }
-        var cleanLines = cleanArray(splitExample);
 
-        cleanLines.forEach(elem => {
+        splitExample.forEach(elem => {
             var first = true;
+            console.log(elem, elem.trim().startsWith("//"));
+            if (elem.trim().startsWith("//")) {
+                console.log("ok");
+                example.code.push({
+                    "data": elem.trim(),
+                    "comment": ""
+                });
+                return;
+            }
             var tabSplit = elem.split("//");
             var cleanElem = tabSplit.filter(n => n);
             var final = {
-                "data":"",
-                "comment":""
+                "data": "",
+                "comment": ""
             };
             cleanElem.forEach(elem2 => {
                 if (first) {
-                    final.data = elem2.replace(/\s+/g,' ').trim();
+                    final.data = elem2.trimEnd();
                     first = false;
                 } else {
-                    final.comment += elem2.replace(/\s+/g,' ').trim().replace('/','');
+                    final.comment += elem2.replace(/\s+/g,' ').trim();
                 }
             });
-            if (final.data.length === 0){
-                final.data = ".";
-            }
             example.code.push(final);
         });
         request.data = example;
+        console.log(example);
 
         if (this.props.user) {
             if (this.props.user.hasPermission("example.create")) {
@@ -254,7 +257,7 @@ export default class SymbolPage extends Component {
                 <div className='symbol-page-title'>
                     Prototype
                 </div>
-                <SyntaxHighlighter  code={prototype.prototype} lang={this.state.lang.name}/>
+                <SyntaxHighlighter  code={prototype.prototype} lang={this.state.lang}/>
             </div>
         )
     }
@@ -322,7 +325,7 @@ export default class SymbolPage extends Component {
                         <div key={index}>
                             {parameter.prototype === 'return'
                                 ? <div>
-                                    <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang.name}/></div>
+                                    <div className='symbol-page-parameter-name'><SyntaxHighlighter  code={parameter.prototype} lang={this.state.lang}/></div>
                                     {parameter.description !== "" ? <div className='symbol-page-parameter-description'>{parameter.description}</div> : ""}
                                 </div>
                                 : null
@@ -523,33 +526,19 @@ export default class SymbolPage extends Component {
     }
 
     renderExample = () => {
-        var footer = [];
-        var lines = [];
-        var examples = [];
-        var description = [];
-        var i = 0;
+        const examples = [];
 
         if (this.state.listExample.length !== 0) {
-            this.state.listExample.forEach(elem => {
-                
-                elem.code.forEach(elem2 => {
+            this.state.listExample.forEach((elem, i) => {
+                const lines = [];
+
+                elem.code.forEach((elem2, i) => {
                     lines.push(
-                        <span key={elem2.data + elem2.id}>
-                            { <span className="symbol-page-code-lines" title={elem2.comment}><SyntaxHighlighter  code={elem2.data} lang={this.state.lang.name}/></span>}
+                        <span key={i}>
+                            { <span className="symbol-page-code-lines" title={elem2.comment}><SyntaxHighlighter  code={elem2.data} lang={this.state.lang}/></span>}
                         </span>
                     );
-                    // lines.push(<br key={elem.id + elem2.data + elem.id} />);
                 });
-                description.push(
-                    <div key={elem.id+elem}>
-                       {elem.description}
-                    </div>
-                )
-                footer.push(
-                    <div className='symbol-page-example-sign' key={elem.id + elem.userId + elem.creationDate}>
-                        Last modification : <b><UserInfoPopup userName={this.state.mapIdPseudo[elem.userId]} userId={elem.userId} /></b> - <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b>
-                    </div>
-                );
                 examples.push(
                     <div key={elem.id}>
                         <div className="symbol-example-card">
@@ -557,12 +546,14 @@ export default class SymbolPage extends Component {
                                 {this.renderVote()}
                                 <div className="symbol-page-inner-example">
                                     <div className="symbol-example-desc">
-                                        {description}
+                                        {elem.description}
                                     </div>
                                     <div className={"symbol-page-code-example"}>
                                         {lines}
                                     </div>
-                                    {footer}
+                                    <div className='symbol-page-example-sign' key={elem.id + elem.userId + elem.creationDate}>
+                                        Last modification : <b><UserInfoPopup userName={this.state.mapIdPseudo[elem.userId]} userId={elem.userId} /></b> - <b>{(new Date(elem.creationDate)).toLocaleDateString()}</b>
+                                    </div>
                                 </div>
                             </div>
                             <span className="symbol-page-comment-title">Comments</span>
@@ -571,11 +562,6 @@ export default class SymbolPage extends Component {
                         {(i !== this.state.listExample.length - 1) ? (<hr />) : ('')}
                     </div>
                 );
-                // active = "";
-                lines = [];
-                footer = [];
-                description = [];
-                i++;
             });
         } else {
             return (
@@ -583,9 +569,9 @@ export default class SymbolPage extends Component {
             );
         }
         return(
-        <div>
-            {examples}
-        </div>
+            <div>
+                {examples}
+            </div>
         );
     }
 
@@ -630,11 +616,11 @@ export default class SymbolPage extends Component {
                         <Editor
                             value={this.state.code}
                             onValueChange={code => this.setState({code})}
-                            highlight={code => highlight(code, languages.js)}
+                            highlight={code => highlight(code, getSyntaxHighlighterLanguage(this.state.lang.name))}
                             padding={10}
                             style={{
-                            fontFamily: '"Fira code", "Fira Mono", monospace',
-                            fontSize: 12,
+                                fontFamily: '"Fira code", "Fira Mono", monospace',
+                                fontSize: 12,
                             }}
                         />
                     </div>
