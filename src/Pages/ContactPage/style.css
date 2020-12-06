@@ -12,7 +12,7 @@
     line-height: 40px;
     font-family: 'Open Sans';
     font-weight: bold;
-    color: #4C3DA8;
+    color: #7B68EE;
     margin-right: 16px;
     margin-bottom: 0;
 }
@@ -41,23 +41,40 @@
 }
 
 .contact-secondary-title-component {
-    margin-bottom: 30px;
+    margin-bottom: 16px;
 }
 
 .contact-secondary-title {
-    font-size: 15px;
+    font-size: 18px;
     font-family: 'Open Sans';
-    color: #202020;
+    color: #7B68EE;
+    font-weight: 700;
 }
 
 .contact-secondary-title-description {
-    margin-top: 16px;
+    margin-top: 8px;
     margin-left: 30px;
 }
 
 .contact-colored-text {
     font-size: 15px;
     font-family: 'Open Sans';
-    color: #7B68EE;
+    color: #4C3DA8;
     font-style: italic;
+}
+
+.contact-social {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.contact-social > img{
+    height: 40px;
+    margin-right: 16px;
+}
+
+.contact-social > div {
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
