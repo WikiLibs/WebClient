@@ -134,8 +134,8 @@ export default class UserUpdatePage extends Component {
                         <div className="profile-top-form">
                             <div className="profile-form-account">
                                 <TextField
-                                    name="pseudo"
-                                    label="Pseudo"
+                                    name="Username"
+                                    label="Username"
                                     className="profile-text-field-acc"
                                     value={this.state.pseudo}
                                     margin="normal"
