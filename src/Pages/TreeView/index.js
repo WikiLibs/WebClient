@@ -13,7 +13,6 @@ export default class TreeView extends Component {
     state = {
         libId: 0,
         libName: '',
-        langName: '',
         data: [],
         isLoading: false
     }
@@ -22,11 +21,9 @@ export default class TreeView extends Component {
         var q = useQuery();
         let libId = parseInt(q.lib)
         let libName = q.name
-        let langName = q.name.split("/")[0];
         this.setState({
             libId: libId,
             libName: libName,
-            langName: langName,
             isLoading: true
         })
 
@@ -50,18 +47,25 @@ export default class TreeView extends Component {
             baseLibContents.push({
                 id: type,
                 name: type,
-                subContent: []
+                subContent: [],
+                path: null,
+                type: null
             })
         })
         
         response.forEach(elem => {
             baseLibContents.forEach(typeContents => {
-                if (typeContents.name === elem.type)
+                if (typeContents.name === elem.type) {
+                    let path = elem.path.split("/");
+                    path = path[path.length - 1];
                     typeContents.subContent.push({
                         id: elem.id,
                         name: elem.firstPrototype,
-                        subContent: null
+                        subContent: null,
+                        path: path,
+                        type: elem.type
                     })
+                }
             })
         })
 
@@ -99,7 +103,7 @@ export default class TreeView extends Component {
                         ? <CircularProgress className="tree-view-page-icons"/>
                         : null
                     }
-                    <TreeViewRoot data={this.state.data} langName={this.state.langName} getSubContent={this.getSubContent} {...this.props}/>
+                    <TreeViewRoot data={this.state.data} langName={this.props.langName} getSubContent={this.getSubContent} {...this.props}/>
                 </div>
             </div>
         )

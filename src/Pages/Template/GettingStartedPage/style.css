@@ -185,6 +185,7 @@
 .GS-button-container {
     margin-top: 8px;
     display: flex;
+    cursor: pointer;
 }
 
 .GS-button, .GS-button:visited {

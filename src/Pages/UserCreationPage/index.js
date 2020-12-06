@@ -50,16 +50,6 @@ export default class UserCreationPage extends Component {
         e.preventDefault();
 
         if (checkForm(this.state)) {
-            console.log(`
-                --SUBMITTING--
-                First name: ${this.state.firstName}
-                Last name: ${this.state.lastName}
-                Email: ${this.state.email}
-                Private: ${this.state.private}
-                profilMsg: ${this.state.profilMsg}
-                Pseudo: ${this.state.pseudo}
-                Password: ${this.state.password}
-            `);
             this.api.createUser(this.state)
             .then((data) => {
                 this.setState({loadingMessage: "Successfully created account, please check your email"});
@@ -195,8 +185,8 @@ export default class UserCreationPage extends Component {
                                     onChange={this.handleChange}
                                 />
                                 <TextField
-                                    label="Pseudo *"
-                                    placeholder="Pseudo"
+                                    label="Username *"
+                                    placeholder="Username"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}

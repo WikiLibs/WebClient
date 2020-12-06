@@ -1,4 +1,5 @@
 import * as React from 'react'
+import SymbolPreview from "../../Components/SymbolPreview";
 import SyntaxHighlighter from "../../Components/SyntaxHighlighter";
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -100,7 +101,20 @@ const TreeList = ({
                         <div style={{height: 'auto', display: 'flex', flexDirection: 'row', marginLeft: level * 32, marginBottom: 8, alignItems: 'center'}}>
                             {getIndicator(option, selectedOptions)}
                             <div className="symbol-page-parameter-name tree-view-page-code">
-                                <SyntaxHighlighter code={option.name} lang={langName}/>
+                                {
+                                    option.type !== null ?
+                                        <SymbolPreview className='symbol-page-parameter-name'
+                                            displayName={option.path}
+                                            to={option.id}
+                                            lang={langName}
+                                            prototype={option.name}
+                                            type={option.type}
+                                            mode={true}
+                                        />
+                                    :
+                                        <SyntaxHighlighter code={option.name} lang={langName}/>
+                                }
+                                
                             </div>
                         </div>
                     </div>

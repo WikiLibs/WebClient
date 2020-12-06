@@ -4,6 +4,7 @@ import { ApiService } from '../../ApiService';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { Link } from 'react-router-dom';
 // import CloseIcon from '@material-ui/icons/Close';
 
@@ -97,6 +98,7 @@ export default class AccountButton extends Component {
                                     this.isAdmin() &&
                                         <Link onClick={this.closeMenu} to="/admin"><SupervisorAccountIcon /> Administration</Link>
                                 }
+                                <Link onClick={this.closeMenu} to='/download'><GetAppIcon /> Download</Link>
                                 <Link onClick={() => this.api.disconnect()} to='/'><ExitToAppIcon /> Disconnect</Link>
                             </div>
                         </div>

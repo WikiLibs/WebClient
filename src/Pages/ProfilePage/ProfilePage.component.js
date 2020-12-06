@@ -22,7 +22,6 @@ export default class ProfilePage extends Component {
         super(props);
 
         var tmp = this.props.user.clone();
-        console.log(tmp);
         this.state = {
             firstName: tmp.firstName,
             lastName: tmp.lastName,
@@ -125,11 +124,11 @@ export default class ProfilePage extends Component {
                                 <span className="profile-info-down">User ID: {this.state.id}</span>
                             </div>
                             {/* uncomment when usefull */}
-                            {/* <div className="profile-vertical-separator"></div>
+                            <div className="profile-vertical-separator"></div>
                             <div className="profile-info-right">
                                 <span>User Points</span>
                                 <p id="userPoints">{this.state.points}</p>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>

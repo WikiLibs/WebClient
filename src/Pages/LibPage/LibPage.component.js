@@ -30,6 +30,7 @@ export default class LibPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lang: null,
             id : null,
             name : null,
             displayName : null,
@@ -53,7 +54,7 @@ export default class LibPage extends Component {
             this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
         }).then(response => {
             if (response !== undefined && response !== null) {
-                let tmpData = response.data 
+                let tmpData = response.data
                 this.setState({name : q.name, NewDisplayName : tmpData.displayName, NewDescription : tmpData.description, NewCopyright : tmpData.copyright});
 
                 this.setState(tmpData);
@@ -127,10 +128,10 @@ export default class LibPage extends Component {
         return(
             <div key={data + id}>
                 <div className="GS-button-container">
-                    <Link to={""} onClick={() => window.location.href = data.link} className="GS-button">
+                    <div onClick={() => window.open(data.link, "_blank")} className="GS-button">
                         <div className="GS-button-title">{data.title}</div>
                         <div className="GS-button-description">{data.description}</div>
-                    </Link>
+                    </div>
                 </div>
             </div>
         );
@@ -140,9 +141,9 @@ export default class LibPage extends Component {
         return(
             <div key={data + id}>
                 <div className="GS-button-container">
-                    <Link to={""} onClick={() => window.location.href = data.link} className="GS-button">
+                    <div onClick={() => window.open(data.link, "_blank") } className="GS-button">
                         <div className="GS-button-title">{data.title}</div>
-                    </Link>
+                    </div>
                 </div>
             </div>
         );
@@ -225,7 +226,7 @@ export default class LibPage extends Component {
                 <div className="lib-page-no-info">
                     <span>No information given for this page yet</span>
                     <div className='lib-page-edit-btn' onClick={() => this.handleEdit()}>
-                        <span>add information</span>
+                        <span>Add information</span>
                         <EditIcon/>
                     </div>
                 </div>
@@ -233,7 +234,6 @@ export default class LibPage extends Component {
         }
         let Markdown = [];
         let id = 0
-        console.log(this.state.markdown)
         this.state.markdown.forEach(elem => {
             switch (elem.type) {
                 case Statement.SubTitle:
@@ -276,7 +276,6 @@ export default class LibPage extends Component {
     handleChange = e => {
         e.preventDefault();
         const { name, value } = e.target;
-        console.log(name)
         this.setState({[name]: value });
     }
 
@@ -345,7 +344,6 @@ export default class LibPage extends Component {
         .catch(err => {
             this.setState({loading: false, icon : pp})
             console.log("error uploading image");
-            //error popup
             if (err.response.status === 500) {
                 this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             }
@@ -364,12 +362,10 @@ export default class LibPage extends Component {
     }
 
     handleEdit = () => {
-        console.log("switching to edit mode");
         this.setState({isEdit: true});
     }
 
     handleSave = () => {
-        console.log("switching to viewer mode and saving data");
         this.setState({isEdit: false, expandedDescription : true});
         if (this.state.NewCopyright !== null && this.state.NewCopyright !== undefined && this.state.NewDescription !== null && this.state.NewDescription !== undefined && this.state.NewDisplayName !== null && this.state.NewDisplayName !== undefined) {
             this.api.patchLib(this.state.id, {
@@ -377,7 +373,6 @@ export default class LibPage extends Component {
                 description: this.state.NewDescription,
                 copyright: this.state.NewCopyright
             }).then(_=> {
-                console.log("success"); 
                 this.setState({isEdit: false,
                     displayName : this.state.NewDisplayName,
                     description : this.state.NewDescription,
@@ -411,17 +406,17 @@ export default class LibPage extends Component {
                     {this.state.isEdit ? 
                         <>
                             <div className="lib-page-edit-btn lib-page-save-btn" onClick={() => this.handleSave()}>
-                                <span>save modification</span>
+                                <span>Save modification</span>
                                 <PublishIcon/>
                             </div>
                             <div className="lib-page-edit-btn lib-page-cancel-btn" onClick={() => this.handelCancel()}>
-                                <span>cancel</span>
+                                <span>Cancel</span>
                                 <CancelIcon/>
                             </div>
                         </>
                         :
                         <div className="lib-page-edit-btn" onClick={() => this.handleEdit()}>
-                            <span>edit this page</span>
+                            <span>Edit this page</span>
                             <EditIcon/>
                         </div>
                     }
@@ -455,7 +450,7 @@ export default class LibPage extends Component {
                                 <div className="card-header" id="headingOne">
                                     <h5 className="mb-0 lib-page-btn-collapse">
                                         <button className="symbol-page-title btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded={this.state.expandedDescription ? "true" : "false"} aria-controls="collapseOne">
-                                            {this.state.displayName}'s' information
+                                            {this.state.displayName}'s information
                                         </button>
                                         {this.renderButtonSwitch()}
                                         
@@ -480,13 +475,12 @@ export default class LibPage extends Component {
                                 </div>
                                 <div id="collapseTwo" className={this.state.expandedTreeView ? "collapse show" : "collapse"} aria-labelledby="headingTwo" data-parent="#accordion">
                                     <div className="symbol-card-body">
-                                        <TreeView />
+                                        <TreeView langName={this.state.lang}/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {this.renderCopyright()}
-                        {console.log(this.state)}
                     </div>
                 </div>
                 {this.renderLoadingDialog()}
