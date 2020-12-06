@@ -185,8 +185,8 @@ export default class UserCreationPage extends Component {
                                     onChange={this.handleChange}
                                 />
                                 <TextField
-                                    label="Pseudo *"
-                                    placeholder="Pseudo"
+                                    label="Username *"
+                                    placeholder="Username"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
