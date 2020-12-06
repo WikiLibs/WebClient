@@ -609,25 +609,26 @@ export default class SymbolPage extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    {this.renderBox()}
-                    <div className="symbol-page-code-example">
-                        <Editor
-                            value={this.state.code}
-                            onValueChange={code => this.setState({code})}
-                            highlight={code => highlight(code, getSyntaxHighlighterLanguage(this.state.lang.name))}
-                            padding={10}
-                            style={{
-                                fontFamily: '"Fira code", "Fira Mono", monospace',
-                                fontSize: 12,
-                            }}
-                        />
-                    </div>
-
                     {this.props.user ? 
-                        <Button className="symbol-page-send-example" variant="outline-success" type="submit">Send</Button>: 
-                        <div className="symbol-page-connect">
-                            <Link to='/login'>You should login to post examples</Link>
-                        </div>
+                        <>
+                            {this.renderBox()}
+                            <div className="symbol-page-code-example">
+                                <Editor
+                                    value={this.state.code}
+                                    onValueChange={code => this.setState({code})}
+                                    highlight={code => highlight(code, getSyntaxHighlighterLanguage(this.state.lang.name))}
+                                    padding={10}
+                                    style={{
+                                        fontFamily: '"Fira code", "Fira Mono", monospace',
+                                        fontSize: 12,
+                                    }}
+                                />
+                            </div>
+                            <Button className="symbol-page-send-example" variant="outline-success" type="submit">Send</Button></>: 
+                            <div className="symbol-page-connect">
+                                <Link to='/login'>You should login to post examples</Link>
+                            </div>
+                        
                     }
                 </form>
             </div>
