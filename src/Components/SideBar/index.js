@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
-import HomeIcon from '@material-ui/icons/Home';
-import StarIcon from '@material-ui/icons/Star';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import ListIcon from '@material-ui/icons/List';
 
 import './index.css'
+
+import CIcon from './imgs/c_icon.png'
+import CPPIcon from './imgs/cpp_icon.png'
+import JavaIcon from './imgs/java_icon.png'
+import PythonIcon from './imgs/python_icon.png'
 
 export default class SideBar extends Component {
     api = new ApiService();
@@ -19,12 +24,40 @@ export default class SideBar extends Component {
         return (vals);
     }
 
+    getIconByLangName(langName) {
+        let icon = PythonIcon;
+        switch (langName) {
+            case "C":
+                icon = CIcon;
+                break;
+            case "C++":
+                icon = CPPIcon;
+                break;
+            case "Java":
+                icon = JavaIcon;
+                break;
+            default:
+                icon = PythonIcon;
+                break;
+        }
+        return icon;
+    }
+
+    genLangbtn(lang) {
+        return (
+            <>
+                <img src={this.getIconByLangName(this.state[lang].displayName)}/>
+                <span>{this.state[lang].displayName}</span>
+            </>
+        )
+    }
+
     genLangList() {
         var vals = []
         for (var lang in this.state) {
             vals.push(
                 <li key={lang}>
-                    <a href={"#" + lang} data-toggle="collapse" aria-expanded="false" className="sidebar-fontRegular">{this.state[lang].displayName}</a>
+                    <a href={"#" + lang} data-toggle="collapse" aria-expanded="false" className="sidebar-fontRegular">{this.genLangbtn(lang)}</a>
                     <ul className="collapse list-unstyled" id={lang}>
                         {this.genLibList(lang)}
                     </ul>
@@ -39,10 +72,10 @@ export default class SideBar extends Component {
             <div className="SideBar">
                 <div id="sidebar-wrapper">
                     <ul className="sidebar-nav-home sidebar-nav">
-                        <a className="title-sidebar-nav sidebar-fontRegular" href='/'><HomeIcon className="sidebar-icons"/>Home</a>
+                        <a className="title-sidebar-nav sidebar-fontRegular" href='/'><HomeOutlinedIcon className="sidebar-icons"/><span>Home</span></a>
                     </ul>
                     <ul className="sidebar-nav">
-                        <p className="title-sidebar-nav sidebar-fontRegular"><StarIcon className="sidebar-icons"/>All Language</p>
+                        <p className="title-sidebar-nav sidebar-fontRegular"><ListIcon className="sidebar-icons"/><span>All Language</span></p>
                         {this.genLangList()}
                     </ul>
                 </div>
