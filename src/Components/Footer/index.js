@@ -10,7 +10,6 @@ import './style.css';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
-      color: 'rgba(0, 0, 0, 0.87)',
       boxShadow: '0 1px 9px rgba(0,0,0,0.5)',
       fontSize: 15,
       fontFamily: 'Open Sans',

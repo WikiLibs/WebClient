@@ -46,7 +46,7 @@ export default class SideBar extends Component {
     genLangbtn(lang) {
         return (
             <>
-                <img src={this.getIconByLangName(this.state[lang].displayName)}/>
+                <img src={this.getIconByLangName(this.state[lang].displayName)} alt={this.state[lang].displayName}/>
                 <span>{this.state[lang].displayName}</span>
             </>
         )
