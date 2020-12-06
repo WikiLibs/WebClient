@@ -23,6 +23,7 @@ import PrivacyPolicy from './Pages/PrivacyPolicy'
 import TermsOfUse from './Pages/TermsOfUse'
 import CodeRecommendations from './Pages/CodeRecommendations'
 import HowToUseParser from './Pages/HowToUseParser'
+import DownloadAppPage from './Pages/DownloadAppPage'
 import LibPage from './Pages/LibPage'
 import MiniMdDocPage from './Pages/MiniMdDocPage'
 
@@ -56,6 +57,7 @@ export default function App()
                         <Layout exact path='/terms-of-use' component={TermsOfUse} />
                         <Layout exact path='/codere-commendations-guide' component={CodeRecommendations} />
                         <Layout exact path='/how-to-use-parser' component={HowToUseParser} />
+                        <Layout exact path='/download-app' component={DownloadAppPage} />
                         <Layout exact path='/libraries' component={LibPage}/>
                         <Layout exact path='/mini-markdown-cheat-sheet' component={MiniMdDocPage}/>
                         <Layout component={NotFoundPage} />

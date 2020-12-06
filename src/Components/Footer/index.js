@@ -28,6 +28,7 @@ export default class Footer extends Component {
                         <div className="footer-opinion" title="You noticed something wrong or want to give your opinion?" onClick={() => window.open("https://docs.google.com/forms/d/1QDUNpi07MoG_2Zg4Zfvl9V8Nw_85sNu9nPY_xRhrOcw/viewform?edit_requested=true", "_blank") } >
                            <EmojiObjectsIcon/>
                         </div>
+                        <a href="/download-app">GET THE APP</a>
                         <a href="/contact">CONTACT</a>
                         <a href="/FAQ">HELP AND FAQ</a>
                         <a href="/terms-of-use">TERMS OF USE</a>

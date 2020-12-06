@@ -136,8 +136,17 @@ export default class SymbolPage extends Component {
         this.setState({description: event.target.value});
     }
 
-    handleVote = (event) => {
-        console.log("vote");
+    handleVote = (id, vote) => {
+        this.api.vote(id, vote);
+        let tmp = this.state.listExample
+
+        tmp.forEach(elem => {
+            if (elem.id === id) {
+                vote === "upvote" ? elem.voteCount += 1 : elem.voteCount -= 1
+                elem.hasVoted = true
+            }
+        })
+        this.setState({listExample: tmp});
     }
 
     handleComment = (message, id) => {
@@ -150,7 +159,10 @@ export default class SymbolPage extends Component {
         var q = useQuery();
         const values = queryString.parse(this.props.location.search)
         let apiError = "";
-        var listExample = await this.api.getExamples(values.id).catch(err => {
+        let isConnect = false;
+
+        this.props.user === undefined ? isConnect = true : isConnect = false;
+        var listExample = await this.api.getExamples(values.id, isConnect).catch(err => {
             this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
             apiError = this.api.translateErrorMessage(err);
         });
@@ -507,19 +519,19 @@ export default class SymbolPage extends Component {
         );
     }
 
-    renderVote = () => {
-        if (this.props.user) {
+    renderVote = (vote, id, hasVoted) => {
+        if (this.props.user && !hasVoted) {
                 return (
                     <div className="symbol-page-vote-example">
-                        <Button className="symbol-page-upvote" onClick={this.handleVote}><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
-                        <div id="symbol-page-vote-value">0</div>{/* put nb vote of example */}
-                        <Button className="symbol-page-downvote" onClick={this.handleVote}><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
+                        <Button className="symbol-page-upvote" onClick={() => {this.handleVote(id, 'upvote')}}><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
+                        <div id="symbol-page-vote-value">{vote}</div>
+                        <Button className="symbol-page-downvote" onClick={() => {this.handleVote(id, 'downvote')}}><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
                     </div>
                 );
         } else return (
             <div className="symbol-page-vote-example">
                 <Button className="symbol-page-new-comment-disabled" disabled><KeyboardArrowUpIcon></KeyboardArrowUpIcon></Button>{/* disable button if not connected + class symbol-page-new-comment-disabled ||||| activate class symbol-page-vote-example-up or symbol-page-vote-example-down if already voted*/}
-                <div id="symbol-page-vote-value">0</div>{/* put nb vote of example */}
+                <div id="symbol-page-vote-value">{vote}</div>
                 <Button className="symbol-page-new-comment-disabled" disabled><KeyboardArrowDownIcon></KeyboardArrowDownIcon></Button>
             </div>
         );
@@ -541,7 +553,7 @@ export default class SymbolPage extends Component {
                     <div key={elem.id}>
                         <div className="symbol-example-card">
                             <div className="symbol-example-fst-block-card">
-                                {this.renderVote()}
+                                {this.renderVote(elem.voteCount, elem.id, elem.hasVoted)}
                                 <div className="symbol-page-inner-example">
                                     <div className="symbol-example-desc">
                                         {elem.description}
