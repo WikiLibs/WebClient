@@ -81,7 +81,7 @@ export default class UserConnectionPage extends Component {
             <div>
                 <div id="Body">
                     <div className="forgot-content-account">
-                        <span>Account recovery</span>
+                        <span>Reset password</span>
                         <div className="forgot-margin-form">
                             <form id="outlined-start-adornment" onSubmit={this.handleSubmit} className="forgot-form-register" noValidate autoComplete="off">
                                 <TextField
@@ -101,7 +101,7 @@ export default class UserConnectionPage extends Component {
                                     type="submit"
                                     className="forgot-submit-btn"
                                 >
-                                    NEXT
+                                    SEND REQUEST
                                 </Button>
                             </form>
                             {this.state.apiError && <Alert severity="error">{this.state.apiError}</Alert>}
