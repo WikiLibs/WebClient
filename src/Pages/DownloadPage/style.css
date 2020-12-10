@@ -32,6 +32,24 @@
     margin-top: 64px;
     display: flex;
     justify-content: center;
+    margin-left: 125px;
+}
+
+.download-page-button-container-disabledtrue {
+    cursor: not-allowed;
+}
+
+.download-page-button-container > .Mui-disabled {
+    background-color:#868686!important;
+}
+
+.download-page-button-title {
+    font-weight: bold;
+}
+
+.download-page-button-description {
+    font-style: italic;
+    float: left;
 }
 
 .download-page-subtext {
@@ -61,4 +79,28 @@
 .download-page-other-link {
     color: #4C3DA8;
     margin-left: 16px;
+}
+
+.download-page-text-field > div {
+    min-width: 250px;
+}
+
+.download-page-form-container {
+    margin-top: 64px;
+}
+
+.download-page-form-container > div {
+    display: block;
+}
+
+.download-page-selector {
+    margin-top: 32px!important;
+}
+
+.download-page-selector > div {
+    min-width: 250px;
+}
+
+.download-page-form {
+    display: flex
 }

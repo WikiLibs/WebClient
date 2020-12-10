@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import TextField from '@material-ui/core/TextField';
+import Alert from '@material-ui/lab/Alert';
 
 import './style.css';
 import { Link } from 'react-router-dom';
+
+const keyTest = RegExp(
+    /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/
+);
 
 export default class DownloadPage extends Component {
 
@@ -12,28 +22,120 @@ export default class DownloadPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            detectedOS : null,
+            selectedOS : null,
+            btnDiasble : true,
+            errorForm : null,
+            apikey : null
         };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     getUserOs = () => {
         let os = window.navigator.platform;
 
-        if (os.includes('Nintendo')) {
-            return 'What are you even doing here ?'
-        }
-        return os;
+        if (os.includes('Nintendo'))
+            this.setState({detectedOS : 'What are you even doing here ?'});
+        else if (os.toLowerCase().includes('linux'))
+            this.setState({detectedOS : 'Linux', selectedOS:  'Linux'});
+        else if (os.toLowerCase().includes('win'))
+            this.setState({detectedOS : 'Win64', selectedOS:  'Win64'});
+        else if (os.toLowerCase().includes('mac'))
+            this.setState({detectedOS : 'OSX', selectedOS:  'OSX'});
     }
 
-    getUserOsLink = () => {
-        let os = this.getUserOs()
+    componentDidMount = () => {
+        this.getUserOs();
+    }
 
-        if (os.toLowerCase().includes('linux'))
-            return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_linux'
-        else if (os.toLowerCase().includes('win'))
-            return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_windows.exe'
-        else if (os.toLowerCase().includes('mac'))
-            return 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_mac'
-        return ''
+    handleChange(e) {
+        e.preventDefault();
+        const { name, value } = e.target;
+
+        this.setState({errorForm: null});
+
+        if (name === "apikey") {
+            //check valid API KEY
+            if (value.replace(keyTest, "") === "" && value.length === 36) {
+                this.setState({apiKey: value, btnDiasble: false});
+            } else {
+                this.setState({apiKey: null, btnDiasble: true, errorForm: 'Invalid APi Key'});
+            }
+        } else if (name === "os") {
+            this.setState({selectedOS: value});
+        }
+    }
+
+    getDownLoadLink() {
+        if (this.state.apiKey !== null && this.state.apiKey.replace(keyTest, "") === ""  && this.state.apiKey.length === 36) {
+            window.open("https://eip.yuristudio.net/?os=" + this.state.selectedOS + "&apiKey=" + this.state.apiKey + "&userId=" + this.props.user.id);
+        }
+    }
+
+    rederDonwloadForm = () => {
+        return (
+            <div className='download-page-form'>
+                <div className='download-page-form-container' size="Normal">
+                    <TextField
+                            autoFocus
+                            label="API Key *"
+                            placeholder="xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            name="apikey"
+                            onChange={this.handleChange}
+                            variant="outlined"
+                            className="download-page-text-field"
+                        />
+                    <FormControl className='download-page-selector'>
+                        <InputLabel id="demo-simple-select-label">Select your OS</InputLabel>
+                        <NativeSelect
+                            onChange={this.handleChange}
+                            label="Operating system"
+                            name="os"
+                            defaultValue={this.state.detectedOS}
+                            >
+                            { this.state.detectedOS === 'Win64' ? 
+                                <>
+                                    <option value='Win64'>Windows</option>
+                                    <option value='Linux'>Linux</option>
+                                    <option value='OSX'>Mac OS</option>
+                                </>
+                                :
+                                <>
+                                    { this.state.detectedOS === 'Linux' ?
+
+                                        <>
+                                            <option value='Linux'>Linux</option>
+                                            <option value='Win64'>Windows</option>
+                                            <option value='OSX'>Mac OS</option>
+                                        </>
+                                        :
+                                        <>
+                                            <option value='OSX'>Mac OS</option>
+                                            <option value='Linux'>Linux</option>
+                                            <option value='Win64'>Windows</option>
+                                        </>
+                                    }
+                                </>
+                            }
+                        </NativeSelect>
+                        <FormHelperText>Detected OS: {this.state.detectedOS}</FormHelperText>
+                    </FormControl>
+                </div>
+                <div className={'download-page-button-container-disabled' + this.state.btnDiasble + ' download-page-button-container'}>
+                    <Button 
+                        style={{ padding: '8px', color: '#ffff', backgroundColor: '#7B68EE', borderRadius: '4px', margin: 'auto', height: 'auto', width: 'auto', display: 'block'}}
+                        variant="contained"
+                        onClick={() => this.getDownLoadLink()}
+                        disabled={this.state.btnDiasble} >
+                            <div className="download-page-button-title">Download</div>
+                            <div className="download-page-button-description">{this.state.selectedOS}</div>
+                    </Button>
+                </div>
+            </div>
+        )
     }
 
     renderDownloadContent = () => {
@@ -53,17 +155,8 @@ export default class DownloadPage extends Component {
                     <div className='download-page-text'>
                         Before doing it, you might want to check our <Link to="/codere-commendations-guide">code recommandations</Link> to be sure the result is as expected !
                     </div>
-                    <div className='download-page-button-container'>
-                        <Button 
-                            style={{backgroundColor: '#7B67EE', color: '#FFFFFF', fontWeight: 'bold'}}
-                            variant="contained"
-                            target="_blank" href={this.getUserOsLink()} >
-                            Download
-                        </Button>
-                    </div>
-                    <div className='download-page-subtext'>
-                        Detected OS: {this.getUserOs()}
-                    </div>
+                    {this.rederDonwloadForm()}
+                    {this.state.errorForm && <Alert className="user-warning" severity="warning">{this.state.errorForm}</Alert>}
                 </div>
             </div>
         )
@@ -106,18 +199,13 @@ export default class DownloadPage extends Component {
                 </div>
                 <div className='download-page-text-container'>
                     <div className='download-page-text'>
-                        Not the right OS detected ? Please check the other downloads below.
+                    Not the right OS detected ? Please check the dropdown list below the API Key input.
                     </div>
                     <div className='download-page-text'>
                         If it opens the file in another tab, just right click in the page and click "Save As...".
                     </div>
                     <div className='download-page-text'>
                         You may also need to apply the correct permissions to run the file.
-                    </div>
-                    <div className='download-page-other-container'>
-                        {this.renderOtherDownloadButton('Linux - x86 and x64', 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_linux')}
-                        {this.renderOtherDownloadButton('Windows - 64 bits - 7 and later', 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_windows.exe')}
-                        {this.renderOtherDownloadButton('MacOS - 64 bits - Catalina and later', 'http://wikilibs-parser.azurewebsites.net/wikilibs_parser_mac')}
                     </div>
                     <div className='download-page-text'>
                         Cannot find the right platform ?
