@@ -56,7 +56,7 @@ export default class DownloadPage extends Component {
 
         if (name === "apikey") {
             //check valid API KEY
-            if (value.replace(keyTest, "") === "") {
+            if (value.replace(keyTest, "") === "" && value.length === 36) {
                 this.setState({apiKey: value, btnDiasble: false});
             } else {
                 this.setState({apiKey: null, btnDiasble: true, errorForm: 'Invalid APi Key'});
@@ -67,7 +67,7 @@ export default class DownloadPage extends Component {
     }
 
     getDownLoadLink() {
-        if (this.state.apiKey !== null && this.state.apiKey.replace(keyTest, "") === "") {
+        if (this.state.apiKey !== null && this.state.apiKey.replace(keyTest, "") === ""  && this.state.apiKey.length === 36) {
             window.open("https://eip.yuristudio.net/?os=" + this.state.selectedOS + "&apiKey=" + this.state.apiKey + "&userId=" + this.props.user.id);
         }
     }
