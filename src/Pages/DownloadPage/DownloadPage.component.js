@@ -11,6 +11,10 @@ import Alert from '@material-ui/lab/Alert';
 import './style.css';
 import { Link } from 'react-router-dom';
 
+const keyTest = RegExp(
+    /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/
+);
+
 export default class DownloadPage extends Component {
 
     static REQUIRE_SESSION = true;
@@ -51,28 +55,21 @@ export default class DownloadPage extends Component {
         this.setState({errorForm: null});
 
         if (name === "apikey") {
-            console.log("apikey");
             //check valid API KEY
-            /*
-            if () {
+            if (value.replace(keyTest, "") === "") {
                 this.setState({apiKey: value, btnDiasble: false});
             } else {
                 this.setState({apiKey: null, btnDiasble: true, errorForm: 'Invalid APi Key'});
             }
-            */
         } else if (name === "os") {
-            console.log("OS");
             this.setState({selectedOS: value});
         }
     }
 
     getDownLoadLink() {
-        // [USERID] : this.props.user.id
-        // [OS] : this.state.selectedOS
-        // [APIKEY]: 
-        // url https://eip.yuristudio.net/?os=[OS]&apiKey=[APIKEY]&userId=[USERID]
-        //window.open("URL");
-        console.log(this.state);
+        if (this.state.apiKey !== null && this.state.apiKey.replace(keyTest, "") === "") {
+            window.open("https://eip.yuristudio.net/?os=" + this.state.selectedOS + "&apiKey=" + this.state.apiKey + "&userId=" + this.props.user.id);
+        }
     }
 
     rederDonwloadForm = () => {
