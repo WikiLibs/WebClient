@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 import './style.css';
 import { Link } from 'react-router-dom';
@@ -12,7 +17,9 @@ export default class DownloadPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            value: ''
         };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     getUserOs = () => {
@@ -36,6 +43,10 @@ export default class DownloadPage extends Component {
         return ''
     }
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
     renderDownloadContent = () => {
         return (
             <div className='download-page-download-content'>
@@ -52,6 +63,19 @@ export default class DownloadPage extends Component {
                     <br />
                     <div className='download-page-text'>
                         Before doing it, you might want to check our <Link to="/codere-commendations-guide">code recommandations</Link> to be sure the result is as expected !
+                    </div>
+                    <div>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    <div className='download-page-button-container' size="Normal">
+                        <FormControl>
+                            <InputLabel id="demo-simple-select-label">Select your OS</InputLabel>
+                            <Select labelId="demo-simple-select-label" id="demo-simple-select">
+                                <MenuItem value="Linux">Linux</MenuItem>
+                                <MenuItem value="Win64">Win64</MenuItem>
+                                <MenuItem value="OSX">OSX</MenuItem>
+                            </Select>
+                        </FormControl>
                     </div>
                     <div className='download-page-button-container'>
                         <Button 
