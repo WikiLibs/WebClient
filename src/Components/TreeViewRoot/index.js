@@ -66,7 +66,7 @@ const TreeList = ({
         if (level >= 1 && !option.subContent && canBeNested) {
             await getSubContent(option.id, currentTmpPath)
         } else if (level >= 1 && level % 2 === 1 && ((option.subContent && !option.subContent.length) || !canBeNested)) {
-            window.location.assign(window.location.origin + '/symbol?id=' + option.id);
+            //window.location.assign(window.location.origin + '/symbol?id=' + option.id);
         } if (selectedOptions[option.id]){ // Is currently selected
             delete selectedOptions[option.id]; // Remove selected key from options list
         } else { // is not currently selected

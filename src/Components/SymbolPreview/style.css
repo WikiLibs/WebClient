@@ -86,9 +86,13 @@
 }
 
 .symbol-preview-popup-small-title {
-    font-size: 12px;
+    font-size: 12px!important;
     font-style: italic;
     font-weight: 600;
+    display: block;
+}
+.symbol-preview-popup-small-title::first-letter {
+    margin-left: 0px!important;
 }
 
 .symbol-preview-popup-content > .code-block {
