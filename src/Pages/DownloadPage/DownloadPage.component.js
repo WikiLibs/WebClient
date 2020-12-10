@@ -96,9 +96,30 @@ export default class DownloadPage extends Component {
                             name="os"
                             defaultValue={this.state.detectedOS}
                             >
-                            <option value={'Win64'}>Windows</option>
-                            <option value={'Linux'}>Linux</option>
-                            <option value={'OSX'}>Mac OS</option>
+                            { this.state.detectedOS === 'Win64' ? 
+                                <>
+                                    <option value='Win64'>Windows</option>
+                                    <option value='Linux'>Linux</option>
+                                    <option value='OSX'>Mac OS</option>
+                                </>
+                                :
+                                <>
+                                    { this.state.detectedOS === 'Linux' ?
+
+                                        <>
+                                            <option value='Linux'>Linux</option>
+                                            <option value='Win64'>Windows</option>
+                                            <option value='OSX'>Mac OS</option>
+                                        </>
+                                        :
+                                        <>
+                                            <option value='OSX'>Mac OS</option>
+                                            <option value='Linux'>Linux</option>
+                                            <option value='Win64'>Windows</option>
+                                        </>
+                                    }
+                                </>
+                            }
                         </NativeSelect>
                         <FormHelperText>Detected OS: {this.state.detectedOS}</FormHelperText>
                     </FormControl>
@@ -112,7 +133,6 @@ export default class DownloadPage extends Component {
                             <div className="download-page-button-title">Download</div>
                             <div className="download-page-button-description">{this.state.selectedOS}</div>
                     </Button>
-                    {this.state.errorForm && <Alert className="user-warning" severity="warning">{this.state.errorForm}</Alert>}
                 </div>
             </div>
         )
@@ -136,6 +156,7 @@ export default class DownloadPage extends Component {
                         Before doing it, you might want to check our <Link to="/codere-commendations-guide">code recommandations</Link> to be sure the result is as expected !
                     </div>
                     {this.rederDonwloadForm()}
+                    {this.state.errorForm && <Alert className="user-warning" severity="warning">{this.state.errorForm}</Alert>}
                 </div>
             </div>
         )
