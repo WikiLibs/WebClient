@@ -47,7 +47,7 @@ export default class SymbolPreview extends Component {
         return (
             <div className="symbol-preview-popup-menu-container">
                 {this.state.sytaxHighlighter ?
-                    <Link ref={this._ref} target='_blank' className={this.props.className} onClick={() => window.open(window.location.origin + '/symbol?id=' + this.props.to)} to={'/symbol?id=' + this.props.to} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
+                        <Link ref={this._ref} target='_blank' className={this.props.className} to={'/symbol?id=' + this.props.to} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
                             {
                                 this.props.mode ? 
                                 <div>{this.props.displayName}</div>                                    
