@@ -17,6 +17,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
 import SymbolPreview from '../../Components/SymbolPreview';
 import SyntaxHighlighter from '../../Components/SyntaxHighlighter';
+import ExampleEditor from './ExampleEditor';
 
 const EDITOR_LNG_TBL = {
     "CPP": languages.clike,
@@ -60,22 +61,21 @@ export default class SymbolPage extends Component {
         };
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        var splitExample = this.state.code.split("\n");
+    handleSubmit = (data) => {
+        //var splitExample = this.state.code.split("\n");
         var example = {
             "symbolId": this.state.symbolId,
-            "code": [],
-            "description": this.state.description,
+            "code": data.code,//[],
+            "description": data.description//this.state.description,
           }
         var request = {
-            "message": this.state.message,
+            "message": data.message,//this.state.message,
             "method": "POST",
             "data": {},
             "applyTo": null
         }
 
-        splitExample.forEach(elem => {
+        /*splitExample.forEach(elem => {
             var first = true;
             console.log(elem, elem.trim().startsWith("//"));
             if (elem.trim().startsWith("//")) {
@@ -101,7 +101,7 @@ export default class SymbolPage extends Component {
                 }
             });
             example.code.push(final);
-        });
+        });*/
         request.data = example;
         console.log(example);
 
@@ -121,11 +121,11 @@ export default class SymbolPage extends Component {
             }
         }
 
-        this.setState({
+        /*this.setState({
             code: "Write an example...", 
             description: "",
             message: ""
-        });
+        });*/
     }
 
     handleMessage = (event) => {
@@ -602,7 +602,7 @@ export default class SymbolPage extends Component {
                 <div className="symbol-page-example-form">
                     <div>
                         <p>The message will be for the administrator who will check your example</p>
-                        <input type="text" placeholder="Message" value={this.state.message} onChange={this.handleMessage} />                    
+                        <input type="text" placeholder="Message" value={this.state.message} onChange={this.handleMessage} />
                     </div>
                     <div>
                         <p>The description will be for users who will read your example</p>
@@ -649,40 +649,39 @@ export default class SymbolPage extends Component {
 
     renderUploadExample = () => {
         if (this.state.type) {
-            //if (this.state.type.name === "function") {
-                return(
-                    <div id="accordion">
-                        <div className="card">
-                            <div className="card-header" id="headingOne">
+            return(
+                <div id="accordion">
+                    <div className="card">
+                        <div className="card-header" id="headingOne">
                             <h5 className="mb-0">
                                 <button className="symbol-page-title btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Examples
+                                    Examples
                                 </button>
                             </h5>
-                            </div>
-                            <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        </div>
+                        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div className="symbol-card-body">
                                 {this.renderExample()}
                             </div>
-                            </div>
                         </div>
-                        <div className="card">
-                            <div className="card-header" id="headingTwo">
+                    </div>
+                    <div className="card">
+                        <div className="card-header" id="headingTwo">
                             <h5 className="mb-0">
                                 <button className="symbol-page-title btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Create your own example
+                                    Create your own example
                                 </button>
                             </h5>
-                            </div>
-                            <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        </div>
+                        <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div className="symbol-card-body">
-                                {this.renderUpload()}
-                            </div>
+                                {/*this.renderUpload()*/}
+                                <ExampleEditor lang={getSyntaxHighlighterLanguage(this.state.lang.name)} user={this.props.user} handleSubmit={this.handleSubmit} />
                             </div>
                         </div>
                     </div>
-                )
-            //}
+                </div>
+            )
         }
     }
 
