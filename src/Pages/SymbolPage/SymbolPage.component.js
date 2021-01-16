@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../ApiService';
 import { useQuery } from '../../util';
-import Editor from 'react-simple-code-editor';
 import Button from 'react-bootstrap/Button';
 import queryString from 'query-string'
-import { highlight, languages } from 'prismjs/components/prism-core';
+import { languages } from 'prismjs/components/prism-core';
 import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
@@ -17,6 +16,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
 import SymbolPreview from '../../Components/SymbolPreview';
 import SyntaxHighlighter from '../../Components/SyntaxHighlighter';
+import ExampleEditor from './ExampleEditor';
 
 const EDITOR_LNG_TBL = {
     "CPP": languages.clike,
@@ -60,50 +60,19 @@ export default class SymbolPage extends Component {
         };
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        var splitExample = this.state.code.split("\n");
+    handleSubmit = (data) => {
         var example = {
             "symbolId": this.state.symbolId,
-            "code": [],
-            "description": this.state.description,
-          }
+            "code": data.code,
+            "description": data.description
+        };
         var request = {
-            "message": this.state.message,
+            "message": data.message,
             "method": "POST",
             "data": {},
             "applyTo": null
-        }
-
-        splitExample.forEach(elem => {
-            var first = true;
-            console.log(elem, elem.trim().startsWith("//"));
-            if (elem.trim().startsWith("//")) {
-                console.log("ok");
-                example.code.push({
-                    "data": elem.trim(),
-                    "comment": ""
-                });
-                return;
-            }
-            var tabSplit = elem.split("//");
-            var cleanElem = tabSplit.filter(n => n);
-            var final = {
-                "data": "",
-                "comment": ""
-            };
-            cleanElem.forEach(elem2 => {
-                if (first) {
-                    final.data = elem2.trimEnd();
-                    first = false;
-                } else {
-                    final.comment += elem2.replace(/\s+/g,' ').trim();
-                }
-            });
-            example.code.push(final);
-        });
+        };
         request.data = example;
-        console.log(example);
 
         if (this.props.user) {
             if (this.props.user.hasPermission("example.create")) {
@@ -120,12 +89,6 @@ export default class SymbolPage extends Component {
                 });
             }
         }
-
-        this.setState({
-            code: "Write an example...", 
-            description: "",
-            message: ""
-        });
     }
 
     handleMessage = (event) => {
@@ -585,104 +548,40 @@ export default class SymbolPage extends Component {
         );
     }
 
-    renderBox = () => {
-        if (!this.props.user) {
-            return (<div></div>);
-        } else if (this.props.user.hasPermission("example.create")) {
-            return (
-                <div className="symbol-page-example-form">
-                    <div>
-                        <p>You're an administrator so your example will be push without any verification</p>
-                        <input type="text" placeholder="Description" value={this.state.description} onChange={this.handleDescription} />
-                    </div>
-                </div>
-            );
-        } else {
-            return (
-                <div className="symbol-page-example-form">
-                    <div>
-                        <p>The message will be for the administrator who will check your example</p>
-                        <input type="text" placeholder="Message" value={this.state.message} onChange={this.handleMessage} />                    
-                    </div>
-                    <div>
-                        <p>The description will be for users who will read your example</p>
-                        <input type="text" placeholder="Description" value={this.state.description} onChange={this.handleDescription} />
-                    </div>
-                    <div>
-                        <p>You can push your own example here. It will be check by our team and validate in 2 days maximum</p>
-                        <p>You can write your code and if you want to add some comments for help the community you can add them after a "//"</p>
-                    </div>
-                </div>
-            );
-        }
-    }
-
-    renderUpload = () => {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    {this.props.user ? 
-                        <>
-                            {this.renderBox()}
-                            <div className="symbol-page-code-example">
-                                <Editor
-                                    value={this.state.code}
-                                    onValueChange={code => this.setState({code})}
-                                    highlight={code => highlight(code, getSyntaxHighlighterLanguage(this.state.lang.name))}
-                                    padding={10}
-                                    style={{
-                                        fontFamily: '"Fira code", "Fira Mono", monospace',
-                                        fontSize: 12,
-                                    }}
-                                />
-                            </div>
-                            <Button className="symbol-page-send-example" variant="outline-success" type="submit">Send</Button></>: 
-                            <div className="symbol-page-connect">
-                                <Link to='/login'>You should login to post examples</Link>
-                            </div>
-                        
-                    }
-                </form>
-            </div>
-        );
-    }
-
     renderUploadExample = () => {
         if (this.state.type) {
-            //if (this.state.type.name === "function") {
-                return(
-                    <div id="accordion">
-                        <div className="card">
-                            <div className="card-header" id="headingOne">
+            return(
+                <div id="accordion">
+                    <div className="card">
+                        <div className="card-header" id="headingOne">
                             <h5 className="mb-0">
                                 <button className="symbol-page-title btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Examples
+                                    Examples
                                 </button>
                             </h5>
-                            </div>
-                            <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        </div>
+                        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div className="symbol-card-body">
                                 {this.renderExample()}
                             </div>
-                            </div>
                         </div>
-                        <div className="card">
-                            <div className="card-header" id="headingTwo">
+                    </div>
+                    <div className="card">
+                        <div className="card-header" id="headingTwo">
                             <h5 className="mb-0">
                                 <button className="symbol-page-title btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Create your own example
+                                    Create your own example
                                 </button>
                             </h5>
-                            </div>
-                            <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        </div>
+                        <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div className="symbol-card-body">
-                                {this.renderUpload()}
-                            </div>
+                                <ExampleEditor lang={getSyntaxHighlighterLanguage(this.state.lang.name)} user={this.props.user} handleSubmit={this.handleSubmit} />
                             </div>
                         </div>
                     </div>
-                )
-            //}
+                </div>
+            )
         }
     }
 
