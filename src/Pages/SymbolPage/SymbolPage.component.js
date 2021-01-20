@@ -4,19 +4,18 @@ import { useQuery } from '../../util';
 import Button from 'react-bootstrap/Button';
 import queryString from 'query-string'
 import { languages } from 'prismjs/components/prism-core';
-import { Link } from 'react-router-dom';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
 import './style.css';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import UserInfoPopup from '../../Components/UserInfoPopup';
 import SymbolPreview from '../../Components/SymbolPreview';
 import SyntaxHighlighter from '../../Components/SyntaxHighlighter';
 import ExampleEditor from './ExampleEditor';
+import CommentEditor from "./CommentEditor";
 
 const EDITOR_LNG_TBL = {
     "CPP": languages.clike,
@@ -54,8 +53,6 @@ export default class SymbolPage extends Component {
             pseudoExample: "",
             mapIdPseudo: {},
             mapComments: {},
-            comment: {},
-            exampleId: 0,
             commentId: 0,
         };
     }
@@ -91,10 +88,6 @@ export default class SymbolPage extends Component {
         }
     }
 
-    handleMessage = (event) => {
-        this.setState({message: event.target.value});
-    }
-
     handleDescription = (event) => {
         this.setState({description: event.target.value});
     }
@@ -110,12 +103,6 @@ export default class SymbolPage extends Component {
             }
         })
         this.setState({listExample: tmp});
-    }
-
-    handleComment = (message, id) => {
-        let tmp = this.state.comment;
-        tmp[id] = message;
-        this.setState({comment: tmp});
     }
 
     componentDidMount = async () => {
@@ -136,7 +123,6 @@ export default class SymbolPage extends Component {
 
             let mapIdPseudo = {};
             let mapComments = {};
-            let comments = {};
             listExample.data.forEach(elem => {
                 this.api.getUser(elem.userId).then(response => {mapIdPseudo[elem.userId] = response.data.pseudo});
                 this.api.getComments(elem.id, 1).catch(err => {
@@ -147,13 +133,11 @@ export default class SymbolPage extends Component {
                         this.api.getUser(comment.userId).then(resp => {mapComments[resp.id] = resp.data.pseudo})
                     })
                 });
-                comments[elem.id] = "";
             })
 
             this.setState({mapIdPseudo: mapIdPseudo});
             this.setState({listExample: listExample.data});
             this.setState({mapComments: mapComments});
-            this.setState({comment: comments});
 
             this.api.getSymbolById(q.id).catch(err => {
                 this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err});
@@ -164,10 +148,10 @@ export default class SymbolPage extends Component {
     getName = () => {
         var str = this.state.path;
         if (!str)
-            return (null);
+            return null;
         var arr = str.split('/');
         if (arr.length <= 0)
-            return (null);
+            return null;
         return (arr[arr.length - 1]);
     }
 
@@ -374,7 +358,6 @@ export default class SymbolPage extends Component {
                 symbolsCluster.forEach(e => {
                     innerHtml.push(
                         <div key={e.id} className="symbol-page-parameters-container">
-                            {/* <Link to={"/symbol?id=" + e.id} onClick={() => window.location.assign(window.location.origin + '/symbol?id=' + e.id)} className="symbol-page-parameter-name"><SyntaxHighlighter  code={e.firstPrototype} lang={this.state.lang.name}/></Link> */}
                             <SymbolPreview className='symbol-page-parameter-name'
                                 displayName={this.getPathDisplayName(e.path)}
                                 to={e.id}
@@ -409,17 +392,14 @@ export default class SymbolPage extends Component {
         document.getElementById("comment-" + this.state.commentId).style.display = "none";
     }
 
-    handleSubmitComment = (event) => {
-        event.preventDefault();
-        this.api.postComment(this.state.exampleId, this.state.comment[this.state.exampleId]).catch(err => {
-            this.props.history.replace(this.props.history.pathname,{statusCode: err.response.status, errorObj: err.response.data});
-        }).then(response => { 
-            //alert("Your comment is sent, it's actually online");
+    handleSubmitComment = (comment, example) => {
+        this.api.postComment(example, comment).catch(err => {
+            this.props.history.replace(this.props.history.pathname, {statusCode: err.response.status, errorObj: err.response.data});
+        }).then(response => {
+            const comments = this.state.mapComments;
+            comments[example].data.reverse().unshift(response.data);
+            this.setState({mapComments: comments});
         });
-        let tmp = this.state.comment;
-        tmp[this.state.exampleId] = "";
-        this.setState({comment: tmp});
-        //window.location.reload();
     }
 
     renderDeleteButton = (userId, commentId) => {
@@ -437,7 +417,7 @@ export default class SymbolPage extends Component {
     renderComment = (id) => {
         let list = [];
         let comments = [];
-        this.state.mapComments[id].data.forEach(elem => {
+        this.state.mapComments[id].data.reverse().forEach(elem => {
             if (elem.data !== "" && this.state.mapIdPseudo[elem.userId] !== undefined) {
                 comments.push(
                     <div key={elem.id} id={"comment-" + elem.id}>
@@ -464,20 +444,7 @@ export default class SymbolPage extends Component {
             <div className="symbol-page-comment-holder">
                 {list}
                 <hr className="symbol-page-spe-comment" />
-                <form onSubmit={this.handleSubmitComment}>
-                    {this.props.user ? 
-                        <div className="symbol-page-new-comment">
-                            <input type="text" placeholder="Add a comment..." value={this.state.comment[id]} onChange={(event) => this.handleComment(event.target.value, id)} />
-                            {this.state.comment[id].length !== 0
-                                ? <Button variant="outline-success" type="submit" onClick={() => this.setState({exampleId: id})}><SendIcon></SendIcon></Button>
-                                : <Button disabled className="symbol-page-new-comment-disabled"><SendIcon></SendIcon></Button>
-                            }
-                        </div>:
-                        <div className="symbol-page-connect">
-                            <Link to='/login'>You should login to post comments</Link>
-                        </div>
-                    }
-                </form>
+                <CommentEditor user={this.props.user} example={id} handleSubmit={this.handleSubmitComment} />
             </div>
         );
     }
